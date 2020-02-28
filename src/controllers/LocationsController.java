@@ -9,6 +9,7 @@ import dao.DaoCountriesManagement;
 import dao.DaoLocationsManagement;
 import dao.InterfaceCountriesManagement;
 import dao.InterfaceLocationsManagement;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -59,7 +60,7 @@ public class LocationsController {
             row[2] = ListLoc.get(dtm.getRowCount()).getZipCode();
             row[3] = ListLoc.get(dtm.getRowCount()).getCity();
             row[4] = ListLoc.get(dtm.getRowCount()).getProvince();
-            row[5] = ListLoc.get(dtm.getRowCount()).getIdCounty();
+            row[5] = ListLoc.get(dtm.getRowCount()).getIdCountry();
             dtm.addRow(row);
 
         }
@@ -73,7 +74,7 @@ public class LocationsController {
         LocView.getTxtProvince().setText(ListLoc.get(row).getProvince());
         LocView.getTxtStreetAddress().setText(ListLoc.get(row).getAddress());
         LocView.getTxtZipCode().setText(ListLoc.get(row).getZipCode());
-        LocView.getCmbCountryId().setSelectedItem(ListLoc.get(row).getIdCounty());
+        LocView.getCmbCountryId().setSelectedItem(ListLoc.get(row).getIdCountry());
 
     }
 
@@ -92,20 +93,32 @@ public class LocationsController {
         LocView.getCmbCountryId().setModel(tR);
         return countryId;
     }
-    public void insert(){
-        if (!LocView.getTxtLocationId().getText().isEmpty()
-                && !LocView.getTxtZipCode().getText().isEmpty()
-                && !LocView.getTxtCity().getText().isEmpty() 
-                && !LocView.getTxtProvince().getText().isEmpty() 
-                && !LocView.getTxtStreetAddress().getText().isEmpty()
-                && LocView.getCmbCountryId().getSelectedIndex()==0) {
-           
-            EL.setId( Integer.parseInt(LocView.getTxtLocationId().getText()));
+
+    public String getValueBox() {
+        String val = LocView.getCmbCountryId().getSelectedItem().toString();
+        int idx = -1;
+        ArrayList result = new ArrayList<String>();
+        result = getValueFK();
+        String[] region_name = new String[result.size()];
+        int[] region_id =  new int[result.size()];
+        region_name = (String[])result.get(0);
+        for (int i = 0; i < region_name.length; i++) {
+             if(val.equals(region_name[i])){
+             idx=i+1;
+             }
+        }
+        
+        return val;
+    }
+
+    public void insert() {
+        if (isEmptyfield()) {
+            EL.setId(Integer.parseInt(LocView.getTxtLocationId().getText()));
             EL.setAdrress(LocView.getTxtStreetAddress().getText());
             EL.setCity(LocView.getTxtCity().getText());
             EL.setProvince(LocView.getTxtProvince().getText());
             EL.setZipCode(LocView.getTxtZipCode().getText());
-            
+            EL.setIdCountry(getValueBox());
             JOptionPane.showMessageDialog(null, "Data telah di input");
         } else {
             JOptionPane.showMessageDialog(null, "isi terlebih dahulu");
@@ -114,5 +127,32 @@ public class LocationsController {
         IntrfcLM.insert(EL);
 
     }
-    
+
+    public boolean isEmptyfield() {
+        if (!LocView.getTxtLocationId().getText().isEmpty()
+                && !LocView.getTxtZipCode().getText().isEmpty()
+                && !LocView.getTxtCity().getText().isEmpty()
+                && !LocView.getTxtProvince().getText().isEmpty()
+                && !LocView.getTxtStreetAddress().getText().isEmpty()
+                && LocView.getCmbCountryId().getSelectedIndex() == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    private ArrayList getValueFK() {
+       ArrayList FK = null;
+        DefaultTableModel dtm = new DefaultTableModel();
+
+        Object[] row;
+        row = new Object[ListCountry.size()];
+        while (dtm.getRowCount() < ListCountry.size()) {
+            row[0] = ListCountry.get(dtm.getRowCount()).getId();
+            dtm.addRow(row);
+
+        }
+        //FK = 
+        return FK ;
+    }
+
 }

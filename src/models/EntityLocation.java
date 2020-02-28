@@ -16,7 +16,7 @@ public class EntityLocation {
     private String ZipCode;
     private String City;
     private String Province;
-    private String idCounty;
+    private String idCountry;
 
     public Integer getId() {
         return Id;
@@ -58,12 +58,12 @@ public class EntityLocation {
         this.Province = Province;
     }
 
-    public String getIdCounty() {
-        return idCounty;
+    public String getIdCountry() {
+        return idCountry;
     }
 
-    public void setIdCounty(String idCounty) {
-        this.idCounty = idCounty;
+    public void setIdCountry(String idCounty) {
+        this.idCountry = idCounty;
     }
 
 }

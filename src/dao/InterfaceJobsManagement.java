@@ -5,10 +5,20 @@
  */
 package dao;
 
+import java.util.List;
+import models.EntityJob;
+
 /**
  *
  * @author amry4
  */
 public interface InterfaceJobsManagement {
-    
+     public boolean insert(EntityJob Ej);
+
+    public boolean update(EntityJob Ej);
+
+    public boolean delete(String id);
+
+    public List<EntityJob> getALL();
+
 }

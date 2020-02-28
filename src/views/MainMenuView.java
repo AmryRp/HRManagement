@@ -28,89 +28,125 @@ public class MainMenuView extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu2 = new javax.swing.JMenu();
-        jInternalFrame1 = new javax.swing.JInternalFrame();
         jMenuBar1 = new javax.swing.JMenuBar();
         jFile = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu9 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
-        jMenu6 = new javax.swing.JMenu();
-        jMenu7 = new javax.swing.JMenu();
-        jMenu8 = new javax.swing.JMenu();
+        jExit = new javax.swing.JMenuItem();
+        jRegion = new javax.swing.JMenu();
+        jCountries = new javax.swing.JMenu();
+        jLocations = new javax.swing.JMenu();
+        jEmployees = new javax.swing.JMenu();
+        jJobs = new javax.swing.JMenu();
+        jDepartments = new javax.swing.JMenu();
+        jJobHistory = new javax.swing.JMenu();
 
         jMenu2.setText("jMenu2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jInternalFrame1.setVisible(true);
-
-        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
-        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
-        jInternalFrame1Layout.setHorizontalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 721, Short.MAX_VALUE)
-        );
-        jInternalFrame1Layout.setVerticalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 441, Short.MAX_VALUE)
-        );
-
         jFile.setText("File");
+        jFile.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jFileMenuSelected(evt);
+            }
+        });
 
-        jMenuItem1.setText("jMenuItem1");
-        jFile.add(jMenuItem1);
+        jExit.setText("exit");
+        jExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jExitMouseClicked(evt);
+            }
+        });
+        jFile.add(jExit);
 
         jMenuBar1.add(jFile);
 
-        jMenu1.setText("Regions");
-        jMenu1.addMenuListener(new javax.swing.event.MenuListener() {
+        jRegion.setText("Regions");
+        jRegion.addMenuListener(new javax.swing.event.MenuListener() {
             public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
             public void menuSelected(javax.swing.event.MenuEvent evt) {
-                jMenu1MenuSelected(evt);
+                jRegionMenuSelected(evt);
             }
         });
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jRegion);
 
-        jMenu9.setText("Countries");
-        jMenu9.addMenuListener(new javax.swing.event.MenuListener() {
+        jCountries.setText("Countries");
+        jCountries.addMenuListener(new javax.swing.event.MenuListener() {
             public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
             public void menuSelected(javax.swing.event.MenuEvent evt) {
-                jMenu9MenuSelected(evt);
+                jCountriesMenuSelected(evt);
             }
         });
-        jMenuBar1.add(jMenu9);
+        jMenuBar1.add(jCountries);
 
-        jMenu4.setText("Locations");
-        jMenu4.addMenuListener(new javax.swing.event.MenuListener() {
+        jLocations.setText("Locations");
+        jLocations.addMenuListener(new javax.swing.event.MenuListener() {
             public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
             public void menuSelected(javax.swing.event.MenuEvent evt) {
-                jMenu4MenuSelected(evt);
+                jLocationsMenuSelected(evt);
             }
         });
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(jLocations);
 
-        jMenu5.setText("Employees");
-        jMenuBar1.add(jMenu5);
+        jEmployees.setText("Employees");
+        jEmployees.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jEmployeesMenuSelected(evt);
+            }
+        });
+        jMenuBar1.add(jEmployees);
 
-        jMenu6.setText("Jobs");
-        jMenuBar1.add(jMenu6);
+        jJobs.setText("Jobs");
+        jJobs.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jJobsMenuSelected(evt);
+            }
+        });
+        jMenuBar1.add(jJobs);
 
-        jMenu7.setText("Departments");
-        jMenuBar1.add(jMenu7);
+        jDepartments.setText("Departments");
+        jDepartments.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jDepartmentsMenuSelected(evt);
+            }
+        });
+        jMenuBar1.add(jDepartments);
 
-        jMenu8.setText("Job History");
-        jMenuBar1.add(jMenu8);
+        jJobHistory.setText("Job History");
+        jJobHistory.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jJobHistoryMenuSelected(evt);
+            }
+        });
+        jMenuBar1.add(jJobHistory);
 
         setJMenuBar(jMenuBar1);
 
@@ -118,32 +154,50 @@ public class MainMenuView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+            .addGap(0, 769, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+            .addGap(0, 521, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu1MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu1MenuSelected
+    private void jRegionMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jRegionMenuSelected
          new RegionView().setVisible(true);
-    }//GEN-LAST:event_jMenu1MenuSelected
+    }//GEN-LAST:event_jRegionMenuSelected
 
-    private void jMenu9MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu9MenuSelected
+    private void jCountriesMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jCountriesMenuSelected
          new CountriesView().setVisible(true);
-    }//GEN-LAST:event_jMenu9MenuSelected
-    private void jMenu4MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu4MenuSelected
+    }//GEN-LAST:event_jCountriesMenuSelected
+    private void jLocationsMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jLocationsMenuSelected
           new LocationsView().setVisible(true); 
-    }//GEN-LAST:event_jMenu4MenuSelected
+    }//GEN-LAST:event_jLocationsMenuSelected
+
+    private void jEmployeesMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jEmployeesMenuSelected
+     new EmployeesView().setVisible(true); 
+    }//GEN-LAST:event_jEmployeesMenuSelected
+
+    private void jJobsMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jJobsMenuSelected
+       new JobsView().setVisible(true); 
+    }//GEN-LAST:event_jJobsMenuSelected
+
+    private void jDepartmentsMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jDepartmentsMenuSelected
+       new DepartmentsView().setVisible(true); 
+    }//GEN-LAST:event_jDepartmentsMenuSelected
+
+    private void jJobHistoryMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jJobHistoryMenuSelected
+       new JobHistoryView().setVisible(true); 
+    }//GEN-LAST:event_jJobHistoryMenuSelected
+
+    private void jFileMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jFileMenuSelected
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileMenuSelected
+
+    private void jExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jExitMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jExitMouseClicked
 
     /**
      * @param args the command line arguments
@@ -181,17 +235,16 @@ public class MainMenuView extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jCountries;
+    private javax.swing.JMenu jDepartments;
+    private javax.swing.JMenu jEmployees;
+    private javax.swing.JMenuItem jExit;
     private javax.swing.JMenu jFile;
-    private javax.swing.JInternalFrame jInternalFrame1;
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jJobHistory;
+    private javax.swing.JMenu jJobs;
+    private javax.swing.JMenu jLocations;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
-    private javax.swing.JMenu jMenu8;
-    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenu jRegion;
     // End of variables declaration//GEN-END:variables
 }

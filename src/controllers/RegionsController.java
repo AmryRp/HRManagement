@@ -22,13 +22,13 @@ public class RegionsController {
 
     RegionView frame;
     InterfaceRegionsManagement IntrfcRM;
-    List<EntityRegion> lb;
+    List<EntityRegion> ListRegion;
     EntityRegion Er = new EntityRegion();
 
     public RegionsController(RegionView frame) {
         this.frame = frame;
         IntrfcRM = new DaoRegionsManagement();
-        lb = IntrfcRM.getALL();
+        ListRegion = IntrfcRM.getALL();
     }
 
     public void reset() {
@@ -39,14 +39,14 @@ public class RegionsController {
     }
 
     public void isiTabel(JTable tabel) {
-        lb = IntrfcRM.getALL();
+        ListRegion = IntrfcRM.getALL();
         DefaultTableModel tR = (DefaultTableModel) tabel.getModel();
 
         Object[] row;
-        row = new Object[lb.size()];
-        while (tR.getRowCount() < lb.size()) {
-            row[0] = lb.get(tR.getRowCount()).getId();
-            row[1] = lb.get(tR.getRowCount()).getName();
+        row = new Object[ListRegion.size()];
+        while (tR.getRowCount() < ListRegion.size()) {
+            row[0] = ListRegion.get(tR.getRowCount()).getId();
+            row[1] = ListRegion.get(tR.getRowCount()).getName();
             tR.addRow(row);
 
         }
@@ -56,8 +56,8 @@ public class RegionsController {
     }
 
     public void isiField(int row) {
-        frame.getTxtId().setText(lb.get(row).getId().toString());
-        frame.getTxtName().setText(lb.get(row).getName());
+        frame.getTxtId().setText(ListRegion.get(row).getId().toString());
+        frame.getTxtName().setText(ListRegion.get(row).getName());
     }
 
     public void clear(JTable tabel) {
@@ -114,14 +114,14 @@ public class RegionsController {
     }
 
     public void searchRegion(JTable tabel) {
-        lb = IntrfcRM.getCariRegions(frame.getTxtSearch().getText().trim());
+        ListRegion = IntrfcRM.getCariRegions(frame.getTxtSearch().getText().trim());
         DefaultTableModel tR = (DefaultTableModel) tabel.getModel();
 
         Object[] row;
-        row = new Object[lb.size()];
-        while (tR.getRowCount() < lb.size()) {
-            row[0] = lb.get(tR.getRowCount()).getId();
-            row[1] = lb.get(tR.getRowCount()).getName();
+        row = new Object[ListRegion.size()];
+        while (tR.getRowCount() < ListRegion.size()) {
+            row[0] = ListRegion.get(tR.getRowCount()).getId();
+            row[1] = ListRegion.get(tR.getRowCount()).getName();
             tR.addRow(row);
 
         }

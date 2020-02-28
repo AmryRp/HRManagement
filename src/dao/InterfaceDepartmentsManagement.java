@@ -5,10 +5,19 @@
  */
 package dao;
 
+import java.util.List;
+import models.EntityDepartment;
+
 /**
  *
  * @author amry4
  */
 public interface InterfaceDepartmentsManagement {
-    
+    public boolean insert(EntityDepartment ED);
+
+    public boolean update(EntityDepartment ED);
+
+    public boolean delete(int id);
+
+    public List<EntityDepartment> getALL();
 }

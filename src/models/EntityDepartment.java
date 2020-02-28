@@ -12,7 +12,24 @@ package models;
 public class EntityDepartment {
     private Integer id;
     private String name;
+    private Integer managerId;
+    private Integer locationId;
 
+    public Integer getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(Integer managerId) {
+        this.managerId = managerId;
+    }
+
+    public Integer getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
+    }
     public Integer getId() {
         return id;
     }

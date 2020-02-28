@@ -12,8 +12,8 @@ package models;
 public class EntityJob {
     private String id;
     private String title;
-    private Integer minSalary;
-    private Integer maxSalary;
+    private float minSalary;
+    private float maxSalary;
 
     public String getId() {
         return id;
@@ -31,19 +31,19 @@ public class EntityJob {
         this.title = title;
     }
 
-    public Integer getMinSalary() {
+    public float getMinSalary() {
         return minSalary;
     }
 
-    public void setMinSalary(int minSalary) {
+    public void setMinSalary(float minSalary) {
         this.minSalary = minSalary;
     }
 
-    public Integer getMaxSalary() {
+    public float getMaxSalary() {
         return maxSalary;
     }
 
-    public void setMaxSalary(int maxSalary) {
+    public void setMaxSalary(float maxSalary) {
         this.maxSalary = maxSalary;
     }
 }

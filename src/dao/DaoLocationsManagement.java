@@ -49,7 +49,7 @@ public class DaoLocationsManagement implements InterfaceLocationsManagement {
             statement.setString(3, EL.getZipCode());
             statement.setString(4, EL.getCity());
             statement.setString(5, EL.getProvince());
-            statement.setString(6, EL.getIdCounty());
+            statement.setString(6, EL.getIdCountry());
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -66,7 +66,7 @@ public class DaoLocationsManagement implements InterfaceLocationsManagement {
             statement.setString(2, EL.getZipCode());
             statement.setString(3, EL.getCity());
             statement.setString(4, EL.getProvince());
-            statement.setString(5, EL.getIdCounty());
+            statement.setString(5, EL.getIdCountry());
             statement.setInt(6, EL.getId());
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -103,7 +103,7 @@ public class DaoLocationsManagement implements InterfaceLocationsManagement {
                 Er.setZipCode(rs.getString(3));
                 Er.setCity(rs.getString(4));
                 Er.setProvince(rs.getString(5));
-                Er.setIdCounty(rs.getString(6));
+                Er.setIdCountry(rs.getString(6));
                 lb.add(Er);
             }
         } catch (SQLException ex) {

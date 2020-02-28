@@ -8,6 +8,7 @@ package controllers;
 import dao.DaoCountriesManagement;
 import dao.InterfaceCountriesManagement;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import models.EntityCountries;
@@ -51,8 +52,27 @@ public class CountriesController {
         }
         frame.getjTblCountries().setModel(tR);
     }
+     public void isiField(int row) {
+        frame.getjTxtCountryId().setText(lb.get(row).getId().toString());
+        frame.getjTxtCountryName().setText(lb.get(row).getCountryName());
+        frame.getjCmbRegionId().setSelectedIndex(0);
+        
+    }
     public void insert()
     {
-    
+          if (!frame.getjTxtCountryId().getText().trim().isEmpty()
+                && !frame.getjTxtCountryName().getText().trim().isEmpty()) {
+            String Name = frame.getjTxtCountryName().getText();
+            String ID = frame.getjTxtCountryId().getText().trim();
+            EL.setCountryName(Name);
+            EL.setId(ID);
+            JOptionPane.showMessageDialog(frame, "Data telah di input");
+        } else {
+            JOptionPane.showMessageDialog(frame, "isi terlebih dahulu");
+        }
+
+        intrcCM.insert(EL);
+
     }
-}
+    }
+

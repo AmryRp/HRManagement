@@ -5,10 +5,14 @@
  */
 package dao;
 
+import java.util.List;
+import models.EntityJobHistory;
+
 /**
  *
  * @author amry4
  */
 public interface InterfaceJobHistoryManagement {
     
+    public List<EntityJobHistory> getALL();
 }

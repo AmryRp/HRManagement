@@ -5,10 +5,19 @@
  */
 package dao;
 
+import java.util.List;
+import models.EntityEmployee;
+
 /**
  *
  * @author amry4
  */
 public interface InterfaceEmployeesManagement {
-    
+     public boolean insert(EntityEmployee EM);
+
+    public boolean update(EntityEmployee EM);
+
+    public boolean delete(int id);
+
+    public List<EntityEmployee> getALL();
 }
