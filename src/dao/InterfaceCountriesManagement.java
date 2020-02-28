@@ -17,7 +17,7 @@ public interface InterfaceCountriesManagement {
 
     public boolean update(EntityCountries EC);
 
-    public boolean delete(int id);
+    public boolean delete(String id);
 
     public List<EntityCountries> getALL();
 

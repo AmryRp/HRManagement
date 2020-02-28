@@ -25,9 +25,9 @@ import tools.Connections;
 public class DaoCountriesManagement implements InterfaceCountriesManagement {
 
     Connection c;
-    final String insert = "INSERT INTO HR.Countries (country_id,Country_name,Region_id)VALUES(?,?,?)";
+    final String insert = "INSERT INTO HR.Countries VALUES(?,?,?)";
     final String update = "UPDATE HR.Countries SET COUNTRY_NAME=?,"
-            + " REGION_ID=? WHERE LOCATION_ID=?";
+            + " REGION_ID=? WHERE Country_ID=?";
     final String delete = "DELETE FROM HR.Countries WHERE Country_id =?";
     final String select = "SELECT * FROM HR.Countries ORDER BY Country_ID";
     final String search = "SELECT * FROM HR.Countries WHERE Country_NAME LIKE ?";
@@ -69,10 +69,10 @@ public class DaoCountriesManagement implements InterfaceCountriesManagement {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(String id) {
         try {
             pst = c.prepareStatement(delete);
-            pst.setInt(1, id);
+            pst.setString(1, id);
             return pst.executeUpdate() > 0;
         } catch (SQLException ex) {
             ex.printStackTrace();

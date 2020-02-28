@@ -28,9 +28,9 @@ public class LocationsController {
 
     LocationsView LocView;
     InterfaceLocationsManagement IntrfcLM;
-    InterfaceCountriesManagement IntrfcCM;
     List<EntityLocation> ListLoc;
     List<EntityCountries> ListCountry;
+     InterfaceCountriesManagement IntrfcCM;
     EntityLocation EL = new EntityLocation();
 
     public LocationsController(LocationsView frame) {
@@ -100,14 +100,14 @@ public class LocationsController {
         ArrayList result = new ArrayList<String>();
         result = getValueFK();
         String[] region_name = new String[result.size()];
-        int[] region_id =  new int[result.size()];
-        region_name = (String[])result.get(0);
+        int[] region_id = new int[result.size()];
+        region_name = (String[]) result.get(0);
         for (int i = 0; i < region_name.length; i++) {
-             if(val.equals(region_name[i])){
-             idx=i+1;
-             }
+            if (val.equals(region_name[i])) {
+                idx = i + 1;
+            }
         }
-        
+
         return val;
     }
 
@@ -141,18 +141,18 @@ public class LocationsController {
     }
 
     private ArrayList getValueFK() {
-       ArrayList FK = null;
-        DefaultTableModel dtm = new DefaultTableModel();
-
-        Object[] row;
-        row = new Object[ListCountry.size()];
-        while (dtm.getRowCount() < ListCountry.size()) {
-            row[0] = ListCountry.get(dtm.getRowCount()).getId();
-            dtm.addRow(row);
-
+        ArrayList FK = new ArrayList<String>();
+        String[] countryname = new String[ListCountry.size()];
+        int[] countryId = new int[ListCountry.size()];
+        int i = 0;
+        while (i < ListCountry.size()) {
+            countryname[i] = ListCountry.get(i).getCountryName();
+            countryId[i] = ListCountry.get(i).getRegionId();
+            i++;
         }
-        //FK = 
-        return FK ;
+        FK.add(countryname);
+        FK.add(countryId);
+        return FK;
     }
 
 }

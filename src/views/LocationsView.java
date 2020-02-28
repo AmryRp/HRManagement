@@ -23,6 +23,7 @@ public class LocationsView extends javax.swing.JFrame {
         initComponents();
         Lct = new LocationsController(this);
         Lct.isiTabel(tblViewLocation);
+        Lct.Fillcbox(CmbCountryId);
     }
 
     /**

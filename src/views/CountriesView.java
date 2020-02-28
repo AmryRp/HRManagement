@@ -12,7 +12,9 @@ import controllers.CountriesController;
  * @author amry4
  */
 public class CountriesView extends javax.swing.JFrame {
+
     CountriesController cct;
+
     /**
      * Creates new form CountriesManagement
      */
@@ -20,6 +22,8 @@ public class CountriesView extends javax.swing.JFrame {
         initComponents();
         cct = new CountriesController(this);
         cct.isiTabel(jTblCountries);
+        cct.Fillcbox(jCmbRegionId);
+        cct.getValueBox();
     }
 
     /**
@@ -93,7 +97,6 @@ public class CountriesView extends javax.swing.JFrame {
             }
         });
 
-        jCmbRegionId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jCmbRegionId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCmbRegionIdActionPerformed(evt);
@@ -158,6 +161,11 @@ public class CountriesView extends javax.swing.JFrame {
             }
         ));
         jTblCountries.setToolTipText("");
+        jTblCountries.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTblCountriesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTblCountries);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -194,15 +202,21 @@ public class CountriesView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-       
+        cct.insert();
+        cct.isiTabel(jTblCountries);
+        cct.refresh();
     }//GEN-LAST:event_btnInsertActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-       
+        cct.Update();
+        cct.isiTabel(jTblCountries);
+        cct.refresh();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-     
+        cct.delete();
+        cct.isiTabel(jTblCountries);
+        cct.refresh();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void jTxtCountryIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtCountryIdActionPerformed
@@ -216,6 +230,10 @@ public class CountriesView extends javax.swing.JFrame {
     private void jCmbRegionIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCmbRegionIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCmbRegionIdActionPerformed
+
+    private void jTblCountriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblCountriesMouseClicked
+        cct.isiField(jTblCountries.getSelectedRow());
+    }//GEN-LAST:event_jTblCountriesMouseClicked
 
     /**
      * @param args the command line arguments
