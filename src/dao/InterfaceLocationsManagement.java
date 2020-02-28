@@ -13,13 +13,11 @@ import models.EntityLocation;
  * @author amry4
  */
 public interface InterfaceLocationsManagement {
-    public boolean insert(EntityLocation EL);
 
-    public boolean update(EntityLocation EL);
+    public boolean insertOrUpdate(EntityLocation EL, boolean isInsert);
 
     public boolean delete(int id);
 
     public List<EntityLocation> getALL();
 
-    public List<EntityLocation> getCariRegions(String nama);
 }

@@ -14,13 +14,10 @@ import models.*;
  */
 public interface InterfaceRegionsManagement {
 
-    public boolean insert(EntityRegion Er);
-
-    public boolean update(EntityRegion Er);
+    public boolean insertOrUpdate(EntityRegion Er, boolean isInsert);
 
     public boolean delete(int id);
 
     public List<EntityRegion> getALL();
 
-    public List<EntityRegion> getCariRegions(String nama);
 }

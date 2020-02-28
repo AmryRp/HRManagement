@@ -24,15 +24,14 @@ import tools.Connections;
 public class DaoLocationsManagement implements InterfaceLocationsManagement {
 
     Connection c;
-    final String insert = "INSERT INTO HR.Locations (LOCATION_ID,STREET_ADDRESS,"
-            + "POSTAL_CODE,CITY,STATE_PROVINCE,COUNTRY_ID)VALUES(?,?,?,?,?,?)";
+    final String insert = "INSERT INTO HR.Locations (STREET_ADDRESS,"
+            + "POSTAL_CODE,CITY,STATE_PROVINCE,COUNTRY_ID,LOCATION_ID)VALUES(?,?,?,?,?,?)";
     final String update = "UPDATE HR.Locations SET STREET_ADDRESS=?, POSTAL_CODE=?, CITY=?,  "
             + "STATE_PROVINCE=?, COUNTRY_ID=? WHERE LOCATION_ID=?";
     final String delete = "DELETE FROM HR.Locations WHERE LOCATION_ID =?";
     final String select = "SELECT * FROM HR.Locations ORDER BY LOCATION_ID";
     final String search = "SELECT * FROM HR.Locations WHERE REGION_NAME LIKE ?";
-    final String selectFK = "SELECT Country_id FROM HR.Countries";
-    PreparedStatement statement = null;
+      PreparedStatement ps = null;
 
     public DaoLocationsManagement() {
         Connections conn = new Connections();
@@ -40,35 +39,17 @@ public class DaoLocationsManagement implements InterfaceLocationsManagement {
     }
 
     @Override
-    public boolean insert(EntityLocation EL) {
-        PreparedStatement statement = null;
+    public boolean insertOrUpdate(EntityLocation EL,boolean isInsert) {
+      
         try {
-            statement = c.prepareStatement(insert);
-            statement.setInt(1, EL.getId());
-            statement.setString(2, EL.getAddress());
-            statement.setString(3, EL.getZipCode());
-            statement.setString(4, EL.getCity());
-            statement.setString(5, EL.getProvince());
-            statement.setString(6, EL.getIdCountry());
-            return statement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(EntityLocation EL) {
-        PreparedStatement statement = null;
-        try {
-            statement = c.prepareStatement(update);
-            statement.setString(1, EL.getAddress());
-            statement.setString(2, EL.getZipCode());
-            statement.setString(3, EL.getCity());
-            statement.setString(4, EL.getProvince());
-            statement.setString(5, EL.getIdCountry());
-            statement.setInt(6, EL.getId());
-            return statement.executeUpdate() > 0;
+            ps = (isInsert) ? c.prepareStatement(insert) : c.prepareStatement(update);
+            ps.setString(1, EL.getAddress());
+            ps.setString(2, EL.getZipCode());
+            ps.setString(3, EL.getCity());
+            ps.setString(4, EL.getProvince());
+            ps.setString(5, EL.getIdCountry());
+            ps.setInt(6, EL.getId());
+            return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
@@ -77,11 +58,11 @@ public class DaoLocationsManagement implements InterfaceLocationsManagement {
 
     @Override
     public boolean delete(int id) {
-        PreparedStatement statement = null;
+        
         try {
-            statement = c.prepareStatement(delete);
-            statement.setInt(1, id);
-            return statement.executeUpdate() > 0;
+            ps = c.prepareStatement(delete);
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
@@ -91,7 +72,6 @@ public class DaoLocationsManagement implements InterfaceLocationsManagement {
     @Override
     public List<EntityLocation> getALL() {
         List<EntityLocation> lb = null;
-
         try {
             lb = new ArrayList<EntityLocation>();
             Statement st = c.createStatement();
@@ -112,9 +92,6 @@ public class DaoLocationsManagement implements InterfaceLocationsManagement {
         return lb;
     }
 
-    @Override
-    public List<EntityLocation> getCariRegions(String nama) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
 }

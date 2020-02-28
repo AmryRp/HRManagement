@@ -12,8 +12,20 @@ package models;
 public class EntityLocation {
 
     private Integer Id;
-    private String Adrress;
+
+    public EntityLocation() {
+    }
+    private String Address;
     private String ZipCode;
+
+    public EntityLocation(Integer Id, String Address, String ZipCode, String City, String Province, String idCountry) {
+        this.Id = Id;
+        this.Address = Address;
+        this.ZipCode = ZipCode;
+        this.City = City;
+        this.Province = Province;
+        this.idCountry = idCountry;
+    }
     private String City;
     private String Province;
     private String idCountry;
@@ -27,11 +39,11 @@ public class EntityLocation {
     }
 
     public String getAddress() {
-        return Adrress;
+        return Address;
     }
 
-    public void setAdrress(String Adrress) {
-        this.Adrress = Adrress;
+    public void setAdrress(String Address) {
+        this.Address = Address;
     }
 
     public String getZipCode() {

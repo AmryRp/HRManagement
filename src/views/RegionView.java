@@ -6,9 +6,15 @@
 package views;
 
 import controllers.RegionsController;
+import dao.DaoRegionsManagement;
+import dao.InterfaceRegionsManagement;
+import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import models.EntityRegion;
 
 /**
  *
@@ -17,6 +23,9 @@ import javax.swing.JTextField;
 public class RegionView extends javax.swing.JFrame {
 
     RegionsController rct;
+    InterfaceRegionsManagement IntrfcRM;
+    List<EntityRegion> ListRegion;
+    boolean isClicked = true;
 
     /**
      * Creates new form RegionManagement
@@ -24,7 +33,10 @@ public class RegionView extends javax.swing.JFrame {
     public RegionView() {
         initComponents();
         rct = new RegionsController(this);
-        rct.isiTabel(tblView);
+        IntrfcRM = new DaoRegionsManagement();
+        ListRegion = IntrfcRM.getALL();
+        bindingTable(tblView);
+
     }
 
     /**
@@ -42,7 +54,6 @@ public class RegionView extends javax.swing.JFrame {
         txtId = new javax.swing.JTextField();
         txtName = new javax.swing.JTextField();
         btnDelete = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
         btnInsert = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblView = new javax.swing.JTable();
@@ -79,16 +90,8 @@ public class RegionView extends javax.swing.JFrame {
             }
         });
 
-        btnUpdate.setBackground(new java.awt.Color(0, 204, 255));
-        btnUpdate.setText("UPDATE");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
-
         btnInsert.setBackground(new java.awt.Color(51, 204, 255));
-        btnInsert.setText("INSERT");
+        btnInsert.setText("SAVE");
         btnInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertActionPerformed(evt);
@@ -101,13 +104,12 @@ public class RegionView extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnInsert)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnUpdate)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDelete))
+                        .addGap(420, 420, 420)
+                        .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
@@ -132,7 +134,6 @@ public class RegionView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnInsert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -156,6 +157,7 @@ public class RegionView extends javax.swing.JFrame {
         tblView.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblViewMouseClicked(evt);
+                sortClick(evt);
             }
         });
         jScrollPane1.setViewportView(tblView);
@@ -215,36 +217,90 @@ public class RegionView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private boolean IsEmptyField() {
+        return txtId.getText().trim().equals("");
+    }
 
+    public void bindingTable(JTable tabel) {
+        ListRegion = IntrfcRM.getALL();
+        String[] tblHeader = new String[]{"id", "name"};
+        DefaultTableModel tR = new DefaultTableModel(null, tblHeader);
+        tabel.getModel();
+
+        Object[] row;
+        row = new Object[ListRegion.size()];
+        while (tR.getRowCount() < ListRegion.size()) {
+            row[0] = ListRegion.get(tR.getRowCount()).getId();
+            row[1] = ListRegion.get(tR.getRowCount()).getName();
+            tR.addRow(row);
+
+        }
+
+        tblView.setModel(tR);
+
+    }
+
+    public void clearTable(JTable table) {
+        DefaultTableModel dm = (DefaultTableModel) table.getModel();
+        while (dm.getRowCount() > 0) {
+            dm.removeRow(0);
+        }
+    }
+
+    public void refresh() {
+        clearTable(tblView);
+        bindingTable(tblView);
+        txtId.setText("");
+        txtName.setText("");
+        txtId.setEditable(true);
+        isClicked = true;
+    }
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-        rct.insert();
-        rct.isiTabel(tblView);
-        rct.refresh();
+        if (IsEmptyField()) {
+            JOptionPane.showMessageDialog(rootPane, "fill id");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, rct.Save(txtId.getText(), txtName.getText(), isClicked));
+            refresh();
+
+        }
     }//GEN-LAST:event_btnInsertActionPerformed
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        rct.update();
-        rct.isiTabel(tblView);
-        rct.refresh();
-    }//GEN-LAST:event_btnUpdateActionPerformed
-
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        rct.delete();
-        rct.isiTabel(tblView);
-        rct.refresh();
+        if (!IsEmptyField()) {
+            int result = JOptionPane.showConfirmDialog(null,
+                    "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                 JOptionPane.showMessageDialog(rootPane, rct.delete(txtId.getText()));
+                 refresh();
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(rootPane, "fill id");
+            }
+        bindingTable(tblView);
+
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void tblViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblViewMouseClicked
-        rct.isiField(tblView.getSelectedRow());
+        DefaultTableModel dm = (DefaultTableModel) tblView.getModel();
+        int row = tblView.getSelectedRow();
+        txtId.setText(dm.getValueAt(row, 0).toString());
+        txtName.setText(dm.getValueAt(row, 1).toString());
+        txtId.setEditable(false);
+        isClicked = false;
     }//GEN-LAST:event_tblViewMouseClicked
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        rct.searchname();
+
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void sortClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sortClick
+
+    }//GEN-LAST:event_sortClick
 
     /**
      * @param args the command line arguments
@@ -285,7 +341,6 @@ public class RegionView extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -308,10 +363,6 @@ public class RegionView extends javax.swing.JFrame {
 
     public JButton getBtnSearch() {
         return btnSearch;
-    }
-
-    public JButton getBtnUpdate() {
-        return btnUpdate;
     }
 
     public JTable getTblView() {

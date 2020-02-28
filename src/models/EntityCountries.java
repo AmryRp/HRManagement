@@ -14,6 +14,13 @@ public class EntityCountries {
     private String countryName;
     private Integer regionId;
 
+    public EntityCountries() {
+    }
+
+    public EntityCountries(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

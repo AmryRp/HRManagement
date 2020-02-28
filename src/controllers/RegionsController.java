@@ -31,35 +31,6 @@ public class RegionsController {
         ListRegion = IntrfcRM.getALL();
     }
 
-    public void reset() {
-        frame.getTxtId().setText("");
-        frame.getTxtName().setText("");
-        frame.getTxtSearch().setText("");
-
-    }
-
-    public void isiTabel(JTable tabel) {
-        ListRegion = IntrfcRM.getALL();
-        DefaultTableModel tR = (DefaultTableModel) tabel.getModel();
-
-        Object[] row;
-        row = new Object[ListRegion.size()];
-        while (tR.getRowCount() < ListRegion.size()) {
-            row[0] = ListRegion.get(tR.getRowCount()).getId();
-            row[1] = ListRegion.get(tR.getRowCount()).getName();
-            tR.addRow(row);
-
-        }
-
-        frame.getTblView().setModel(tR);
-
-    }
-
-    public void isiField(int row) {
-        frame.getTxtId().setText(ListRegion.get(row).getId().toString());
-        frame.getTxtName().setText(ListRegion.get(row).getName());
-    }
-
     public void clear(JTable tabel) {
         DefaultTableModel tR = (DefaultTableModel) tabel.getModel();
         while (tR.getRowCount() > 0) {
@@ -67,74 +38,16 @@ public class RegionsController {
         }
     }
 
-    public void refresh() {
-        reset();
-        clear(frame.getTblView());
-        isiTabel(frame.getTblView());
-    }
+    public String Save(String id, String name, boolean isSave) {
 
-    public void insert() {
-        if (!frame.getTxtId().getText().trim().isEmpty()
-                && !frame.getTxtName().getText().trim().isEmpty()) {
-            String Name = frame.getTxtName().getText();
-            int ID = Integer.parseInt(frame.getTxtId().getText().trim());
-            Er.setName(Name);
-            Er.setId(ID);
-            JOptionPane.showMessageDialog(frame, "Data telah di input");
-        } else {
-            JOptionPane.showMessageDialog(frame, "isi terlebih dahulu");
-        }
-
-        IntrfcRM.insert(Er);
+        return (IntrfcRM.insertOrUpdate(new EntityRegion(Integer.parseInt(id), name), isSave)) ? "sukses" : "failed";
 
     }
 
-    public void update() {
-        if (!frame.getTxtId().getText().trim().isEmpty() && !frame.getTxtName().getText().trim().isEmpty()) {
-            String Name = frame.getTxtName().getText();
-            int ID = Integer.parseInt(frame.getTxtId().getText().trim());
-            Er.setName(Name);
-            Er.setId(ID);
-            JOptionPane.showMessageDialog(frame, "Data telah di update");
-        } else {
-            JOptionPane.showMessageDialog(frame, "Pilih data yang akan di update");
-        }
-        IntrfcRM.update(Er);
-    }
+    public String delete(String id) {
 
-    public void delete() {
-        if (!frame.getTxtId().getText().trim().isEmpty()) {
-            int id = Integer.parseInt(frame.getTxtId().getText());
-            IntrfcRM.delete(id);
-            JOptionPane.showMessageDialog(frame, "Data sudah dihapus");
-        } else {
-            JOptionPane.showMessageDialog(frame, "Pilih data yang akan di hapus");
-        }
+        return (IntrfcRM.delete(Integer.parseInt(id))) ? "sukses" : "failed";
 
-    }
-
-    public void searchRegion(JTable tabel) {
-        ListRegion = IntrfcRM.getCariRegions(frame.getTxtSearch().getText().trim());
-        DefaultTableModel tR = (DefaultTableModel) tabel.getModel();
-
-        Object[] row;
-        row = new Object[ListRegion.size()];
-        while (tR.getRowCount() < ListRegion.size()) {
-            row[0] = ListRegion.get(tR.getRowCount()).getId();
-            row[1] = ListRegion.get(tR.getRowCount()).getName();
-            tR.addRow(row);
-
-        }
-        frame.getTblView().setModel(tR);
-    }
-
-    public void searchname() {
-        if (!frame.getTxtSearch().getText().trim().isEmpty()) {
-            IntrfcRM.getCariRegions(frame.getTxtSearch().getText());
-            searchRegion(frame.getTblView());
-        } else {
-            JOptionPane.showMessageDialog(frame, "Inputkan data yang akan dicari");
-        }
     }
 
 }

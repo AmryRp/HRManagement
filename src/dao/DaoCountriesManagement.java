@@ -31,7 +31,7 @@ public class DaoCountriesManagement implements InterfaceCountriesManagement {
     final String delete = "DELETE FROM HR.Countries WHERE Country_id =?";
     final String select = "SELECT * FROM HR.Countries ORDER BY Country_ID";
     final String search = "SELECT * FROM HR.Countries WHERE Country_NAME LIKE ?";
-    final String selectFK = "SELECT Country_id FROM HR.Countries";
+    final String selectFK = "SELECT Country_name FROM HR.Countries where country_id = ?";
     PreparedStatement pst = null;
 
     public DaoCountriesManagement() {
@@ -94,7 +94,7 @@ public class DaoCountriesManagement implements InterfaceCountriesManagement {
                 EC.setCountryName(rs.getString(2));
                 EC.setRegionId(rs.getInt(3));
                 lb.add(EC);
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(DaoCountriesManagement.class.getName()).log(Level.SEVERE, null, ex);
@@ -105,6 +105,27 @@ public class DaoCountriesManagement implements InterfaceCountriesManagement {
     @Override
     public List<EntityCountries> getCariRegions(String nama) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getById(String Id) {
+        ResultSet rs;
+        String temp = null;
+        try {
+            EntityCountries EC = new EntityCountries();
+            pst = c.prepareStatement(selectFK);
+            rs = pst.executeQuery();
+            while (rs.next())
+            {
+//             EC.setId(rs.getString(1));
+             temp = rs.getString(1);
+            }
+           
+
+        } catch (Exception e) {
+            return e.toString();
+        }
+    return temp;   
     }
 
 }

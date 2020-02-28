@@ -15,6 +15,20 @@ public class EntityRegion {
     private Integer id;
     private String name;
 
+    public EntityRegion(String name) {
+        this.name = name;
+    }
+
+    public EntityRegion() {
+    }
+
+    public EntityRegion(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+   
+
     public Integer getId() {
         return id;
     }

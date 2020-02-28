@@ -33,6 +33,9 @@ public class CountriesController {
     InterfaceRegionsManagement IntrfcRM;
     EntityCountries EL = new EntityCountries();
 
+    public CountriesController() {
+    }
+
     public CountriesController(CountriesView frame) {
         this.CountryView = frame;
         intrcCM = new DaoCountriesManagement();
@@ -50,7 +53,6 @@ public class CountriesController {
     public void isiTabel(JTable tabel) {
         ListCountry = intrcCM.getALL();
         DefaultTableModel tR = (DefaultTableModel) tabel.getModel();
-
         Object[] row;
         row = new Object[ListCountry.size()];
         while (tR.getRowCount() < ListCountry.size()) {
@@ -73,7 +75,7 @@ public class CountriesController {
     public void insert() {
         if (!CountryView.getjTxtCountryId().getText().trim().isEmpty()
                 && !CountryView.getjTxtCountryName().getText().trim().isEmpty()) {
-          
+
             EL.setId(CountryView.getjTxtCountryId().getText());
             EL.setCountryName(CountryView.getjTxtCountryName().getText());
             EL.setRegionId(getValueBox());
@@ -89,7 +91,7 @@ public class CountriesController {
     public void Update() {
         if (!CountryView.getjTxtCountryId().getText().trim().isEmpty()
                 && !CountryView.getjTxtCountryName().getText().trim().isEmpty()) {
-           
+
             EL.setCountryName(CountryView.getjTxtCountryName().getText());
             EL.setId(CountryView.getjTxtCountryId().getText().trim());
             EL.setRegionId(getValueBox());
@@ -114,7 +116,7 @@ public class CountriesController {
     }
 
     public void Fillcbox(JComboBox Jbox) {
-    ListRegion = IntrfcRM.getALL();
+        ListRegion = IntrfcRM.getALL();
         String[] regionName = new String[ListRegion.size()];
         int[] regionId = new int[ListRegion.size()];
         int i = 0;
@@ -130,7 +132,7 @@ public class CountriesController {
 
     private ArrayList getValueFK() {
         ListRegion = IntrfcRM.getALL();
-        
+
         String[] regionName = new String[ListRegion.size()];
         int[] regionId = new int[ListRegion.size()];
         int i = 0;
@@ -161,4 +163,11 @@ public class CountriesController {
 
         return idx;
     }
+
+    public String getById(String id) {
+        
+    return (intrcCM.getById(id));
+    }
+
+    
 }

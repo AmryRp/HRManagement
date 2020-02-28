@@ -115,9 +115,9 @@ public class JobsController {
         IntrfcJM.update(EJ);
     }
 
-    public void delete(String id) {
+    public void delete() {
         if (IsEmptyField()) {
-            EJ.setId(frame.getjTxtJobId().getText());
+            String id= frame.getjTxtJobId().getText();
             IntrfcJM.delete(id);
             JOptionPane.showMessageDialog(frame, "Data sudah dihapus");
         } else {
