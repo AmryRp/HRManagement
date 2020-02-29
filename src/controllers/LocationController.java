@@ -40,7 +40,7 @@ public class LocationController {
                 isSave)) ? "sukses" : "failed";
 
     }
-
+    
     public String delete(String Id) {
         return (IntrfcLM.delete(Integer.parseInt(Id))) ? "sukses" : "failed";
     }

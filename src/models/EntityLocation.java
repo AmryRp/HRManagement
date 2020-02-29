@@ -12,11 +12,11 @@ package models;
 public class EntityLocation {
 
     private Integer Id;
+    private String Address;
+    private String ZipCode;
 
     public EntityLocation() {
     }
-    private String Address;
-    private String ZipCode;
 
     public EntityLocation(Integer Id, String Address, String ZipCode, String City, String Province, String idCountry) {
         this.Id = Id;

@@ -47,6 +47,7 @@ public final class LocationView extends javax.swing.JFrame {
     boolean isClicked = true;
 
     private ArrayList getValueFK() {
+        ListCountry = IntrfcCM.getALL();
         ArrayList FK = new ArrayList<String>();
         String[] countryname = new String[ListCountry.size()];
         int[] countryId = new int[ListCountry.size()];
@@ -61,7 +62,7 @@ public final class LocationView extends javax.swing.JFrame {
         return FK;
     }
 
-    public int[] Fillcbox(JComboBox Jbox) {
+    public void Fillcbox(JComboBox Jbox) {
 
         ListCountry = IntrfcCM.getALL();
         String[] countryname = new String[ListCountry.size()];
@@ -74,7 +75,6 @@ public final class LocationView extends javax.swing.JFrame {
         }
         DefaultComboBoxModel tR = new DefaultComboBoxModel(countryname);
         getCmbCountryId().setModel(tR);
-        return countryId;
     }
 
     public String getValueBox() {
@@ -83,7 +83,6 @@ public final class LocationView extends javax.swing.JFrame {
         ArrayList result = new ArrayList<String>();
         result = getValueFK();
         String[] region_name = new String[result.size()];
-        int[] region_id = new int[result.size()];
         region_name = (String[]) result.get(0);
         for (int i = 0; i < region_name.length; i++) {
             if (val.equals(region_name[i])) {
@@ -114,7 +113,18 @@ public final class LocationView extends javax.swing.JFrame {
         }
         tblViewLocation.setModel(tR);
     }
-
+     public void IdBind(JTable tabel) {
+        ListLocation = IntrfcLM.getALL();
+        DefaultTableModel tR = new DefaultTableModel();
+        tabel.getModel();
+        Object[] row;
+        row = new Object[ListLocation.size()];
+        while (tR.getRowCount() < ListLocation.size()) {
+            row[0] = ListLocation.get(tR.getRowCount()).getId();
+            tR.addRow(row);
+        }
+        tblViewLocation.setModel(tR);
+    }
     public void clearTable(JTable table) {
         DefaultTableModel dm = (DefaultTableModel) table.getModel();
         while (dm.getRowCount() > 0) {
@@ -193,6 +203,11 @@ public final class LocationView extends javax.swing.JFrame {
                 TxtLocationIdActionPerformed(evt);
             }
         });
+        TxtLocationId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TxtLocationIdKeyTyped(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         jLabel2.setText("Location id");
@@ -242,15 +257,15 @@ public final class LocationView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(TxtStreetAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(391, 391, 391))
+                        .addGap(385, 385, 385))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addGap(36, 36, 36)
+                                .addGap(38, 38, 38)
                                 .addComponent(TxtLocationId, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,14 +381,11 @@ public final class LocationView extends javax.swing.JFrame {
         int row = tblViewLocation.getSelectedRow();
         TxtLocationId.setText(dm.getValueAt(row, 0).toString());
         TxtStreetAddress.setText(dm.getValueAt(row, 1).toString());
-        TxtZipCode.setText(dm.getValueAt(row, 2).toString());
+        String Temp2 = (dm.getValueAt(row, 2)==null) ? "" : dm.getValueAt(row, 2).toString();
+        TxtZipCode.setText(Temp2);
         TxtCity.setText(dm.getValueAt(row, 3).toString());
-        if(dm.getValueAt(row, 4)==null){
-            TxtProvince.setText("");
-        }
-        else{
-            TxtProvince.setText(dm.getValueAt(row, 4).toString());
-        }
+        String Temp4 = (dm.getValueAt(row, 4)==null) ? "" : dm.getValueAt(row, 4).toString();
+        TxtProvince.setText(Temp4);
         CmbCountryId.setSelectedItem(dm.getValueAt(row, 5));
         TxtLocationId.setEditable(false);
         isClicked = false;
@@ -422,6 +434,10 @@ public final class LocationView extends javax.swing.JFrame {
     private void TxtLocationIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtLocationIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtLocationIdActionPerformed
+
+    private void TxtLocationIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtLocationIdKeyTyped
+       
+    }//GEN-LAST:event_TxtLocationIdKeyTyped
 
     /**
      * @param args the command line arguments

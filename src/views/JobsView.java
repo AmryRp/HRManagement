@@ -20,7 +20,7 @@ public class JobsView extends javax.swing.JFrame {
      */
     public JobsView() {
         initComponents();
-        Jct.isiTabel(jTblJob);
+        Jct.isiTabel(TblJob);
         
     }
 
@@ -34,24 +34,23 @@ public class JobsView extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTblJob = new javax.swing.JTable();
+        TblJob = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         btnInsertJob = new javax.swing.JButton();
-        btnUpdateJob = new javax.swing.JButton();
         btnDeleteJob = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTxtJobId = new javax.swing.JTextField();
-        jTxtJobTitle = new javax.swing.JTextField();
-        jTxtMinSal = new javax.swing.JTextField();
-        jTxtMaxSal = new javax.swing.JTextField();
+        TxtJobId = new javax.swing.JTextField();
+        TxtJobTitle = new javax.swing.JTextField();
+        TxtMinSal = new javax.swing.JTextField();
+        TxtMaxSal = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTblJob.setModel(new javax.swing.table.DefaultTableModel(
+        TblJob.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -74,28 +73,20 @@ public class JobsView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTblJob.addMouseListener(new java.awt.event.MouseAdapter() {
+        TblJob.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTblJobMouseClicked(evt);
+                TblJobMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTblJob);
+        jScrollPane1.setViewportView(TblJob);
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
         btnInsertJob.setBackground(new java.awt.Color(51, 204, 255));
-        btnInsertJob.setText("INSERT");
+        btnInsertJob.setText("SAVE");
         btnInsertJob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertJobActionPerformed(evt);
-            }
-        });
-
-        btnUpdateJob.setBackground(new java.awt.Color(0, 204, 255));
-        btnUpdateJob.setText("UPDATE");
-        btnUpdateJob.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateJobActionPerformed(evt);
             }
         });
 
@@ -122,11 +113,9 @@ public class JobsView extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnInsertJob)
-                .addGap(18, 18, 18)
-                .addComponent(btnUpdateJob)
-                .addGap(18, 18, 18)
-                .addComponent(btnDeleteJob)
+                .addComponent(btnInsertJob, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(btnDeleteJob, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
@@ -136,14 +125,14 @@ public class JobsView extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTxtJobTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtJobTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTxtMinSal, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TxtMinSal, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(56, 56, 56)
                         .addComponent(jLabel4)
                         .addGap(35, 35, 35)
-                        .addComponent(jTxtMaxSal, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTxtJobId, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(TxtMaxSal, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TxtJobId, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(271, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -152,21 +141,20 @@ public class JobsView extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTxtJobId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TxtJobId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTxtJobTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TxtJobTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
-                    .addComponent(jTxtMinSal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtMaxSal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TxtMinSal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtMaxSal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDeleteJob, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnUpdateJob, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnInsertJob, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -207,26 +195,20 @@ public class JobsView extends javax.swing.JFrame {
 
     private void btnInsertJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertJobActionPerformed
         Jct.insert();
-        Jct.isiTabel(jTblJob);
+        Jct.isiTabel(TblJob);
         Jct.refresh();
     }//GEN-LAST:event_btnInsertJobActionPerformed
 
-    private void btnUpdateJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateJobActionPerformed
-        Jct.update();
-        Jct.isiTabel(jTblJob);
-        Jct.refresh();
-    }//GEN-LAST:event_btnUpdateJobActionPerformed
-
     private void btnDeleteJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteJobActionPerformed
         Jct.delete();
-        Jct.isiTabel(jTblJob);
+        Jct.isiTabel(TblJob);
         Jct.refresh();
     }//GEN-LAST:event_btnDeleteJobActionPerformed
 
-    private void jTblJobMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblJobMouseClicked
-        Jct.isiField(jTblJob.getSelectedRow());
+    private void TblJobMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TblJobMouseClicked
+        Jct.isiField(TblJob.getSelectedRow());
 
-    }//GEN-LAST:event_jTblJobMouseClicked
+    }//GEN-LAST:event_TblJobMouseClicked
 
     /**
      * @param args the command line arguments
@@ -265,9 +247,13 @@ public class JobsView extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TblJob;
+    private javax.swing.JTextField TxtJobId;
+    private javax.swing.JTextField TxtJobTitle;
+    private javax.swing.JTextField TxtMaxSal;
+    private javax.swing.JTextField TxtMinSal;
     private javax.swing.JButton btnDeleteJob;
     private javax.swing.JButton btnInsertJob;
-    private javax.swing.JButton btnUpdateJob;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -275,31 +261,26 @@ public class JobsView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTblJob;
-    private javax.swing.JTextField jTxtJobId;
-    private javax.swing.JTextField jTxtJobTitle;
-    private javax.swing.JTextField jTxtMaxSal;
-    private javax.swing.JTextField jTxtMinSal;
     // End of variables declaration//GEN-END:variables
 
     public javax.swing.JTable getjTblJob() {
-        return jTblJob;
+        return TblJob;
     }
 
     public javax.swing.JTextField getjTxtJobId() {
-        return jTxtJobId;
+        return TxtJobId;
     }
 
     public javax.swing.JTextField getjTxtJobTitle() {
-        return jTxtJobTitle;
+        return TxtJobTitle;
     }
 
     public javax.swing.JTextField getjTxtMaxSal() {
-        return jTxtMaxSal;
+        return TxtMaxSal;
     }
 
     public javax.swing.JTextField getjTxtMinSal() {
-        return jTxtMinSal;
+        return TxtMinSal;
     }
 
 }

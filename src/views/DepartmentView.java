@@ -28,17 +28,16 @@ public class DepartmentView extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTxtDMId = new javax.swing.JTextField();
-        jTxtDMName = new javax.swing.JTextField();
+        TxtDMId = new javax.swing.JTextField();
+        TxtDMName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnInsert = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        jCmbDMLoc = new javax.swing.JComboBox<>();
+        CmbDMLoc = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTblDM = new javax.swing.JTable();
+        TblDM = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -46,9 +45,9 @@ public class DepartmentView extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
-        jTxtDMId.addActionListener(new java.awt.event.ActionListener() {
+        TxtDMId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTxtDMIdActionPerformed(evt);
+                TxtDMIdActionPerformed(evt);
             }
         });
 
@@ -57,18 +56,10 @@ public class DepartmentView extends javax.swing.JFrame {
         jLabel3.setText("Department Name");
 
         btnInsert.setBackground(new java.awt.Color(51, 204, 255));
-        btnInsert.setText("INSERT");
+        btnInsert.setText("SAVE");
         btnInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertActionPerformed(evt);
-            }
-        });
-
-        btnUpdate.setBackground(new java.awt.Color(0, 204, 255));
-        btnUpdate.setText("UPDATE");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
             }
         });
 
@@ -81,7 +72,7 @@ public class DepartmentView extends javax.swing.JFrame {
             }
         });
 
-        jCmbDMLoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Location", "item1", "item2" }));
+        CmbDMLoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Location", "item1", "item2" }));
 
         jLabel4.setText("Department Location");
 
@@ -91,11 +82,9 @@ public class DepartmentView extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnInsert)
-                .addGap(18, 18, 18)
-                .addComponent(btnUpdate)
-                .addGap(18, 18, 18)
-                .addComponent(btnDelete)
+                .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(52, 52, 52)
@@ -105,9 +94,9 @@ public class DepartmentView extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jCmbDMLoc, 0, 219, Short.MAX_VALUE)
-                    .addComponent(jTxtDMName)
-                    .addComponent(jTxtDMId))
+                    .addComponent(CmbDMLoc, 0, 219, Short.MAX_VALUE)
+                    .addComponent(TxtDMName)
+                    .addComponent(TxtDMId))
                 .addContainerGap(323, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -115,27 +104,26 @@ public class DepartmentView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTxtDMId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtDMId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTxtDMName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtDMName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCmbDMLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CmbDMLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnInsert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 30, 730, 200));
 
-        jTblDM.setModel(new javax.swing.table.DefaultTableModel(
+        TblDM.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -151,7 +139,7 @@ public class DepartmentView extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTblDM);
+        jScrollPane1.setViewportView(TblDM);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 730, 290));
 
@@ -162,17 +150,13 @@ public class DepartmentView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTxtDMIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtDMIdActionPerformed
+    private void TxtDMIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtDMIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTxtDMIdActionPerformed
+    }//GEN-LAST:event_TxtDMIdActionPerformed
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
       
     }//GEN-LAST:event_btnInsertActionPerformed
-
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-    
-    }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
       
@@ -214,18 +198,17 @@ public class DepartmentView extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> CmbDMLoc;
+    private javax.swing.JTable TblDM;
+    private javax.swing.JTextField TxtDMId;
+    private javax.swing.JTextField TxtDMName;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnInsert;
-    private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> jCmbDMLoc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTblDM;
-    private javax.swing.JTextField jTxtDMId;
-    private javax.swing.JTextField jTxtDMName;
     // End of variables declaration//GEN-END:variables
 }

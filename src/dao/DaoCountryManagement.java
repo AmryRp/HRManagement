@@ -54,7 +54,6 @@ public class DaoCountryManagement implements InterfaceCountryManagement {
         }
     }
 
-
     @Override
     public boolean delete(String id) {
         try {
@@ -75,6 +74,7 @@ public class DaoCountryManagement implements InterfaceCountryManagement {
             lb = new ArrayList<EntityCountry>();
             Statement st = c.createStatement();
             ResultSet rs = st.executeQuery(select);
+
             while (rs.next()) {
                 EntityCountry EC = new EntityCountry();
                 EC.setId(rs.getString(1));
@@ -96,21 +96,22 @@ public class DaoCountryManagement implements InterfaceCountryManagement {
 
     @Override
     public String getById(String Id) {
-        ResultSet rs;
-        String temp = "1";
+        String temp = "";
         try {
-            EntityCountry EC = new EntityCountry();
+            ResultSet rs;
+            temp = new String();
             pst = c.prepareStatement(selectFK);
-            rs = pst.executeQuery();
-            while (rs.next())
-            {
-//             EC.setId(rs.getString(1));
-             temp = rs.getString(1);
-            } 
+            pst.setString(1, Id);
+            pst.execute();
+            rs = pst.getResultSet();
+            while (rs.next()) {
+                temp = rs.getString(1);
+               
+            }
         } catch (Exception e) {
             return e.toString();
         }
-    return temp;   
+        return temp;
     }
 
 }
