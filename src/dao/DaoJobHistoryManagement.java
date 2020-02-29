@@ -25,7 +25,7 @@ public class DaoJobHistoryManagement implements InterfaceJobHistoryManagement {
 
     Connection c;
     final String select = "SELECT * FROM HR.job_history ORDER BY job_id";
-    //final String search = "SELECT * FROM HR.job_history WHERE job_id LIKE ?";
+    final String search = "SELECT * FROM HR.job_history WHERE job_id LIKE ?";
     PreparedStatement statement = null;
 
     public DaoJobHistoryManagement() {

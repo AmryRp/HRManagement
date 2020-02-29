@@ -198,17 +198,6 @@ public final class LocationView extends javax.swing.JFrame {
             }
         });
 
-        TxtLocationId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtLocationIdActionPerformed(evt);
-            }
-        });
-        TxtLocationId.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxtLocationIdKeyTyped(evt);
-            }
-        });
-
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         jLabel2.setText("Location id");
 
@@ -218,26 +207,8 @@ public final class LocationView extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         jLabel4.setText("Zip code");
 
-        TxtZipCode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtZipCodeActionPerformed(evt);
-            }
-        });
-
-        TxtCity.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtCityActionPerformed(evt);
-            }
-        });
-
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         jLabel5.setText("City");
-
-        TxtProvince.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtProvinceActionPerformed(evt);
-            }
-        });
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         jLabel6.setText("Province");
@@ -418,26 +389,6 @@ public final class LocationView extends javax.swing.JFrame {
         }
         bindingTable(tblViewLocation);
     }//GEN-LAST:event_btnInsertLoactionActionPerformed
-
-    private void TxtZipCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtZipCodeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtZipCodeActionPerformed
-
-    private void TxtCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtCityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtCityActionPerformed
-
-    private void TxtProvinceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtProvinceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtProvinceActionPerformed
-
-    private void TxtLocationIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtLocationIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtLocationIdActionPerformed
-
-    private void TxtLocationIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtLocationIdKeyTyped
-       
-    }//GEN-LAST:event_TxtLocationIdKeyTyped
 
     /**
      * @param args the command line arguments

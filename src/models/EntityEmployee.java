@@ -15,15 +15,31 @@ public class EntityEmployee {
     private Integer id;
     private String firstName;
     private String lastName;
+
     private String email;
-    private Integer phoneNumber;
+    private String phoneNumber;
     private Date hireDate;
     private String jobId;
-    private Integer Salary;
+    private float Salary;
     private float commision;
     private Integer managerId;
     private Integer deptId;
 
+    public EntityEmployee() {
+    }
+    public EntityEmployee(Integer id, String firstName, String lastName, String email, String phoneNumber, Date hireDate, String jobId, float Salary, float commision, Integer managerId, Integer deptId) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.hireDate = hireDate;
+        this.jobId = jobId;
+        this.Salary = Salary;
+        this.commision = commision;
+        this.managerId = managerId;
+        this.deptId = deptId;
+    }
     public Integer getId() {
         return id;
     }
@@ -56,11 +72,11 @@ public class EntityEmployee {
         this.email = email;
     }
 
-    public Integer getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Integer phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -80,11 +96,11 @@ public class EntityEmployee {
         this.jobId = jobId;
     }
 
-    public Integer getSalary() {
+    public float getSalary() {
         return Salary;
     }
 
-    public void setSalary(Integer Salary) {
+    public void setSalary(float Salary) {
         this.Salary = Salary;
     }
 

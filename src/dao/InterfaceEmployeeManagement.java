@@ -13,9 +13,7 @@ import models.EntityEmployee;
  * @author amry4
  */
 public interface InterfaceEmployeeManagement {
-     public boolean insert(EntityEmployee EM);
-
-    public boolean update(EntityEmployee EM);
+    public boolean insertOrUpdate(EntityEmployee EM, boolean isInsert);
 
     public boolean delete(int id);
 

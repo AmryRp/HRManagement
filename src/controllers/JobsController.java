@@ -5,7 +5,7 @@
  */
 package controllers;
 
-import dao.DaoJobsManagement;
+import dao.DaoJobManagement;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -27,7 +27,7 @@ public class JobsController {
 
     public JobsController(JobsView frame) {
         this.frame = frame;
-        IntrfcJM = new DaoJobsManagement();
+        IntrfcJM = new DaoJobManagement();
         ListJob = IntrfcJM.getALL();
     }
 
@@ -71,58 +71,15 @@ public class JobsController {
         }
     }
 
-    public void refresh() {
-        reset();
-        clear(frame.getjTblJob());
-        isiTabel(frame.getjTblJob());
-    }
 
-    public boolean IsEmptyField() {
-        if (!frame.getjTxtJobId().getText().trim().isEmpty()
-                && !frame.getjTxtJobTitle().getText().trim().isEmpty()
-                && !frame.getjTxtMaxSal().getText().trim().isEmpty()
-                && !frame.getjTxtMinSal().getText().trim().isEmpty()) {
-            return false;
-        }
-        return true;
-    }
-
-    public void insert() {
-        if (IsEmptyField()) {
-            EJ.setId(frame.getjTxtJobId().getText());
-            EJ.setTitle(frame.getjTxtJobTitle().getText().trim());
-            EJ.setMinSalary(Float.valueOf(frame.getjTxtMinSal().getText().trim()));
-            EJ.setMaxSalary(Float.valueOf(frame.getjTxtMaxSal().getText().trim()));
-            JOptionPane.showMessageDialog(frame, "Data telah di input");
-        } else {
-            JOptionPane.showMessageDialog(frame, "isi terlebih dahulu");
-        }
-
-        IntrfcJM.insert(EJ);
+    public String Save(String id, String title, String minSalary, String maxSalary, boolean isSave) {
+        return (IntrfcJM.insertOrUpdate(new EntityJob(id, title, Float.valueOf(minSalary),
+                Float.valueOf(maxSalary)), isSave)) ? "sukses" : "failed";
 
     }
 
-    public void update() {
-        if (IsEmptyField()) {
-            EJ.setTitle(frame.getjTxtJobTitle().getText().trim());
-            EJ.setMinSalary(Float.valueOf(frame.getjTxtMinSal().getText().trim()));
-            EJ.setMaxSalary(Float.valueOf(frame.getjTxtMaxSal().getText().trim()));
-            EJ.setId(frame.getjTxtJobId().getText());
-            JOptionPane.showMessageDialog(frame, "Data telah di update");
-        } else {
-            JOptionPane.showMessageDialog(frame, "Pilih data yang akan di update");
-        }
-        IntrfcJM.update(EJ);
-    }
-
-    public void delete() {
-        if (IsEmptyField()) {
-            String id= frame.getjTxtJobId().getText();
-            IntrfcJM.delete(id);
-            JOptionPane.showMessageDialog(frame, "Data sudah dihapus");
-        } else {
-            JOptionPane.showMessageDialog(frame, "Pilih data yang akan di hapus");
-        }
+    public String delete(String id) {
+         return (IntrfcJM.delete(id)) ? "sukses" : "failed";
 
     }
 }

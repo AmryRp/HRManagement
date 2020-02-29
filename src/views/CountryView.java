@@ -44,7 +44,7 @@ public class CountryView extends javax.swing.JFrame {
         ListRegion = IntrfcRM.getALL();
         IntrfcCM = new DaoCountryManagement();
         ListCountry = IntrfcCM.getALL();
-        cct.isiTabel(TblCountries);
+        bindingTable(TblCountries);
         Fillcbox(CmbRegionId);
 
     }
@@ -97,6 +97,7 @@ public class CountryView extends javax.swing.JFrame {
         bindingTable(TblCountries);
         TxtCountryId.setText("");
         TxtCountryName.setText("");
+        CmbRegionId.setSelectedItem("Pilih Region");
         TxtCountryId.setEditable(true);
         isClicked = true;
     }
@@ -133,18 +134,6 @@ public class CountryView extends javax.swing.JFrame {
         jLabel3.setText("Country Name");
 
         jLabel4.setText("Region id");
-
-        TxtCountryId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtCountryIdActionPerformed(evt);
-            }
-        });
-
-        TxtCountryName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtCountryNameActionPerformed(evt);
-            }
-        });
 
         btnInsert.setBackground(new java.awt.Color(51, 204, 255));
         btnInsert.setText("SAVE");
@@ -294,14 +283,6 @@ public class CountryView extends javax.swing.JFrame {
         }
         bindingTable(TblCountries);
     }//GEN-LAST:event_btnDeleteActionPerformed
-
-    private void TxtCountryIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtCountryIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtCountryIdActionPerformed
-
-    private void TxtCountryNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtCountryNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtCountryNameActionPerformed
 
     private void CmbRegionIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmbRegionIdActionPerformed
         // TODO add your handling code here:

@@ -6,6 +6,13 @@
 package views;
 
 import controllers.JobsController;
+import dao.DaoJobManagement;
+import dao.InterfaceJobManagement;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import models.EntityJob;
 
 /**
  *
@@ -14,16 +21,56 @@ import controllers.JobsController;
 public class JobsView extends javax.swing.JFrame {
 
     JobsController Jct;
-
+    List<EntityJob> ListJob;
+    InterfaceJobManagement IntrfcJM;
+      boolean isClicked = true;
     /**
      * Creates new form JobsManager
      */
     public JobsView() {
         initComponents();
-        Jct.isiTabel(TblJob);
+        Jct = new JobsController(this);
+        IntrfcJM = new DaoJobManagement();
+        ListJob = IntrfcJM.getALL();
+        bindingTable(TblJob);
         
     }
+    private boolean IsEmptyField() {
+        return TxtJobId.getText().trim().equals("");
+    }
+     public void refresh() {
+        clearTable(TblJob);
+        bindingTable(TblJob);
+        TxtJobId.setText("");
+        TxtJobTitle.setText("");
+        TxtMinSal.setText("");
+        TxtMaxSal.setText("");
+        TxtJobId.setEditable(true);
+        isClicked = true;
+    }
+      public void clearTable(JTable table) {
+        DefaultTableModel dm = (DefaultTableModel) table.getModel();
+        while (dm.getRowCount() > 0) {
+            dm.removeRow(0);
+        }
+    }
+      public void bindingTable(JTable tabel) {
+        ListJob = IntrfcJM.getALL();
+        String[] tblHeader = new String[]{"id", "Title", "Min Salary","Max Salary"};
+        DefaultTableModel dtm = new DefaultTableModel(null, tblHeader);
+        tabel.getModel();
+        Object[] row;
+        row = new Object[ListJob.size()];
+        while (dtm.getRowCount() < ListJob.size()) {
+            row[0] = ListJob.get(dtm.getRowCount()).getId();
+            row[1] = ListJob.get(dtm.getRowCount()).getTitle();
+            row[2] = ListJob.get(dtm.getRowCount()).getMinSalary();
+            row[3] = ListJob.get(dtm.getRowCount()).getMaxSalary();
+            dtm.addRow(row);
+        }
+        TblJob.setModel(dtm);
 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -194,20 +241,40 @@ public class JobsView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInsertJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertJobActionPerformed
-        Jct.insert();
-        Jct.isiTabel(TblJob);
-        Jct.refresh();
+         if (IsEmptyField()) {
+            JOptionPane.showMessageDialog(rootPane, "fill id");
+        } else {
+
+            JOptionPane.showMessageDialog(rootPane, Jct.Save(TxtJobId.getText(),
+                    TxtJobTitle.getText(), TxtMinSal.getText() , TxtMaxSal.getText(),
+                    isClicked));
+        }
+        refresh();
     }//GEN-LAST:event_btnInsertJobActionPerformed
 
     private void btnDeleteJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteJobActionPerformed
-        Jct.delete();
-        Jct.isiTabel(TblJob);
-        Jct.refresh();
+       if (!IsEmptyField()) {
+            int result = JOptionPane.showConfirmDialog(null,
+                    "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(rootPane, Jct.delete(TxtJobId.getText()));
+                refresh();
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "fill id");
+        }
+        bindingTable(TblJob);
     }//GEN-LAST:event_btnDeleteJobActionPerformed
 
     private void TblJobMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TblJobMouseClicked
-        Jct.isiField(TblJob.getSelectedRow());
-
+     DefaultTableModel dm = (DefaultTableModel) TblJob.getModel();
+        int row = TblJob.getSelectedRow();
+        TxtJobId.setText(dm.getValueAt(row, 0).toString());
+        TxtJobTitle.setText(dm.getValueAt(row, 1).toString());
+        TxtMinSal.setText(dm.getValueAt(row, 2).toString());
+        TxtMaxSal.setText(dm.getValueAt(row, 3).toString());
+        TxtJobId.setEditable(false);
+        isClicked = false;
     }//GEN-LAST:event_TblJobMouseClicked
 
     /**

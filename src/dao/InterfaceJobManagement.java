@@ -13,9 +13,7 @@ import models.EntityJob;
  * @author amry4
  */
 public interface InterfaceJobManagement {
-     public boolean insert(EntityJob Ej);
-
-    public boolean update(EntityJob Ej);
+     public boolean insertOrUpdate(EntityJob Ej, boolean isInsert);
 
     public boolean delete(String id);
 

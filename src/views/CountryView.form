@@ -137,14 +137,8 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="TxtCountryId">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtCountryIdActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="TxtCountryName">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtCountryNameActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnInsert">
           <Properties>

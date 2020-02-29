@@ -20,6 +20,9 @@ import dao.InterfaceRegionManagement;
  */
 public class RegionController {
 
+    public RegionController() {
+    }
+
     RegionView frame;
     InterfaceRegionManagement IntrfcRM;
     List<EntityRegion> ListRegion;

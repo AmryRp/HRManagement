@@ -53,7 +53,6 @@ public class DaoRegionManagement implements InterfaceRegionManagement {
 
     @Override
     public boolean delete(int id) {
-
         try {
             pst = c.prepareStatement(delete);
             pst.setInt(1, id);

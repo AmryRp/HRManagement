@@ -45,12 +45,6 @@ public class DepartmentView extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
-        TxtDMId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtDMIdActionPerformed(evt);
-            }
-        });
-
         jLabel2.setText("Department Id");
 
         jLabel3.setText("Department Name");
@@ -149,10 +143,6 @@ public class DepartmentView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void TxtDMIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtDMIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtDMIdActionPerformed
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
       

@@ -189,10 +189,6 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="TxtLocationId">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtLocationIdActionPerformed"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TxtLocationIdKeyTyped"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="TxtStreetAddress">
         </Component>
@@ -221,14 +217,8 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="TxtZipCode">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtZipCodeActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="TxtCity">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtCityActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -239,9 +229,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="TxtProvince">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtProvinceActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>

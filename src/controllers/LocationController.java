@@ -20,17 +20,17 @@ import dao.InterfaceLocationManagement;
  */
 public class LocationController {
 
+    public LocationController() {
+    }
+
     LocationView LocView;
     InterfaceLocationManagement IntrfcLM;
     List<EntityLocation> ListLoc;
-    List<EntityCountry> ListCountry;
-    InterfaceCountryManagement IntrfcCM;
     EntityLocation EL = new EntityLocation();
 
     public LocationController(LocationView frame) {
         this.LocView = frame;
         IntrfcLM = new DaoLocationManagement();
-        IntrfcCM = new DaoCountryManagement();
         ListLoc = IntrfcLM.getALL();
     }
 

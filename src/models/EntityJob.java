@@ -15,6 +15,16 @@ public class EntityJob {
     private float minSalary;
     private float maxSalary;
 
+    public EntityJob(String id, String title, float minSalary, float maxSalary) {
+        this.id = id;
+        this.title = title;
+        this.minSalary = minSalary;
+        this.maxSalary = maxSalary;
+    }
+
+    public EntityJob() {
+    }
+
     public String getId() {
         return id;
     }
