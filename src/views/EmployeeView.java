@@ -9,12 +9,12 @@ package views;
  *
  * @author amry4
  */
-public class EmployeesView extends javax.swing.JFrame {
+public class EmployeeView extends javax.swing.JFrame {
 
     /**
      * Creates new form EmployeeManagement
      */
-    public EmployeesView() {
+    public EmployeeView() {
         initComponents();
     }
 

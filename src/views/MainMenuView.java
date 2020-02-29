@@ -169,14 +169,14 @@ public class MainMenuView extends javax.swing.JFrame {
     }//GEN-LAST:event_jRegionMenuSelected
 
     private void jCountriesMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jCountriesMenuSelected
-         new CountriesView().setVisible(true);
+         new CountryView().setVisible(true);
     }//GEN-LAST:event_jCountriesMenuSelected
     private void jLocationsMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jLocationsMenuSelected
-          new LocationsView().setVisible(true); 
+          new LocationView().setVisible(true); 
     }//GEN-LAST:event_jLocationsMenuSelected
 
     private void jEmployeesMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jEmployeesMenuSelected
-     new EmployeesView().setVisible(true); 
+     new EmployeeView().setVisible(true); 
     }//GEN-LAST:event_jEmployeesMenuSelected
 
     private void jJobsMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jJobsMenuSelected
@@ -184,7 +184,7 @@ public class MainMenuView extends javax.swing.JFrame {
     }//GEN-LAST:event_jJobsMenuSelected
 
     private void jDepartmentsMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jDepartmentsMenuSelected
-       new DepartmentsView().setVisible(true); 
+       new DepartmentView().setVisible(true); 
     }//GEN-LAST:event_jDepartmentsMenuSelected
 
     private void jJobHistoryMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jJobHistoryMenuSelected

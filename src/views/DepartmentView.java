@@ -9,12 +9,12 @@ package views;
  *
  * @author amry4
  */
-public class DepartmentsView extends javax.swing.JFrame {
+public class DepartmentView extends javax.swing.JFrame {
 
     /**
      * Creates new form DepartmentsManagement
      */
-    public DepartmentsView() {
+    public DepartmentView() {
         initComponents();
     }
 
@@ -42,7 +42,6 @@ public class DepartmentsView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 566));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));

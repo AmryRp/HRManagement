@@ -51,7 +51,7 @@ public class DaoJobHistoryManagement implements InterfaceJobHistoryManagement {
                 lb.add(Er);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DaoRegionsManagement.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DaoRegionManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lb;
     }

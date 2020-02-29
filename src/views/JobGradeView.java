@@ -9,12 +9,12 @@ package views;
  *
  * @author amry4
  */
-public class JobGradesView extends javax.swing.JFrame {
+public class JobGradeView extends javax.swing.JFrame {
 
     /**
      * Creates new form JobGradesManagement
      */
-    public JobGradesView() {
+    public JobGradeView() {
         initComponents();
     }
 

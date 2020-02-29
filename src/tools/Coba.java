@@ -5,7 +5,7 @@
  */
 package tools;
 
-import dao.DaoRegionsManagement;
+import dao.DaoRegionManagement;
 import models.EntityRegion;
 
 /**
@@ -15,7 +15,7 @@ import models.EntityRegion;
 public class Coba {
 
     public static void main(String[] args) {
-        DaoRegionsManagement drm = new DaoRegionsManagement();
+        DaoRegionManagement drm = new DaoRegionManagement();
         for (EntityRegion region : drm.getALL()) {
             System.out.println(region.getName());
 

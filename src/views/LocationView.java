@@ -5,12 +5,10 @@
  */
 package views;
 
-import controllers.CountriesController;
-import controllers.LocationsController;
-import dao.DaoCountriesManagement;
-import dao.DaoLocationsManagement;
-import dao.InterfaceCountriesManagement;
-import dao.InterfaceLocationsManagement;
+import controllers.CountryController;
+import controllers.LocationController;
+import dao.DaoCountryManagement;
+import dao.DaoLocationManagement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -19,31 +17,33 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import models.EntityCountries;
+import models.EntityCountry;
 import models.EntityLocation;
+import dao.InterfaceCountryManagement;
+import dao.InterfaceLocationManagement;
 
 /**
  *
  * @author amry4
  */
-public final class LocationsView extends javax.swing.JFrame {
+public final class LocationView extends javax.swing.JFrame {
 
-    public LocationsView() {
+    public LocationView() {
         initComponents();
-        Lct = new LocationsController(this);
-        IntrfcLM = new DaoLocationsManagement();
+        Lct = new LocationController(this);
+        IntrfcLM = new DaoLocationManagement();
         ListLocation = IntrfcLM.getALL();
-        IntrfcCM = new DaoCountriesManagement();
+        IntrfcCM = new DaoCountryManagement();
         ListCountry = IntrfcCM.getALL();
         bindingTable(tblViewLocation);
         Fillcbox(CmbCountryId);
         getValueBox();
     }
-    LocationsController Lct;
-    InterfaceLocationsManagement IntrfcLM;
+    LocationController Lct;
+    InterfaceLocationManagement IntrfcLM;
     List<EntityLocation> ListLocation;
-    List<EntityCountries> ListCountry;
-    InterfaceCountriesManagement IntrfcCM;
+    List<EntityCountry> ListCountry;
+    InterfaceCountryManagement IntrfcCM;
     boolean isClicked = true;
 
     private ArrayList getValueFK() {
@@ -109,7 +109,7 @@ public final class LocationsView extends javax.swing.JFrame {
             row[3] = ListLocation.get(tR.getRowCount()).getCity();
             row[4] = ListLocation.get(tR.getRowCount()).getProvince();
 //            row[5] = ;
-            row[5] = new CountriesController().getById(ListLocation.get(tR.getRowCount()).getIdCountry());
+            row[5] = new CountryController().getById(ListLocation.get(tR.getRowCount()).getIdCountry());
             tR.addRow(row);
         }
         tblViewLocation.setModel(tR);
@@ -168,7 +168,6 @@ public final class LocationsView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(907, 599));
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 

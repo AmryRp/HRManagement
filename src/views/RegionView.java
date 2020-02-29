@@ -5,9 +5,8 @@
  */
 package views;
 
-import controllers.RegionsController;
-import dao.DaoRegionsManagement;
-import dao.InterfaceRegionsManagement;
+import controllers.RegionController;
+import dao.DaoRegionManagement;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -15,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import models.EntityRegion;
+import dao.InterfaceRegionManagement;
 
 /**
  *
@@ -22,8 +22,8 @@ import models.EntityRegion;
  */
 public class RegionView extends javax.swing.JFrame {
 
-    RegionsController rct;
-    InterfaceRegionsManagement IntrfcRM;
+    RegionController rct;
+    InterfaceRegionManagement IntrfcRM;
     List<EntityRegion> ListRegion;
     boolean isClicked = true;
 
@@ -32,8 +32,8 @@ public class RegionView extends javax.swing.JFrame {
      */
     public RegionView() {
         initComponents();
-        rct = new RegionsController(this);
-        IntrfcRM = new DaoRegionsManagement();
+        rct = new RegionController(this);
+        IntrfcRM = new DaoRegionManagement();
         ListRegion = IntrfcRM.getALL();
         bindingTable(tblView);
 

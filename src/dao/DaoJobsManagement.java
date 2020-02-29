@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author amry4
  */
-public class DaoJobsManagement implements InterfaceJobsManagement{
+public class DaoJobsManagement implements InterfaceJobManagement{
 
     Connection c;
     final String insert = "INSERT INTO HR.Employees (Job_id,job_title,"
@@ -97,7 +97,7 @@ public class DaoJobsManagement implements InterfaceJobsManagement{
                 lb.add(Er);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DaoRegionsManagement.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DaoRegionManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lb;
     

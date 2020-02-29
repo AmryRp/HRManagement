@@ -6,13 +6,13 @@
 package controllers;
 
 import dao.DaoJobsManagement;
-import dao.InterfaceJobsManagement;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import models.EntityJob;
 import views.JobsView;
+import dao.InterfaceJobManagement;
 
 /**
  *
@@ -21,7 +21,7 @@ import views.JobsView;
 public class JobsController {
 
     JobsView frame;
-    InterfaceJobsManagement IntrfcJM;
+    InterfaceJobManagement IntrfcJM;
     List<EntityJob> ListJob;
     EntityJob EJ = new EntityJob();
 

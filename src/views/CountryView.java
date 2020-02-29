@@ -5,25 +5,74 @@
  */
 package views;
 
-import controllers.CountriesController;
+import controllers.CountryController;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import models.EntityCountry;
+import dao.InterfaceCountryManagement;
 
 /**
  *
  * @author amry4
  */
-public class CountriesView extends javax.swing.JFrame {
+public class CountryView extends javax.swing.JFrame {
 
-    CountriesController cct;
+    CountryController cct;
+    InterfaceCountryManagement IntrfcCM;
+    List<EntityCountry> ListCountry;
+    boolean isClicked = true;
 
     /**
      * Creates new form CountriesManagement
      */
-    public CountriesView() {
+    public CountryView() {
         initComponents();
-        cct = new CountriesController(this);
+        cct = new CountryController(this);
         cct.isiTabel(jTblCountries);
         cct.Fillcbox(jCmbRegionId);
         cct.getValueBox();
+    }
+
+    public void bindingTable(JTable tabel) {
+        ListCountry = IntrfcCM.getALL();
+        String[] tblHeader = new String[]{"id", "name"};
+        DefaultTableModel tR = new DefaultTableModel(null, tblHeader);
+        tabel.getModel();
+
+        Object[] row;
+        row = new Object[ListCountry.size()];
+        while (tR.getRowCount() < ListCountry.size()) {
+            row[0] = ListCountry.get(tR.getRowCount()).getId();
+            row[1] = ListCountry.get(tR.getRowCount()).getCountryName();
+            row[2] = ListCountry.get(tR.getRowCount()).getRegionId();
+            tR.addRow(row);
+
+        }
+
+        jTblCountries.setModel(tR);
+
+    }
+
+    private boolean IsEmptyField() {
+        return jTxtCountryId.getText().trim().equals("");
+    }
+
+    public void clearTable(JTable table) {
+        DefaultTableModel dm = (DefaultTableModel) table.getModel();
+        while (dm.getRowCount() > 0) {
+            dm.removeRow(0);
+        }
+    }
+
+    public void refresh() {
+        clearTable(jTblCountries);
+        bindingTable(jTblCountries);
+        jTxtCountryId.setText("");
+        jTxtCountryName.setText("");
+        jTxtCountryId.setEditable(true);
+        isClicked = true;
     }
 
     /**
@@ -42,7 +91,6 @@ public class CountriesView extends javax.swing.JFrame {
         jTxtCountryId = new javax.swing.JTextField();
         jTxtCountryName = new javax.swing.JTextField();
         btnInsert = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         jCmbRegionId = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -73,18 +121,10 @@ public class CountriesView extends javax.swing.JFrame {
         });
 
         btnInsert.setBackground(new java.awt.Color(51, 204, 255));
-        btnInsert.setText("INSERT");
+        btnInsert.setText("SAVE");
         btnInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertActionPerformed(evt);
-            }
-        });
-
-        btnUpdate.setBackground(new java.awt.Color(0, 204, 255));
-        btnUpdate.setText("UPDATE");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
             }
         });
 
@@ -119,14 +159,12 @@ public class CountriesView extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jTxtCountryName, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jCmbRegionId, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(394, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnInsert)
-                .addGap(18, 18, 18)
-                .addComponent(btnUpdate)
-                .addGap(18, 18, 18)
-                .addComponent(btnDelete)
+                .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -147,7 +185,6 @@ public class CountriesView extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnInsert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(30, 30, 30))
         );
@@ -202,16 +239,16 @@ public class CountriesView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-        cct.insert();
-        cct.isiTabel(jTblCountries);
-        cct.refresh();
-    }//GEN-LAST:event_btnInsertActionPerformed
+        if (IsEmptyField()) {
+            JOptionPane.showMessageDialog(rootPane, "fill id");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, cct.Save(jTxtCountryId.getText(),
+                    jTxtCountryName.getText(), jCmbRegionId.getSelectedItem().toString(),
+                    isClicked));
+            refresh();
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        cct.Update();
-        cct.isiTabel(jTblCountries);
-        cct.refresh();
-    }//GEN-LAST:event_btnUpdateActionPerformed
+        }
+    }//GEN-LAST:event_btnInsertActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         cct.delete();
@@ -232,7 +269,11 @@ public class CountriesView extends javax.swing.JFrame {
     }//GEN-LAST:event_jCmbRegionIdActionPerformed
 
     private void jTblCountriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblCountriesMouseClicked
-        cct.isiField(jTblCountries.getSelectedRow());
+        DefaultTableModel dm = (DefaultTableModel) jTblCountries.getModel();
+        int row = jTblCountries.getSelectedRow();
+        jTxtCountryId.setText(dm.getValueAt(row, 0).toString());
+        jTxtCountryName.setText(dm.getValueAt(row, 1).toString());
+        jCmbRegionId.setSelectedIndex((int) dm.getValueAt(row, 2));
     }//GEN-LAST:event_jTblCountriesMouseClicked
 
     /**
@@ -273,7 +314,6 @@ public class CountriesView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnInsert;
-    private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> jCmbRegionId;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
