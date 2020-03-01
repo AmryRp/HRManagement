@@ -18,11 +18,13 @@ public interface InterfaceEmployeeManagement {
 
     public boolean delete(int id);
 
-    public Integer getById(int Id);
+    public String getById(int Id);
 
     public List<EntityEmployee> getALL();
 
     public List<EntityEmployee> getAllManager();
-     public List<EntityEmployee> getAllJob();
-      public List<EntityEmployee> getAllDepartment();
+
+    public List<EntityEmployee> getAllJob();
+
+    public List<EntityEmployee> getAllDepartment();
 }

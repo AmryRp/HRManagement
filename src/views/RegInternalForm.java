@@ -104,6 +104,7 @@ public class RegInternalForm extends javax.swing.JInternalFrame {
         tblView = new javax.swing.JTable();
 
         setBorder(null);
+        setForeground(java.awt.Color.white);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N

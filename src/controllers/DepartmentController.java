@@ -9,10 +9,12 @@ import dao.DaoDepartmentManagement;
 import dao.DaoEmployeeManagement;
 import dao.DaoLocationManagement;
 import dao.InterfaceDepartmentManagement;
+import dao.InterfaceEmployeeManagement;
 import dao.InterfaceLocationManagement;
 import java.util.ArrayList;
 import java.util.List;
 import models.EntityDepartment;
+import models.EntityEmployee;
 import models.EntityLocation;
 import views.DepartmentView;
 
@@ -31,6 +33,8 @@ public class DepartmentController {
     List<EntityLocation> ListLoc;
     InterfaceLocationManagement IntrfcLM;
 
+    InterfaceEmployeeManagement IntrfcEMM;
+    List<EntityEmployee> ListEmpM;
     EntityDepartment ED = new EntityDepartment();
 
     public DepartmentController(DepartmentView CountryView) {
@@ -40,11 +44,14 @@ public class DepartmentController {
 
         IntrfcLM = new DaoLocationManagement();
         ListLoc = IntrfcLM.getALL();
+        
+        IntrfcEMM = new DaoEmployeeManagement();
+        ListEmpM = IntrfcEMM.getAllManager();
     }
 
     public String Save(String id, String name, String Manager, String Location, boolean isSave) {
 
-        return (IntrfcDM.insertOrUpdate(new EntityDepartment(Integer.parseInt(id), name, getValueBox(Manager), getValueBox(Location)),
+        return (IntrfcDM.insertOrUpdate(new EntityDepartment(Integer.parseInt(id), name, getValueBoxLoc(Manager), getValueBoxLoc(Location)),
                 isSave)) ? "sukses" : "failed";
     }
 
@@ -54,16 +61,13 @@ public class DepartmentController {
 
     }
 
-    public Integer getByIdLocation(int id) {
+    public String getById(int id) {
 
-        return (new DaoLocationManagement().getById(id));
+        return (new DaoDepartmentManagement().getById(id));
     }
 
-    public Integer getByIdManager(int id) {
-        return (new DaoEmployeeManagement().getById(id));
-    }
 
-    private ArrayList getValueFK() {
+    private ArrayList getValueFKLoc() {
         ListLoc = IntrfcLM.getALL();
         String[] regionName = new String[ListLoc.size()];
         int[] regionId = new int[ListLoc.size()];
@@ -79,18 +83,50 @@ public class DepartmentController {
         return FK;
     }
 
-    public int getValueBox(String Data) {
+    public int getValueBoxLoc(String Data) {
         String val = Data;
-        int idx = -1;
+        int idLocation = -1;
         ArrayList result = new ArrayList<String>();
-        result = getValueFK();
-        String[] region_name = new String[result.size()];
-        region_name = (String[]) result.get(0);
-        for (int i = 0; i < region_name.length; i++) {
-            if (val.equals(region_name[i])) {
-                idx = i + 1;
+        result = getValueFKLoc();
+        String[] locationName = new String[result.size()];
+        Integer[] locationId = new Integer[result.size()];
+        locationName = (String[]) result.get(0);
+        for (int i = 0; i < locationName.length; i++) {
+            if (val.equals(locationName[i])) {
+               idLocation = locationId[i];
             }
         }
-        return idx;
+        return idLocation;
+    }
+     private ArrayList getValueFKMan() {
+        ListEmpM = IntrfcEMM.getALL();
+        String[] regionName = new String[ListEmpM.size()];
+        int[] regionId = new int[ListEmpM.size()];
+        int i = 0;
+        while (i < ListEmpM.size()) {
+            regionName[i] = ListEmpM.get(i).getLastName();
+            regionId[i] = ListEmpM.get(i).getId();
+            i++;
+        }
+        ArrayList FK = new ArrayList<String>();
+        FK.add(regionName);
+        FK.add(regionId);
+        return FK;
+    }
+
+    public int getValueBoxMan(String Data) {
+        String val = Data;
+        int idLocation = -1;
+        ArrayList result = new ArrayList<String>();
+        result = getValueFKMan();
+        String[] locationName = new String[result.size()];
+        Integer[] locationId = new Integer[result.size()];
+        locationName = (String[]) result.get(0);
+        for (int i = 0; i < locationName.length; i++) {
+            if (val.equals(locationName[i])) {
+               idLocation = locationId[i];
+            }
+        }
+        return idLocation;
     }
 }

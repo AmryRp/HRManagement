@@ -29,7 +29,7 @@ public class DaoDepartmentManagement implements InterfaceDepartmentManagement {
     final String update = "UPDATE HR.Departments SET department_NAME=?, manager_id_ID=?, location_id=? WHERE department_ID=?";
     final String delete = "DELETE FROM HR.departments WHERE department_id =?";
     final String select = "SELECT * FROM HR.departments ORDER BY department_ID";
-    final String selectFK = "SELECT department_name FROM HR.locatins where department_id = ?";
+    final String selectFK = "SELECT department_name FROM HR.Departments where department_id = ?";
     PreparedStatement pst = null;
 
     public DaoDepartmentManagement() {
@@ -82,27 +82,27 @@ public class DaoDepartmentManagement implements InterfaceDepartmentManagement {
                 lb.add(Er);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DaoRegionManagement.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DaoDepartmentManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lb;
     }
 
     @Override
-    public Integer getById(int Id) {
-        int temp = 0;
+    public String getById(int Id) {
+        String temp = "";
         try {
             ResultSet rs;
-            temp = new Integer(0);
+            temp = new String();
             pst = c.prepareStatement(selectFK);
             pst.setInt(1, Id);
             pst.execute();
             rs = pst.getResultSet();
             while (rs.next()) {
-                temp = rs.getInt(1);
-
+                temp = rs.getString(1);
+               
             }
         } catch (Exception e) {
-            return temp;
+           System.out.println(e);
         }
         return temp;
     }

@@ -5,19 +5,122 @@
  */
 package views;
 
+import controllers.DepartmentController;
+import controllers.EmployeeController;
+import controllers.LocationController;
+import dao.DaoDepartmentManagement;
+import dao.DaoEmployeeManagement;
+import dao.DaoLocationManagement;
+import dao.InterfaceDepartmentManagement;
+import dao.InterfaceEmployeeManagement;
+import dao.InterfaceLocationManagement;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import models.EntityDepartment;
+import models.EntityEmployee;
+import models.EntityLocation;
+
 /**
  *
  * @author amry4
  */
 public class DepartmentView extends javax.swing.JFrame {
 
+    DepartmentController Dct;
+    InterfaceDepartmentManagement idm;
+    List<EntityDepartment> ListDM;
+    InterfaceEmployeeManagement iem;
+    List<EntityEmployee> ListEM;
+    InterfaceLocationManagement ilm;
+    List<EntityLocation> ListLM;
+    boolean isClicked = true;
+    
     /**
      * Creates new form DepartmentsManagement
      */
     public DepartmentView() {
         initComponents();
+        
+        Dct = new DepartmentController(this);
+        idm = new DaoDepartmentManagement();
+        ListDM = idm.getALL();
+        ilm = new DaoLocationManagement();
+        ListLM = ilm.getALL();
+        iem = new DaoEmployeeManagement();
+        ListEM = iem.getAllManager();
+        bindingTable(TblDM);
+        FillcboxM(CmbDMMan);
+        FillcboxL(CmbDMLoc);
+        
     }
 
+    public void FillcboxM(JComboBox Jbox) {
+
+        ListEM = iem.getAllManager();
+        Integer managerId = new Integer(ListEM.size());
+        String[] manager = new String[ListEM.size()];
+        int i = 0;
+        while (i < ListEM.size()) {
+            managerId = ListEM.get(i).getId();
+            manager[i] = ListEM.get(i).getLastName();
+            i++;
+        }
+        DefaultComboBoxModel dtm = new DefaultComboBoxModel(manager);
+        getCmbDMMan().setModel(dtm);
+    }
+    public void FillcboxL(JComboBox Jbox) {
+
+        ListLM = ilm.getALL();
+        String[] countryname = new String[ListLM.size()];
+        int i = 0;
+        while (i < ListLM.size()) {
+            countryname[i] = ListLM.get(i).getCity();
+            i++;
+        }
+        DefaultComboBoxModel tR = new DefaultComboBoxModel(countryname);
+        getCmbDMLoc().setModel(tR);
+    }
+    public void bindingTable(JTable tabel) {
+        ListDM = idm.getALL();
+        String[] tblHeader = new String[]{"Department Id", "Department Name", "Manager","Location"};
+        DefaultTableModel dtm = new DefaultTableModel(null, tblHeader);
+        tabel.getModel();
+        Object[] row;
+        row = new Object[ListDM.size()];
+        while (dtm.getRowCount() < ListDM.size()) {
+            row[0] = ListDM.get(dtm.getRowCount()).getId();
+            row[1] = ListDM.get(dtm.getRowCount()).getName();
+            row[2] = new EmployeeController().getById(ListDM.get(dtm.getRowCount()).getManagerId());
+            row[3] = new LocationController().getById(ListDM.get(dtm.getRowCount()).getLocationId());
+            dtm.addRow(row);
+        }
+        TblDM.setModel(dtm);
+    }
+    public void clearTable(JTable table) {
+        DefaultTableModel dm = (DefaultTableModel) table.getModel();
+        while (dm.getRowCount() > 0) {
+            dm.removeRow(0);
+        }
+    }
+
+    public void refresh() {
+        clearTable(TblDM);
+        bindingTable(TblDM);
+        TxtDMId.setText("");
+        TxtDMName.setText("");
+        CmbDMLoc.setSelectedIndex(0);
+        CmbDMMan.setSelectedIndex(0);
+        TxtDMId.setEditable(true);
+        isClicked = true;
+    }
+
+    private boolean IsEmptyField() {
+        return TxtDMId.getText().trim().equals("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,12 +140,15 @@ public class DepartmentView extends javax.swing.JFrame {
         CmbDMLoc = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        CmbDMLoc1 = new javax.swing.JComboBox<>();
+        CmbDMMan = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         TblDM = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(2147, 2147));
+        setMinimumSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
@@ -74,61 +180,72 @@ public class DepartmentView extends javax.swing.JFrame {
 
         jLabel5.setText("Department Manager");
 
-        CmbDMLoc1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Location", "item1", "item2" }));
+        CmbDMMan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Location", "item1", "item2" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(CmbDMLoc1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4))
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TxtDMName, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(CmbDMLoc, 0, 216, Short.MAX_VALUE)
-                            .addComponent(TxtDMId))))
-                .addContainerGap(323, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(75, 75, 75)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(CmbDMMan, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(jLabel4)
+                .addGap(21, 21, 21)
+                .addComponent(CmbDMLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(453, 453, 453)
                 .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
-                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(53, 53, 53)
+                        .addComponent(TxtDMId, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(31, 31, 31)
+                        .addComponent(TxtDMName, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TxtDMId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TxtDMName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CmbDMLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CmbDMLoc1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(TxtDMId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel3))
+                    .addComponent(TxtDMName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel5))
+                    .addComponent(CmbDMMan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnInsert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel4))
+                    .addComponent(CmbDMLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnInsert)
+                    .addComponent(btnDelete)))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 30, 730, 220));
@@ -149,6 +266,11 @@ public class DepartmentView extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        TblDM.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TblDMMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TblDM);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 730, 290));
@@ -161,12 +283,41 @@ public class DepartmentView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-      
+         if (IsEmptyField()) {
+            JOptionPane.showMessageDialog(rootPane, "fill id");
+        } else {
+
+            JOptionPane.showMessageDialog(rootPane, Dct.Save(TxtDMId.getText(),
+                    TxtDMName.getText(), CmbDMMan.getSelectedItem().toString(),
+                    CmbDMLoc.getSelectedItem().toString(),
+                    isClicked));
+        }
+        refresh();
     }//GEN-LAST:event_btnInsertActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-      
+if (!IsEmptyField()) {
+            int result = JOptionPane.showConfirmDialog(null,
+                    "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(rootPane, Dct.delete(TxtDMId.getText()));
+                refresh();
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "fill id");
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void TblDMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TblDMMouseClicked
+         DefaultTableModel dm = (DefaultTableModel) TblDM.getModel();
+        int row = TblDM.getSelectedRow();
+        TxtDMId.setText(dm.getValueAt(row, 0).toString());
+        TxtDMName.setText(dm.getValueAt(row, 1).toString());
+        CmbDMLoc.setSelectedItem(dm.getValueAt(row, 2));
+        CmbDMMan.setSelectedItem(dm.getValueAt(row, 3));
+        TxtDMId.setEditable(false);
+        isClicked = false;
+    }//GEN-LAST:event_TblDMMouseClicked
 
     /**
      * @param args the command line arguments
@@ -205,7 +356,7 @@ public class DepartmentView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CmbDMLoc;
-    private javax.swing.JComboBox<String> CmbDMLoc1;
+    private javax.swing.JComboBox<String> CmbDMMan;
     private javax.swing.JTable TblDM;
     private javax.swing.JTextField TxtDMId;
     private javax.swing.JTextField TxtDMName;
@@ -219,4 +370,26 @@ public class DepartmentView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    
+
+    public javax.swing.JTable getTblDM() {
+        return TblDM;
+    }
+
+    public javax.swing.JTextField getTxtDMId() {
+        return TxtDMId;
+    }
+
+    public javax.swing.JTextField getTxtDMName() {
+        return TxtDMName;
+    }
+
+    public javax.swing.JComboBox<String> getCmbDMLoc() {
+        return CmbDMLoc;
+    }
+
+    public javax.swing.JComboBox<String> getCmbDMMan() {
+        return CmbDMMan;
+    }
 }

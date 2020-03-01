@@ -16,7 +16,7 @@ public interface InterfaceDepartmentManagement {
     public boolean insertOrUpdate(EntityDepartment ED, boolean isInsert);
 
     public boolean delete(int id);
-    public Integer getById(int Id);
+    public String getById(int Id);
 
     public List<EntityDepartment> getALL();
 }

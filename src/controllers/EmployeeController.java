@@ -42,7 +42,7 @@ public class EmployeeController {
     EntityEmployee EM = new EntityEmployee();
 
     public EmployeeController() {
-        
+
     }
 
     public EmployeeController(EmployeeView frame) {
@@ -50,7 +50,7 @@ public class EmployeeController {
         IntrfcEM = new DaoEmployeeManagement();
         ListEmp = IntrfcEM.getALL();
         IntrfcEMM = new DaoEmployeeManagement();
-        ListEmpM = IntrfcEM.getAllManager();
+        ListEmpM = IntrfcEMM.getAllManager();
         IntrfcJM = new DaoJobManagement();
         ListJob = IntrfcJM.getALL();
         IntrfcDM = new DaoDepartmentManagement();
@@ -61,7 +61,7 @@ public class EmployeeController {
             String phoneNumber, String hireDate, String jobId, String Salary, String commision, String managerId, String deptId, boolean isSave) {
 
         return (IntrfcEM.insertOrUpdate(new EntityEmployee(Integer.parseInt(id), firstName, lastName, email, phoneNumber,
-                Date.valueOf(hireDate), getValueBoxJob(jobId), Float.valueOf(Salary), Float.valueOf(commision), getValueBoxManager(managerId), getValueBoxDept(deptId)),
+                Date.valueOf(hireDate).toString(), getValueBoxJob(jobId), Float.valueOf(Salary), Float.valueOf(commision), getValueBoxManager(managerId), getValueBoxDept(deptId)),
                 isSave)) ? "sukses" : "failed";
     }
 
@@ -70,35 +70,45 @@ public class EmployeeController {
 
     }
 
+    public String getById(int id) {
+
+        return (new DaoEmployeeManagement().getById(id));
+    }
+
     private ArrayList getValueFKManager() {
         ListEmpM = IntrfcEMM.getAllManager();
         String[] mName = new String[ListEmpM.size()];
         int[] mId = new int[ListEmpM.size()];
         int i = 0;
         while (i < ListEmpM.size()) {
-            mName[i] = ListEmpM.get(i).getLastName();
             mId[i] = ListEmpM.get(i).getId();
+            mName[i] = ListEmpM.get(i).getLastName();
+
             i++;
         }
         ArrayList FK = new ArrayList<String>();
-        FK.add(mName);
         FK.add(mId);
+        FK.add(mName);
+
         return FK;
     }
 
-    public int getValueBoxManager(String Data) {
+    public Integer getValueBoxManager(String Data) {
         String val = Data;
-        int idx = -1;
+        int Id = 0;
         ArrayList result = new ArrayList<String>();
         result = getValueFKManager();
         String[] region_name = new String[result.size()];
-        region_name = (String[]) result.get(0);
+        String[] region_ID = new String[result.size()];
+        
+        region_name = (String[]) result.get(1);
         for (int i = 0; i < region_name.length; i++) {
             if (val.equals(region_name[i])) {
-                idx = i + 1;
+
+                System.out.println(region_name[i]);
             }
         }
-        return idx;
+        return Id;
     }
 
     private ArrayList getValueFKJob() {

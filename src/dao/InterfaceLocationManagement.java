@@ -19,7 +19,7 @@ public interface InterfaceLocationManagement {
     public boolean delete(int id);
     
     
-    public Integer getById(int Id);
+    public String getById(int Id);
 
     public List<EntityLocation> getALL();
 

@@ -19,8 +19,8 @@ public class MainMenuView extends javax.swing.JFrame {
     public MainMenuView() {
         initComponents();
 
-        paneldefault = new Color(0, 204, 255);
-        panelClicked = new Color(0, 11, 153);
+        paneldefault = new Color(0,204,204);
+        panelClicked = new Color(0,200,200);
         PLocation.setBackground(paneldefault);
         PRegion.setBackground(paneldefault);
     }
@@ -58,10 +58,10 @@ public class MainMenuView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(0, 51, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        PRegion.setBackground(new java.awt.Color(0, 204, 255));
+        PRegion.setBackground(new java.awt.Color(0, 204, 204));
         PRegion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         PRegion.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         PRegion.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -75,13 +75,12 @@ public class MainMenuView extends javax.swing.JFrame {
         PRegion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic", 1, 15)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("REGION");
-        PRegion.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 55, -1, -1));
+        PRegion.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
         jPanel1.add(PRegion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 120, 80));
 
-        PCountry.setBackground(new java.awt.Color(0, 204, 255));
+        PCountry.setBackground(new java.awt.Color(0, 204, 204));
         PCountry.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         PCountry.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         PCountry.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -95,13 +94,12 @@ public class MainMenuView extends javax.swing.JFrame {
         PCountry.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Yu Gothic", 1, 15)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("COUNTRY");
-        PCountry.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 55, -1, -1));
+        PCountry.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
         jPanel1.add(PCountry, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 120, 80));
 
-        PLocation.setBackground(new java.awt.Color(0, 204, 255));
+        PLocation.setBackground(new java.awt.Color(0, 204, 204));
         PLocation.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         PLocation.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         PLocation.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -115,13 +113,12 @@ public class MainMenuView extends javax.swing.JFrame {
         PLocation.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Yu Gothic", 1, 15)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("LOCATION");
-        PLocation.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 66, -1, 14));
+        PLocation.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, 14));
 
         jPanel1.add(PLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 120, 80));
 
-        PDepartment.setBackground(new java.awt.Color(0, 204, 255));
+        PDepartment.setBackground(new java.awt.Color(0, 204, 204));
         PDepartment.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         PDepartment.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         PDepartment.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -135,13 +132,12 @@ public class MainMenuView extends javax.swing.JFrame {
         PDepartment.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel5.setFont(new java.awt.Font("Yu Gothic", 1, 15)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("DEPARTMENT");
-        PDepartment.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, 20));
+        PDepartment.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, 20));
 
         jPanel1.add(PDepartment, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 120, 80));
 
-        PJob.setBackground(new java.awt.Color(0, 204, 255));
+        PJob.setBackground(new java.awt.Color(0, 204, 204));
         PJob.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         PJob.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         PJob.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -155,13 +151,12 @@ public class MainMenuView extends javax.swing.JFrame {
         PJob.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setFont(new java.awt.Font("Yu Gothic", 1, 15)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("JOB");
-        PJob.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 64, -1, 16));
+        PJob.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, 16));
 
         jPanel1.add(PJob, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 120, 80));
 
-        PEmployee.setBackground(new java.awt.Color(0, 204, 255));
+        PEmployee.setBackground(new java.awt.Color(0, 204, 204));
         PEmployee.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         PEmployee.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         PEmployee.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -175,13 +170,12 @@ public class MainMenuView extends javax.swing.JFrame {
         PEmployee.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel6.setFont(new java.awt.Font("Yu Gothic", 1, 15)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("EMPLOYEE");
-        PEmployee.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, 16));
+        PEmployee.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, 16));
 
         jPanel1.add(PEmployee, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 120, 80));
 
-        PJHistory.setBackground(new java.awt.Color(0, 204, 255));
+        PJHistory.setBackground(new java.awt.Color(0, 204, 204));
         PJHistory.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         PJHistory.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         PJHistory.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -195,9 +189,8 @@ public class MainMenuView extends javax.swing.JFrame {
         PJHistory.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel8.setFont(new java.awt.Font("Yu Gothic", 1, 15)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("JOB HISTORY");
-        PJHistory.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 60, -1, 20));
+        PJHistory.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, 20));
 
         jPanel1.add(PJHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 120, 80));
 
@@ -206,7 +199,7 @@ public class MainMenuView extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("REGION MANAGEMENT");
+        jLabel2.setText("HR MANAGEMENT");
         jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, 350, 50));
 

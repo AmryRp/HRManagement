@@ -26,15 +26,15 @@ public class DaoEmployeeManagement implements InterfaceEmployeeManagement {
     Connection c;
     final String insert = "INSERT INTO HR.Employees (First_name,Last_name,"
             + "EMail,phone_number,Hire_date,Job_id,Salary,Commission_PCT,Manager_id,"
-            + "Department_id,Employee_id)VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+            + "Department_id,Employee_id)VALUES(?,?,?,?,TO_DATE(?,'dd/mm/yy'),?,?,?,?,?,?,?)";
     final String update = "UPDATE HR.Employees SET employee_name=?,first_name = ?,"
             + "last_name=?, Email=?, phone_number=?,hire_date=?,job_id=?,Salary=?"
             + "COmmission_pct=?,Manager_id=?,department_id=? WHERE employee_id=?";
     final String delete = "DELETE FROM HR.employees WHERE employee_id =?";
     final String select = "SELECT * FROM HR.employees ORDER BY employee_ID";
     final String search = "SELECT * FROM HR.employees WHERE last_NAME LIKE ?";
-    final String selectManager = "select distinct manager.last_name from HR.employees worker Join HR.employees manager ON (worker.manager_id = manager.employee_id)";
-    final String selectFK = "SELECT employee_name FROM HR.employees where manager_id = ?";
+    final String selectManager = "select distinct manager.employee_id,manager.last_name from HR.employees worker Join HR.employees manager ON (worker.manager_id = manager.employee_id)";
+    final String selectFK = "SELECT last_name FROM HR.employees where employee_id = ?";
     PreparedStatement pst = null;
 
     public DaoEmployeeManagement() {
@@ -51,7 +51,7 @@ public class DaoEmployeeManagement implements InterfaceEmployeeManagement {
             pst.setString(2, EM.getLastName());
             pst.setString(3, EM.getEmail());
             pst.setString(4, EM.getPhoneNumber());
-            pst.setDate(5, EM.getHireDate());
+            pst.setString(5, EM.getHireDate());
             pst.setString(6, EM.getJobId());
             pst.setFloat(7, EM.getSalary());
             pst.setFloat(8, EM.getCommision());
@@ -92,7 +92,7 @@ public class DaoEmployeeManagement implements InterfaceEmployeeManagement {
                 EM.setLastName(rs.getString(3));
                 EM.setEmail(rs.getString(4));
                 EM.setPhoneNumber(rs.getString(5));
-                EM.setHireDate(rs.getDate(6));
+                EM.setHireDate(rs.getString(6));
                 EM.setJobId(rs.getString(7));
                 EM.setSalary(rs.getFloat(8));
                 EM.setCommision(rs.getFloat(9));
@@ -107,22 +107,26 @@ public class DaoEmployeeManagement implements InterfaceEmployeeManagement {
     }
 
     @Override
-    public Integer getById(int Id) {
-        int temp = 0;
+    public String getById(int Id) {
+        String temp = "";
         try {
             ResultSet rs;
-            temp = new Integer(0);
+            temp = new String();
             pst = c.prepareStatement(selectFK);
             pst.setInt(1, Id);
-            pst.execute();
+            pst.executeUpdate();
             rs = pst.getResultSet();
             while (rs.next()) {
-                temp = rs.getInt(1);
-
+              
+                temp = rs.getString(1);
             }
-        } catch (Exception e) {
-            return temp;
+            
+        } catch (SQLException e) {
+            
+             e.printStackTrace();
+             return temp;
         }
+        
         return temp;
     }
     
@@ -136,7 +140,9 @@ public class DaoEmployeeManagement implements InterfaceEmployeeManagement {
             ResultSet rs = st.executeQuery(selectManager);
             while (rs.next()) {
                 EntityEmployee EJM = new EntityEmployee();
-                EJM.setLastName(rs.getString(1));
+                EJM.setId(rs.getInt(1));
+                EJM.setLastName(rs.getString(2));
+                
                 ListManager.add(EJM);
             }
         } catch (SQLException ex) {

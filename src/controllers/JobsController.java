@@ -20,6 +20,9 @@ import dao.InterfaceJobManagement;
  */
 public class JobsController {
 
+    public JobsController() {
+    }
+
     JobsView frame;
     InterfaceJobManagement IntrfcJM;
     List<EntityJob> ListJob;
@@ -81,5 +84,9 @@ public class JobsController {
     public String delete(String id) {
          return (IntrfcJM.delete(id)) ? "sukses" : "failed";
 
+    }
+    public String getById(String id) {
+
+        return (new DaoJobManagement().getById(id));
     }
 }

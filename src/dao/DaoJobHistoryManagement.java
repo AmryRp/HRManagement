@@ -42,13 +42,13 @@ public class DaoJobHistoryManagement implements InterfaceJobHistoryManagement {
             Statement st = c.createStatement();
             ResultSet rs = st.executeQuery(select);
             while (rs.next()) {
-                EntityJobHistory Er = new EntityJobHistory();
-                Er.setId(rs.getInt(1));
-                Er.setStartDate(rs.getDate(2));
-                Er.setStartDate(rs.getDate(3));
-                Er.setJobId(rs.getString(4));
-                Er.setDepartmentId(rs.getInt(3));
-                lb.add(Er);
+                EntityJobHistory ejh = new EntityJobHistory();
+                ejh.setId(rs.getInt(1));
+                ejh.setStartDate(rs.getDate(2));
+                ejh.setEndDate(rs.getDate(3));
+                ejh.setJobId(rs.getString(4));
+                ejh.setDepartmentId(rs.getInt(5));
+                lb.add(ejh);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DaoRegionManagement.class.getName()).log(Level.SEVERE, null, ex);

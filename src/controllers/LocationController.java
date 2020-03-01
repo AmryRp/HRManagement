@@ -55,11 +55,11 @@ public class LocationController {
         ListCountry = IntrfcCM.getALL();
         ArrayList FK = new ArrayList<String>();
         String[] countryname = new String[ListCountry.size()];
-        int[] countryId = new int[ListCountry.size()];
+        String[] countryId = new String[ListCountry.size()];
         int i = 0;
         while (i < ListCountry.size()) {
-            countryname[i] = ListCountry.get(i).getCountryName();
-            countryId[i] = ListCountry.get(i).getRegionId();
+            countryname[i] = ListCountry.get(i).getId();
+            countryId[i] = ListCountry.get(i).getCountryName();
             i++;
         }
         FK.add(countryname);
@@ -69,17 +69,22 @@ public class LocationController {
 
     public String getValueBox(String Data) {
         String val = Data;
-        int idx = -1;
+        String Id = "";
         ArrayList result = new ArrayList<String>();
         result = getValueFK();
         String[] region_name = new String[result.size()];
-        region_name = (String[]) result.get(0);
+        String[] region_ID = new String[result.size()];
+        region_name = (String[]) result.get(1);
+        region_ID = (String[]) result.get(0);
         for (int i = 0; i < region_name.length; i++) {
             if (val.equals(region_name[i])) {
-                idx = i + 1;
+                Id = region_ID[i];
             }
         }
+        return Id;
+    }
+     public String getById(int id) {
 
-        return val;
+        return (new DaoLocationManagement().getById(id));
     }
 }

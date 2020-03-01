@@ -28,6 +28,14 @@ import dao.InterfaceLocationManagement;
  */
 public final class LocationView extends javax.swing.JFrame {
 
+    LocationController Lct;
+    InterfaceLocationManagement IntrfcLM;
+    List<EntityLocation> ListLocation;
+    InterfaceCountryManagement IntrfcCM;
+    List<EntityCountry> ListCountry;
+
+    boolean isClicked = true;
+
     public LocationView() {
         initComponents();
         Lct = new LocationController(this);
@@ -37,50 +45,40 @@ public final class LocationView extends javax.swing.JFrame {
         ListCountry = IntrfcCM.getALL();
         bindingTable(tblViewLocation);
         Fillcbox(CmbCountryId);
-        
+
     }
-    LocationController Lct;
-    InterfaceLocationManagement IntrfcLM;
-    List<EntityLocation> ListLocation;
-    List<EntityCountry> ListCountry;
-    InterfaceCountryManagement IntrfcCM;
-    boolean isClicked = true;
 
     public void Fillcbox(JComboBox Jbox) {
 
         ListCountry = IntrfcCM.getALL();
         String[] countryname = new String[ListCountry.size()];
-        int[] countryId = new int[ListCountry.size()];
         int i = 0;
         while (i < ListCountry.size()) {
             countryname[i] = ListCountry.get(i).getCountryName();
-            countryId[i] = ListCountry.get(i).getRegionId();
             i++;
         }
         DefaultComboBoxModel tR = new DefaultComboBoxModel(countryname);
         getCmbCountryId().setModel(tR);
     }
 
-
     public void bindingTable(JTable tabel) {
         ListLocation = IntrfcLM.getALL();
         String[] tblHeader = new String[]{"id", "Address", "Postal Code",
             "City", "State Province", "Country Id"};
-        DefaultTableModel tR = new DefaultTableModel(null, tblHeader);
+        DefaultTableModel dtm = new DefaultTableModel(null, tblHeader);
         tabel.getModel();
         Object[] row;
         row = new Object[ListLocation.size()];
-        while (tR.getRowCount() < ListLocation.size()) {
-            row[0] = ListLocation.get(tR.getRowCount()).getId();
-            row[1] = ListLocation.get(tR.getRowCount()).getAddress();
-            row[2] = ListLocation.get(tR.getRowCount()).getZipCode();
-            row[3] = ListLocation.get(tR.getRowCount()).getCity();
-            row[4] = ListLocation.get(tR.getRowCount()).getProvince();
-//            row[5] = ;
-            row[5] = new CountryController().getById(ListLocation.get(tR.getRowCount()).getIdCountry());
-            tR.addRow(row);
+        while (dtm.getRowCount() < ListLocation.size()) {
+            row[0] = ListLocation.get(dtm.getRowCount()).getId();
+            row[1] = ListLocation.get(dtm.getRowCount()).getAddress();
+            row[2] = ListLocation.get(dtm.getRowCount()).getZipCode();
+            row[3] = ListLocation.get(dtm.getRowCount()).getCity();
+            row[4] = ListLocation.get(dtm.getRowCount()).getProvince();
+            row[5] = new CountryController().getById(ListLocation.get(dtm.getRowCount()).getIdCountry());
+            dtm.addRow(row);
         }
-        tblViewLocation.setModel(tR);
+        tblViewLocation.setModel(dtm);
     }
 //     public void IdBind(JTable tabel) {
 //        ListLocation = IntrfcLM.getALL();
@@ -94,6 +92,7 @@ public final class LocationView extends javax.swing.JFrame {
 //        }
 //        tblViewLocation.setModel(tR);
 //    }
+
     public void clearTable(JTable table) {
         DefaultTableModel dm = (DefaultTableModel) table.getModel();
         while (dm.getRowCount() > 0) {
@@ -321,10 +320,10 @@ public final class LocationView extends javax.swing.JFrame {
         int row = tblViewLocation.getSelectedRow();
         TxtLocationId.setText(dm.getValueAt(row, 0).toString());
         TxtStreetAddress.setText(dm.getValueAt(row, 1).toString());
-        String Temp2 = (dm.getValueAt(row, 2)==null) ? "" : dm.getValueAt(row, 2).toString();
+        String Temp2 = (dm.getValueAt(row, 2) == null) ? "" : dm.getValueAt(row, 2).toString();
         TxtZipCode.setText(Temp2);
         TxtCity.setText(dm.getValueAt(row, 3).toString());
-        String Temp4 = (dm.getValueAt(row, 4)==null) ? "" : dm.getValueAt(row, 4).toString();
+        String Temp4 = (dm.getValueAt(row, 4) == null) ? "" : dm.getValueAt(row, 4).toString();
         TxtProvince.setText(Temp4);
         CmbCountryId.setSelectedItem(dm.getValueAt(row, 5));
         TxtLocationId.setEditable(false);
@@ -342,7 +341,7 @@ public final class LocationView extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(rootPane, "fill id");
         }
-        bindingTable(tblViewLocation);
+
     }//GEN-LAST:event_btnDeleteLocationActionPerformed
 
     private void btnInsertLoactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertLoactionActionPerformed
@@ -356,7 +355,7 @@ public final class LocationView extends javax.swing.JFrame {
             refresh();
 
         }
-        bindingTable(tblViewLocation);
+
     }//GEN-LAST:event_btnInsertLoactionActionPerformed
 
     /**

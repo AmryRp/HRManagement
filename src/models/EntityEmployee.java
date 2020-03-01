@@ -18,7 +18,7 @@ public class EntityEmployee {
 
     private String email;
     private String phoneNumber;
-    private Date hireDate;
+    private String hireDate;
     private String jobId;
     private float Salary;
     private float commision;
@@ -27,7 +27,7 @@ public class EntityEmployee {
 
     public EntityEmployee() {
     }
-    public EntityEmployee(Integer id, String firstName, String lastName, String email, String phoneNumber, Date hireDate, String jobId, float Salary, float commision, Integer managerId, Integer deptId) {
+    public EntityEmployee(Integer id, String firstName, String lastName, String email, String phoneNumber, String hireDate, String jobId, float Salary, float commision, Integer managerId, Integer deptId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -80,11 +80,11 @@ public class EntityEmployee {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getHireDate() {
+    public String getHireDate() {
         return hireDate;
     }
 
-    public void setHireDate(Date hireDate) {
+    public void setHireDate(String hireDate) {
         this.hireDate = hireDate;
     }
 
