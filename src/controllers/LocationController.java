@@ -42,7 +42,7 @@ public class LocationController {
 
     public String Save(String Id, String Address, String ZipCode, String City, String Province, String idCountry, boolean isSave) {
 
-        return (IntrfcLM.insertOrUpdate(new EntityLocation(Integer.parseInt(Id), Address, ZipCode, City, Province, idCountry),
+        return (IntrfcLM.insertOrUpdate(new EntityLocation(Integer.parseInt(Id), Address, ZipCode, City, Province, getValueBox(idCountry)),
                 isSave)) ? "sukses" : "failed";
 
     }
