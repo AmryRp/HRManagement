@@ -13,9 +13,16 @@ import models.EntityEmployee;
  * @author amry4
  */
 public interface InterfaceEmployeeManagement {
+
     public boolean insertOrUpdate(EntityEmployee EM, boolean isInsert);
 
     public boolean delete(int id);
 
+    public Integer getById(int Id);
+
     public List<EntityEmployee> getALL();
+
+    public List<EntityEmployee> getAllManager();
+     public List<EntityEmployee> getAllJob();
+      public List<EntityEmployee> getAllDepartment();
 }

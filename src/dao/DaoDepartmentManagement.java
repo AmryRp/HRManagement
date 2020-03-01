@@ -24,11 +24,12 @@ import tools.Connections;
 public class DaoDepartmentManagement implements InterfaceDepartmentManagement {
 
     Connection c;
-    final String insert = "INSERT INTO HR.Departments (department_id,department_name,manager_id,location_id)VALUES(?,?,?,?)";
+    final String insert = "INSERT INTO HR.Departments (department_name,"
+            + "manager_id,location_id,department_id)VALUES(?,?,?,?)";
     final String update = "UPDATE HR.Departments SET department_NAME=?, manager_id_ID=?, location_id=? WHERE department_ID=?";
     final String delete = "DELETE FROM HR.departments WHERE department_id =?";
     final String select = "SELECT * FROM HR.departments ORDER BY department_ID";
-    final String selectFK = "SELECT Location_id FROM HR.locatins";
+    final String selectFK = "SELECT department_name FROM HR.locatins where department_id = ?";
     PreparedStatement pst = null;
 
     public DaoDepartmentManagement() {
@@ -37,25 +38,10 @@ public class DaoDepartmentManagement implements InterfaceDepartmentManagement {
     }
 
     @Override
-    public boolean insert(EntityDepartment ED) {
-        try {
-            pst = c.prepareStatement(insert);
-            pst.setInt(1, ED.getId());
-            pst.setString(2, ED.getName());
-            pst.setInt(3, ED.getManagerId());
-            pst.setInt(4, ED.getLocationId());
-            return pst.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
+    public boolean insertOrUpdate(EntityDepartment ED, boolean isInsert) {
 
-    @Override
-    public boolean update(EntityDepartment ED) {
-        PreparedStatement pst = null;
         try {
-            pst = c.prepareStatement(update);
+            pst = (isInsert) ? c.prepareStatement(insert) : c.prepareStatement(update);
             pst.setString(1, ED.getName());
             pst.setInt(2, ED.getManagerId());
             pst.setInt(3, ED.getLocationId());
@@ -69,7 +55,7 @@ public class DaoDepartmentManagement implements InterfaceDepartmentManagement {
 
     @Override
     public boolean delete(int id) {
-         try {
+        try {
             pst = c.prepareStatement(delete);
             pst.setInt(1, id);
             pst.executeQuery();
@@ -82,7 +68,7 @@ public class DaoDepartmentManagement implements InterfaceDepartmentManagement {
 
     @Override
     public List<EntityDepartment> getALL() {
-          List<EntityDepartment> lb = null;
+        List<EntityDepartment> lb = null;
         try {
             lb = new ArrayList<EntityDepartment>();
             Statement st = c.createStatement();
@@ -98,5 +84,27 @@ public class DaoDepartmentManagement implements InterfaceDepartmentManagement {
         } catch (SQLException ex) {
             Logger.getLogger(DaoRegionManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return lb; }
+        return lb;
+    }
+
+    @Override
+    public Integer getById(int Id) {
+        int temp = 0;
+        try {
+            ResultSet rs;
+            temp = new Integer(0);
+            pst = c.prepareStatement(selectFK);
+            pst.setInt(1, Id);
+            pst.execute();
+            rs = pst.getResultSet();
+            while (rs.next()) {
+                temp = rs.getInt(1);
+
+            }
+        } catch (Exception e) {
+            return temp;
+        }
+        return temp;
+    }
 }
+

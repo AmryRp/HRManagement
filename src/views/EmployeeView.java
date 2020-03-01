@@ -9,6 +9,9 @@ import controllers.EmployeeController;
 import dao.DaoEmployeeManagement;
 import dao.InterfaceEmployeeManagement;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import models.EntityEmployee;
@@ -21,6 +24,7 @@ public class EmployeeView extends javax.swing.JFrame {
 
     EmployeeController Jct;
     List<EntityEmployee> ListJob;
+    List<EntityEmployee> ListJobM;
     InterfaceEmployeeManagement IntrfcJM;
     boolean isClicked = true;
 
@@ -32,8 +36,9 @@ public class EmployeeView extends javax.swing.JFrame {
         Jct = new EmployeeController(this);
         IntrfcJM = new DaoEmployeeManagement();
         ListJob = IntrfcJM.getALL();
+        ListJobM = IntrfcJM.getAllManager();
         bindingTable(TblEmployee);
-
+        FillcboxManager(cmbManId);
     }
 
     private boolean IsEmptyField() {
@@ -50,10 +55,11 @@ public class EmployeeView extends javax.swing.JFrame {
         TxtEmail.setText("");
         TxtPhoneNumber.setText("");
         TxthireDateChooser.setText("");
-        CmbJobId.setSelectedItem("Pilih Job");
-        cmbManId.setSelectedItem("Pilih Manager");
-        cmbDepId.setSelectedItem("Pilih Departement");
+        CmbJobId.setSelectedItem("Choose Job");
+        cmbManId.setSelectedItem("Choose Manager");
+        cmbDepId.setSelectedItem("Choose Departement");
         TxtEmployeeId.setEditable(true);
+        TxthireDateChooser.setEnabled(true);
         isClicked = true;
     }
 
@@ -65,8 +71,8 @@ public class EmployeeView extends javax.swing.JFrame {
     }
 
     public void bindingTable(JTable tabel) {
-        ListJob = IntrfcJM.getALL();
-        String[] tblHeader = new String[]{"id", "first name", "last name","Email","phone Number","HireDate","Job","Salary","Commission","Manager","Department"};
+        String[] tblHeader = new String[]{"id", "first name", "last name", "Email",
+            "phone Number", "HireDate", "Job", "Salary", "Commission", "Manager", "Department"};
         DefaultTableModel dtm = new DefaultTableModel(null, tblHeader);
         tabel.getModel();
         Object[] row;
@@ -86,6 +92,18 @@ public class EmployeeView extends javax.swing.JFrame {
             dtm.addRow(row);
         }
         TblEmployee.setModel(dtm);
+    }
+
+    public void FillcboxManager(JComboBox Jbox) {
+        ListJobM = IntrfcJM.getAllManager();
+        String[] managerName = new String[ListJobM.size()];
+        int i = 0;
+        while (i < ListJobM.size()) {
+            managerName[i] = ListJobM.get(i).getLastName();
+            i++;
+        }
+        DefaultComboBoxModel dtm = new DefaultComboBoxModel(managerName);
+        getCmbManId().setModel(dtm);
 
     }
 
@@ -144,18 +162,6 @@ public class EmployeeView extends javax.swing.JFrame {
             }
         });
 
-        TxtPhoneNumber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtPhoneNumberActionPerformed(evt);
-            }
-        });
-
-        TxtLastName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtLastNameActionPerformed(evt);
-            }
-        });
-
         jLabel2.setText("Last Name");
 
         jLabel3.setText("First Name");
@@ -163,24 +169,6 @@ public class EmployeeView extends javax.swing.JFrame {
         jLabel4.setText("Email");
 
         jLabel5.setText("Employee Id");
-
-        TxtEmployeeId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtEmployeeIdActionPerformed(evt);
-            }
-        });
-
-        TxtEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtEmailActionPerformed(evt);
-            }
-        });
-
-        TxtFirstName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtFirstNameActionPerformed(evt);
-            }
-        });
 
         jLabel6.setText("Phone Number");
 
@@ -363,6 +351,11 @@ public class EmployeeView extends javax.swing.JFrame {
             "Employee id", "First Name", "Last Name", "Email", "Phone Number", "Hire Date", "Job id", "Salary", "Commision", "Manager", "Department"
         }
     ));
+    TblEmployee.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            TblEmployeeMouseClicked(evt);
+        }
+    });
     jScrollPane1.setViewportView(TblEmployee);
 
     jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -402,32 +395,51 @@ public class EmployeeView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInsertEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertEmpActionPerformed
+        if (IsEmptyField()) {
+            JOptionPane.showMessageDialog(rootPane, "fill id");
+        } else {
 
+            JOptionPane.showMessageDialog(rootPane, Jct.Save(TxtEmployeeId.getText(), TxtFirstName.getText(),
+                    TxtLastName.getText(), TxtEmail.getText(), TxtPhoneNumber.getText(),
+                    TxthireDateChooser.getText(), CmbJobId.getSelectedItem().toString(), TxtSal.getText(),
+                    TxtComP.getText(), cmbManId.getSelectedItem().toString(), cmbDepId.getSelectedItem().toString(),
+                    isClicked));
+        }
+        refresh();
     }//GEN-LAST:event_btnInsertEmpActionPerformed
 
     private void btnDeleteEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteEmpActionPerformed
-
+        if (!IsEmptyField()) {
+            int result = JOptionPane.showConfirmDialog(null,
+                    "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(rootPane, Jct.delete(TxtEmployeeId.getText()));
+                refresh();
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "fill id");
+        }
+        bindingTable(TblEmployee);
     }//GEN-LAST:event_btnDeleteEmpActionPerformed
 
-    private void TxtPhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtPhoneNumberActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtPhoneNumberActionPerformed
-
-    private void TxtLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtLastNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtLastNameActionPerformed
-
-    private void TxtEmployeeIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtEmployeeIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtEmployeeIdActionPerformed
-
-    private void TxtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtEmailActionPerformed
-
-    private void TxtFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtFirstNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtFirstNameActionPerformed
+    private void TblEmployeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TblEmployeeMouseClicked
+       DefaultTableModel dm = (DefaultTableModel) TblEmployee.getModel();
+        int row = TblEmployee.getSelectedRow();
+        TxtEmployeeId.setText(dm.getValueAt(row, 0).toString());
+        TxtFirstName.setText(dm.getValueAt(row, 1).toString());
+        TxtLastName.setText(dm.getValueAt(row, 2).toString());
+        TxtEmail.setText(dm.getValueAt(row, 3).toString());
+        TxtPhoneNumber.setText(dm.getValueAt(row,4).toString());
+        TxthireDateChooser.setText(dm.getValueAt(row, 5).toString());
+        CmbJobId.setSelectedItem(dm.getValueAt(row, 6));
+        TxtSal.setText(dm.getValueAt(row, 7).toString());
+        TxtComP.setText(dm.getValueAt(row, 8).toString());
+        cmbManId.setSelectedItem(dm.getValueAt(row, 9));
+        cmbDepId.setSelectedItem(dm.getValueAt(row, 10));
+        TxtEmployeeId.setEditable(false);
+        TxthireDateChooser.setEnabled(false);
+        isClicked = false;
+    }//GEN-LAST:event_TblEmployeeMouseClicked
 
     /**
      * @param args the command line arguments
@@ -495,4 +507,48 @@ public class EmployeeView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    public javax.swing.JTable getTblEmployee() {
+        return TblEmployee;
+    }
+
+    public javax.swing.JTextField getTxtComP() {
+        return TxtComP;
+    }
+
+    public javax.swing.JTextField getTxtEmail() {
+        return TxtEmail;
+    }
+
+    public javax.swing.JTextField getTxtEmployeeId() {
+        return TxtEmployeeId;
+    }
+
+    public javax.swing.JTextField getTxtFirstName() {
+        return TxtFirstName;
+    }
+
+    public javax.swing.JTextField getTxtLastName() {
+        return TxtLastName;
+    }
+
+    public javax.swing.JTextField getTxtPhoneNumber() {
+        return TxtPhoneNumber;
+    }
+
+    public javax.swing.JTextField getTxtSal() {
+        return TxtSal;
+    }
+
+    public datechooser.beans.DateChooserCombo getTxthireDateChooser() {
+        return TxthireDateChooser;
+    }
+
+    public javax.swing.JComboBox<String> getCmbDepId() {
+        return cmbDepId;
+    }
+
+    public javax.swing.JComboBox<String> getCmbManId() {
+        return cmbManId;
+    }
 }

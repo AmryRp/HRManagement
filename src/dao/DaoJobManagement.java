@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author amry4
  */
-public class DaoJobManagement implements InterfaceJobManagement{
+public class DaoJobManagement implements InterfaceJobManagement {
 
     Connection c;
     final String insert = "INSERT INTO HR.Employees (job_title,"
@@ -30,14 +30,16 @@ public class DaoJobManagement implements InterfaceJobManagement{
             + ", max_Salary=? WHERE job_id=?";
     final String delete = "DELETE FROM HR.jobs WHERE job_id =?";
     final String select = "SELECT * FROM HR.jobs ORDER BY job_id";
-    final String search = "SELECT * FROM HR.jobs WHERE job_title LIKE ?";
+    final String selectFK = "SELECT Job_title FROM HR.jobs WHERE job_id = ?";
     PreparedStatement pst = null;
+
     public DaoJobManagement() {
         Connections conn = new Connections();
         c = conn.getC();
     }
+
     @Override
-    public boolean insertOrUpdate(EntityJob Ej,boolean isInsert) {
+    public boolean insertOrUpdate(EntityJob Ej, boolean isInsert) {
         try {
             pst = (isInsert) ? c.prepareStatement(insert) : c.prepareStatement(update);
             pst.setString(1, Ej.getTitle());
@@ -48,11 +50,12 @@ public class DaoJobManagement implements InterfaceJobManagement{
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
-        } }
+        }
+    }
 
     @Override
     public boolean delete(String id) {
-          try {
+        try {
             pst = c.prepareStatement(delete);
             pst.setString(1, id);
             pst.executeQuery();
@@ -65,7 +68,7 @@ public class DaoJobManagement implements InterfaceJobManagement{
 
     @Override
     public List<EntityJob> getALL() {
-         List<EntityJob> lb = null;
+        List<EntityJob> lb = null;
         try {
             lb = new ArrayList<EntityJob>();
             Statement st = c.createStatement();
@@ -82,7 +85,27 @@ public class DaoJobManagement implements InterfaceJobManagement{
             Logger.getLogger(DaoJobManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lb;
-    
+
     }
-    
+
+    @Override
+    public String getById(String Id) {
+        String temp = "";
+        try {
+            ResultSet rs;
+            temp = new String();
+            pst = c.prepareStatement(selectFK);
+            pst.setString(1, Id);
+            pst.execute();
+            rs = pst.getResultSet();
+            while (rs.next()) {
+                temp = rs.getString(1);
+
+            }
+        } catch (Exception e) {
+            return e.toString();
+        }
+        return temp;
+    }
 }
+

@@ -33,6 +33,8 @@ public class DaoEmployeeManagement implements InterfaceEmployeeManagement {
     final String delete = "DELETE FROM HR.employees WHERE employee_id =?";
     final String select = "SELECT * FROM HR.employees ORDER BY employee_ID";
     final String search = "SELECT * FROM HR.employees WHERE last_NAME LIKE ?";
+    final String selectManager = "select distinct manager.last_name from HR.employees worker Join HR.employees manager ON (worker.manager_id = manager.employee_id)";
+    final String selectFK = "SELECT employee_name FROM HR.employees where manager_id = ?";
     PreparedStatement pst = null;
 
     public DaoEmployeeManagement() {
@@ -102,5 +104,55 @@ public class DaoEmployeeManagement implements InterfaceEmployeeManagement {
             Logger.getLogger(DaoRegionManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lb;
+    }
+
+    @Override
+    public Integer getById(int Id) {
+        int temp = 0;
+        try {
+            ResultSet rs;
+            temp = new Integer(0);
+            pst = c.prepareStatement(selectFK);
+            pst.setInt(1, Id);
+            pst.execute();
+            rs = pst.getResultSet();
+            while (rs.next()) {
+                temp = rs.getInt(1);
+
+            }
+        } catch (Exception e) {
+            return temp;
+        }
+        return temp;
+    }
+    
+    @Override
+    public List<EntityEmployee> getAllManager() {
+        List<EntityEmployee> ListManager = null;
+
+        try {
+            ListManager = new ArrayList<EntityEmployee>();
+            Statement st = c.createStatement();
+            ResultSet rs = st.executeQuery(selectManager);
+            while (rs.next()) {
+                EntityEmployee EJM = new EntityEmployee();
+                EJM.setLastName(rs.getString(1));
+                ListManager.add(EJM);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEmployeeManagement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ListManager;
+    }
+
+
+    @Override
+    public List<EntityEmployee> getAllJob() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<EntityEmployee> getAllDepartment() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

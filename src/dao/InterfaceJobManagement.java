@@ -18,5 +18,6 @@ public interface InterfaceJobManagement {
     public boolean delete(String id);
 
     public List<EntityJob> getALL();
+     public String getById(String Id);
 
 }

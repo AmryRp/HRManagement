@@ -32,7 +32,8 @@ public class CountryController {
 
     List<EntityRegion> ListRegion;
     InterfaceRegionManagement IntrfcRM;
-    EntityCountry EL = new EntityCountry();
+    
+    EntityCountry EC = new EntityCountry();
 
     public CountryController() {
     }
@@ -43,21 +44,6 @@ public class CountryController {
         ListCountry = IntrfcCM.getALL();
         IntrfcRM = new DaoRegionManagement();
         ListRegion = IntrfcRM.getALL();
-    }
-
-    public void isiTabel(JTable tabel) {
-        ListCountry = IntrfcCM.getALL();
-        DefaultTableModel dtm = (DefaultTableModel) tabel.getModel();
-        Object[] row;
-        row = new Object[ListCountry.size()];
-        while (dtm.getRowCount() < ListCountry.size()) {
-            row[0] = ListCountry.get(dtm.getRowCount()).getId();
-            row[1] = ListCountry.get(dtm.getRowCount()).getCountryName();
-            row[2] = ListCountry.get(dtm.getRowCount()).getRegionId();
-            dtm.addRow(row);
-
-        }
-        CountryView.getTblCountries().setModel(dtm);
     }
 
     public String Save(String id, String name, String Region, boolean isSave) {

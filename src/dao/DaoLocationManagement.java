@@ -92,6 +92,11 @@ public class DaoLocationManagement implements InterfaceLocationManagement {
         return lb;
     }
 
+    @Override
+    public Integer getById(int Id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 
 }

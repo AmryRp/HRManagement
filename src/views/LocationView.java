@@ -37,7 +37,7 @@ public final class LocationView extends javax.swing.JFrame {
         ListCountry = IntrfcCM.getALL();
         bindingTable(tblViewLocation);
         Fillcbox(CmbCountryId);
-        getValueBox();
+        
     }
     LocationController Lct;
     InterfaceLocationManagement IntrfcLM;
@@ -45,22 +45,6 @@ public final class LocationView extends javax.swing.JFrame {
     List<EntityCountry> ListCountry;
     InterfaceCountryManagement IntrfcCM;
     boolean isClicked = true;
-
-    private ArrayList getValueFK() {
-        ListCountry = IntrfcCM.getALL();
-        ArrayList FK = new ArrayList<String>();
-        String[] countryname = new String[ListCountry.size()];
-        int[] countryId = new int[ListCountry.size()];
-        int i = 0;
-        while (i < ListCountry.size()) {
-            countryname[i] = ListCountry.get(i).getCountryName();
-            countryId[i] = ListCountry.get(i).getRegionId();
-            i++;
-        }
-        FK.add(countryname);
-        FK.add(countryId);
-        return FK;
-    }
 
     public void Fillcbox(JComboBox Jbox) {
 
@@ -77,21 +61,6 @@ public final class LocationView extends javax.swing.JFrame {
         getCmbCountryId().setModel(tR);
     }
 
-    public String getValueBox() {
-        String val = getCmbCountryId().getSelectedItem().toString();
-        int idx = -1;
-        ArrayList result = new ArrayList<String>();
-        result = getValueFK();
-        String[] region_name = new String[result.size()];
-        region_name = (String[]) result.get(0);
-        for (int i = 0; i < region_name.length; i++) {
-            if (val.equals(region_name[i])) {
-                idx = i + 1;
-            }
-        }
-
-        return val;
-    }
 
     public void bindingTable(JTable tabel) {
         ListLocation = IntrfcLM.getALL();
@@ -113,18 +82,18 @@ public final class LocationView extends javax.swing.JFrame {
         }
         tblViewLocation.setModel(tR);
     }
-     public void IdBind(JTable tabel) {
-        ListLocation = IntrfcLM.getALL();
-        DefaultTableModel tR = new DefaultTableModel();
-        tabel.getModel();
-        Object[] row;
-        row = new Object[ListLocation.size()];
-        while (tR.getRowCount() < ListLocation.size()) {
-            row[0] = ListLocation.get(tR.getRowCount()).getId();
-            tR.addRow(row);
-        }
-        tblViewLocation.setModel(tR);
-    }
+//     public void IdBind(JTable tabel) {
+//        ListLocation = IntrfcLM.getALL();
+//        DefaultTableModel tR = new DefaultTableModel();
+//        tabel.getModel();
+//        Object[] row;
+//        row = new Object[ListLocation.size()];
+//        while (tR.getRowCount() < ListLocation.size()) {
+//            row[0] = ListLocation.get(tR.getRowCount()).getId();
+//            tR.addRow(row);
+//        }
+//        tblViewLocation.setModel(tR);
+//    }
     public void clearTable(JTable table) {
         DefaultTableModel dm = (DefaultTableModel) table.getModel();
         while (dm.getRowCount() > 0) {

@@ -15,6 +15,16 @@ public class EntityDepartment {
     private Integer managerId;
     private Integer locationId;
 
+    public EntityDepartment() {
+    }
+
+    public EntityDepartment(Integer id, String name, Integer managerId, Integer locationId) {
+        this.id = id;
+        this.name = name;
+        this.managerId = managerId;
+        this.locationId = locationId;
+    }
+
     public Integer getManagerId() {
         return managerId;
     }
