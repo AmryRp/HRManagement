@@ -12,6 +12,7 @@ import dao.InterfaceDepartmentManagement;
 import dao.InterfaceEmployeeManagement;
 import dao.InterfaceJobManagement;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import models.EntityDepartment;
@@ -58,10 +59,10 @@ public class EmployeeController {
     }
 
     public String Save(String id, String firstName, String lastName, String email,
-            String phoneNumber, String hireDate, String jobId, String Salary, String commision, String managerId, String deptId, boolean isSave) {
+            String phoneNumber, Date hireDate, String jobId, String Salary, String commision, String managerId, String deptId, boolean isSave) {
 
         return (IntrfcEM.insertOrUpdate(new EntityEmployee(Integer.parseInt(id), firstName, lastName, email, phoneNumber,
-                Date.valueOf(hireDate).toString(), getValueBoxJob(jobId), Float.valueOf(Salary), Float.valueOf(commision), getValueBoxManager(managerId), getValueBoxDept(deptId)),
+                hireDate, getValueBoxJob(jobId), Float.valueOf(Salary), Float.valueOf(commision), getValueBoxManager(managerId.toString()), getValueBoxDept(deptId.toString())),
                 isSave)) ? "sukses" : "failed";
     }
 
@@ -97,15 +98,15 @@ public class EmployeeController {
         String val = Data;
         int Id = 0;
         ArrayList result = new ArrayList<String>();
+        ArrayList resultint = new ArrayList<Integer>();
         result = getValueFKManager();
         String[] region_name = new String[result.size()];
-        String[] region_ID = new String[result.size()];
-        
+        int[] region_ID = new int[result.size()];
+        region_ID = (int[]) result.get(0);
         region_name = (String[]) result.get(1);
         for (int i = 0; i < region_name.length; i++) {
             if (val.equals(region_name[i])) {
-
-                System.out.println(region_name[i]);
+                Id = region_ID[i];
             }
         }
         return Id;
@@ -129,17 +130,19 @@ public class EmployeeController {
 
     public String getValueBoxJob(String Data) {
         String val = Data;
-        int idx = -1;
+        String idx = " ";
         ArrayList result = new ArrayList<String>();
         result = getValueFKJob();
         String[] region_name = new String[result.size()];
+        String[] region_ID = new String[result.size()];
+        region_ID = (String[]) result.get(1);
         region_name = (String[]) result.get(0);
         for (int i = 0; i < region_name.length; i++) {
             if (val.equals(region_name[i])) {
-                idx = i + 1;
+                idx = region_ID[i];
             }
         }
-        return val;
+        return idx;
     }
 
     private ArrayList getValueFKDept() {
@@ -148,28 +151,33 @@ public class EmployeeController {
         int[] mId = new int[ListDept.size()];
         int i = 0;
         while (i < ListDept.size()) {
-            mName[i] = ListDept.get(i).getName();
             mId[i] = ListDept.get(i).getId();
+            mName[i] = ListDept.get(i).getName();
+
             i++;
         }
         ArrayList FK = new ArrayList<String>();
-        FK.add(mName);
         FK.add(mId);
+        FK.add(mName);
+
         return FK;
     }
 
-    public int getValueBoxDept(String Data) {
+    public Integer getValueBoxDept(String Data) {
         String val = Data;
-        int idx = -1;
+        int Id = 0;
         ArrayList result = new ArrayList<String>();
+        ArrayList resultint = new ArrayList<Integer>();
         result = getValueFKDept();
-        String[] region_name = new String[result.size()];
-        region_name = (String[]) result.get(0);
-        for (int i = 0; i < region_name.length; i++) {
-            if (val.equals(region_name[i])) {
-                idx = i + 1;
+        String[] dept_name = new String[result.size()];
+        int[] dept_id = new int[result.size()];
+        dept_id = (int[]) result.get(0);
+        dept_name = (String[]) result.get(1);
+        for (int i = 0; i < dept_name.length; i++) {
+            if (val.equals(dept_name[i])) {
+                Id = dept_id[i];
             }
         }
-        return idx;
+        return Id;
     }
 }

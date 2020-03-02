@@ -44,7 +44,6 @@ public class DepartmentView extends javax.swing.JFrame {
      */
     public DepartmentView() {
         initComponents();
-        
         Dct = new DepartmentController(this);
         idm = new DaoDepartmentManagement();
         ListDM = idm.getALL();
@@ -75,14 +74,14 @@ public class DepartmentView extends javax.swing.JFrame {
     public void FillcboxL(JComboBox Jbox) {
 
         ListLM = ilm.getALL();
-        String[] countryname = new String[ListLM.size()];
+        String[] locationname = new String[ListLM.size()];
         int i = 0;
         while (i < ListLM.size()) {
-            countryname[i] = ListLM.get(i).getCity();
+            locationname[i] = ListLM.get(i).getCity();
             i++;
         }
-        DefaultComboBoxModel tR = new DefaultComboBoxModel(countryname);
-        getCmbDMLoc().setModel(tR);
+        DefaultComboBoxModel dtm = new DefaultComboBoxModel(locationname);
+        getCmbDMLoc().setModel(dtm);
     }
     public void bindingTable(JTable tabel) {
         ListDM = idm.getALL();
@@ -313,8 +312,8 @@ if (!IsEmptyField()) {
         int row = TblDM.getSelectedRow();
         TxtDMId.setText(dm.getValueAt(row, 0).toString());
         TxtDMName.setText(dm.getValueAt(row, 1).toString());
-        CmbDMLoc.setSelectedItem(dm.getValueAt(row, 2));
-        CmbDMMan.setSelectedItem(dm.getValueAt(row, 3));
+        CmbDMLoc.setSelectedItem(dm.getValueAt(row, 2).toString());
+        CmbDMMan.setSelectedItem(dm.getValueAt(row, 3).toString());
         TxtDMId.setEditable(false);
         isClicked = false;
     }//GEN-LAST:event_TblDMMouseClicked

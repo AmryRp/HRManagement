@@ -13,10 +13,14 @@ import models.EntityDepartment;
  * @author amry4
  */
 public interface InterfaceDepartmentManagement {
+
     public boolean insertOrUpdate(EntityDepartment ED, boolean isInsert);
 
     public boolean delete(int id);
+
     public String getById(int Id);
 
     public List<EntityDepartment> getALL();
+    
+    public List<EntityDepartment> getCari(String nama);
 }

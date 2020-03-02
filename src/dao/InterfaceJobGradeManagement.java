@@ -6,14 +6,17 @@
 package dao;
 
 import java.util.List;
-import models.EntityJobHistory;
+import models.EntityJobGrade;
 
 /**
  *
  * @author amry4
  */
-public interface InterfaceJobHistoryManagement {
-    
-    public List<EntityJobHistory> getALL();
-    public List<EntityJobHistory> getCari(String nama);
+public interface InterfaceJobGradeManagement {
+
+    public boolean insertOrUpdate(EntityJobGrade EJD, boolean isInsert);
+
+    public boolean delete(String id);
+
+    public List<EntityJobGrade> getALL();
 }

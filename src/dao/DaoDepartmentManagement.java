@@ -106,5 +106,10 @@ public class DaoDepartmentManagement implements InterfaceDepartmentManagement {
         }
         return temp;
     }
+
+    @Override
+    public List<EntityDepartment> getCari(String nama) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
 

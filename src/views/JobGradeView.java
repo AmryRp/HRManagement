@@ -5,17 +5,73 @@
  */
 package views;
 
+import controllers.JobGradeController;
+import dao.DaoJobGradeManagement;
+import dao.InterfaceJobGradeManagement;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import models.EntityJobGrade;
+
 /**
  *
  * @author amry4
  */
 public class JobGradeView extends javax.swing.JFrame {
 
+    JobGradeController JGct;
+    List<EntityJobGrade> ListJG;
+    InterfaceJobGradeManagement ijgm;
+    boolean isClicked = true;
+
     /**
      * Creates new form JobGradesManagement
      */
     public JobGradeView() {
         initComponents();
+        JGct = new JobGradeController();
+        ijgm = new DaoJobGradeManagement();
+        ListJG = ijgm.getALL();
+        bindingTable(TblJG);
+    }
+
+    public void refresh() {
+        clearTable(TblJG);
+        bindingTable(TblJG);
+        TxtGradelvl.setText("");
+        TxtLowS.setText("");
+        TxtHighS.setText("");
+        TxtGradelvl.setEnabled(true);
+        isClicked = true;
+    }
+
+    private boolean IsEmptyField() {
+        return TxtGradelvl.getText().trim().equals("");
+    }
+
+    public void bindingTable(JTable tabel) {
+        ListJG = ijgm.getALL();
+        String[] tblHeader = new String[]{"grade level", "lowest salary", "highest salary"};
+        DefaultTableModel dtm = new DefaultTableModel(null, tblHeader);
+        tabel.getModel();
+        Object[] row;
+        row = new Object[ListJG.size()];
+        while (dtm.getRowCount() < ListJG.size()) {
+            row[0] = ListJG.get(dtm.getRowCount()).getId();
+            row[1] = ListJG.get(dtm.getRowCount()).getLowestSalary();
+            row[2] = ListJG.get(dtm.getRowCount()).getHighestSalary();
+            dtm.addRow(row);
+        }
+        TblJG.setModel(dtm);
+    }
+
+    public void clearTable(JTable table) {
+        DefaultTableModel dm = (DefaultTableModel) table.getModel();
+        while (dm.getRowCount() > 0) {
+            dm.removeRow(0);
+        }
+
     }
 
     /**
@@ -27,21 +83,165 @@ public class JobGradeView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        TxtLowS = new javax.swing.JTextField();
+        TxtHighS = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        TxtGradelvl = new javax.swing.JTextField();
+        btnDelete = new javax.swing.JButton();
+        btnInsert = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TblJG = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+
+        jLabel2.setText("Grade");
+
+        jLabel3.setText("Lowest salary");
+
+        jLabel4.setText("Highest salary");
+
+        btnDelete.setBackground(new java.awt.Color(255, 51, 51));
+        btnDelete.setForeground(new java.awt.Color(255, 255, 255));
+        btnDelete.setText("DELETE");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnInsert.setBackground(new java.awt.Color(51, 204, 255));
+        btnInsert.setText("SAVE");
+        btnInsert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addGap(18, 18, 18))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addGap(20, 20, 20)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(64, 64, 64)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(TxtGradelvl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtLowS, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                    .addComponent(TxtHighS))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(TxtGradelvl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtLowS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtHighS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addContainerGap(34, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnInsert)
+                    .addComponent(btnDelete))
+                .addContainerGap())
+        );
+
+        TblJG.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ));
+        jScrollPane1.setViewportView(TblJG);
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel1.setText("JOB GRADE");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(255, 255, 255)
+                        .addComponent(jLabel1)))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        if (!IsEmptyField()) {
+            int result = JOptionPane.showConfirmDialog(null,
+                    "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(rootPane, JGct.delete(TxtGradelvl.getText()));
+                refresh();
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "fill id");
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
+        if (IsEmptyField()) {
+            JOptionPane.showMessageDialog(rootPane, "fill id");
+        } else {
+
+            JOptionPane.showMessageDialog(rootPane, JGct.Save(TxtGradelvl.getText(),
+                    TxtLowS.getText(), TxtHighS.getText(),
+                    isClicked));
+        }
+        refresh();
+    }//GEN-LAST:event_btnInsertActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +279,17 @@ public class JobGradeView extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TblJG;
+    private javax.swing.JTextField TxtGradelvl;
+    private javax.swing.JTextField TxtHighS;
+    private javax.swing.JTextField TxtLowS;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnInsert;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

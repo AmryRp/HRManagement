@@ -56,4 +56,9 @@ public class DaoJobHistoryManagement implements InterfaceJobHistoryManagement {
         return lb;
     }
 
+    @Override
+    public List<EntityJobHistory> getCari(String nama) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

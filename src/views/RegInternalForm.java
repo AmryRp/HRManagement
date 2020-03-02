@@ -31,7 +31,7 @@ public class RegInternalForm extends javax.swing.JInternalFrame {
      */
     public RegInternalForm() {
         initComponents();
-        rct = new RegionController();
+        rct = new RegionController(this);
         IntrfcRM = new DaoRegionManagement();
         ListRegion = IntrfcRM.getALL();
         bindingTable(tblView);

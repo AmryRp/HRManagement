@@ -10,9 +10,19 @@ package models;
  * @author amry4
  */
 public class EntityJobGrade {
+
     private String id;
     private int lowestSalary;
     private int highestSalary;
+
+    public EntityJobGrade() {
+    }
+
+    public EntityJobGrade(String id, int lowestSalary, int highestSalary) {
+        this.id = id;
+        this.lowestSalary = lowestSalary;
+        this.highestSalary = highestSalary;
+    }
 
     public String getId() {
         return id;

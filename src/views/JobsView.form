@@ -106,7 +106,6 @@
                   </Group>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="TxtJobTitle" min="-2" pref="112" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="TxtMinSal" min="-2" pref="126" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
@@ -115,6 +114,7 @@
                           <Component id="TxtMaxSal" min="-2" pref="94" max="-2" attributes="0"/>
                       </Group>
                       <Component id="TxtJobId" min="-2" pref="53" max="-2" attributes="0"/>
+                      <Component id="TxtJobTitle" alignment="0" min="-2" pref="182" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="271" max="32767" attributes="0"/>
               </Group>

@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import models.EntityRegion;
 import views.RegionView;
 import dao.InterfaceRegionManagement;
+import views.RegInternalForm;
 
 /**
  *
@@ -24,6 +25,7 @@ public class RegionController {
     }
 
     RegionView frame;
+    RegInternalForm frame2;
     InterfaceRegionManagement IntrfcRM;
     List<EntityRegion> ListRegion;
     EntityRegion Er = new EntityRegion();
@@ -33,7 +35,11 @@ public class RegionController {
         IntrfcRM = new DaoRegionManagement();
         ListRegion = IntrfcRM.getALL();
     }
-
+    public RegionController(RegInternalForm frame) {
+        this.frame2 = frame;
+        IntrfcRM = new DaoRegionManagement();
+        ListRegion = IntrfcRM.getALL();
+    }
     public void clear(JTable tabel) {
         DefaultTableModel tR = (DefaultTableModel) tabel.getModel();
         while (tR.getRowCount() > 0) {

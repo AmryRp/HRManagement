@@ -124,7 +124,6 @@ public class CountryView extends javax.swing.JFrame {
         TblCountries = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(907, 599));
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));

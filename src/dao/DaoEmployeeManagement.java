@@ -26,8 +26,8 @@ public class DaoEmployeeManagement implements InterfaceEmployeeManagement {
     Connection c;
     final String insert = "INSERT INTO HR.Employees (First_name,Last_name,"
             + "EMail,phone_number,Hire_date,Job_id,Salary,Commission_PCT,Manager_id,"
-            + "Department_id,Employee_id)VALUES(?,?,?,?,TO_DATE(?,'dd/mm/yy'),?,?,?,?,?,?,?)";
-    final String update = "UPDATE HR.Employees SET employee_name=?,first_name = ?,"
+            + "Department_id,Employee_id)VALUES(?,?,?,?,TO_DATE(?,'dd/mm/yy'),?,?,?,?,?,?)";
+    final String update = "UPDATE HR.Employees SET first_name = ?,"
             + "last_name=?, Email=?, phone_number=?,hire_date=?,job_id=?,Salary=?"
             + "COmmission_pct=?,Manager_id=?,department_id=? WHERE employee_id=?";
     final String delete = "DELETE FROM HR.employees WHERE employee_id =?";
@@ -51,7 +51,7 @@ public class DaoEmployeeManagement implements InterfaceEmployeeManagement {
             pst.setString(2, EM.getLastName());
             pst.setString(3, EM.getEmail());
             pst.setString(4, EM.getPhoneNumber());
-            pst.setString(5, EM.getHireDate());
+            pst.setDate(5, EM.getHireDate());
             pst.setString(6, EM.getJobId());
             pst.setFloat(7, EM.getSalary());
             pst.setFloat(8, EM.getCommision());
@@ -92,7 +92,7 @@ public class DaoEmployeeManagement implements InterfaceEmployeeManagement {
                 EM.setLastName(rs.getString(3));
                 EM.setEmail(rs.getString(4));
                 EM.setPhoneNumber(rs.getString(5));
-                EM.setHireDate(rs.getString(6));
+                EM.setHireDate(rs.getDate(6));
                 EM.setJobId(rs.getString(7));
                 EM.setSalary(rs.getFloat(8));
                 EM.setCommision(rs.getFloat(9));
@@ -159,6 +159,11 @@ public class DaoEmployeeManagement implements InterfaceEmployeeManagement {
 
     @Override
     public List<EntityEmployee> getAllDepartment() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<EntityEmployee> getCari(String nama) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

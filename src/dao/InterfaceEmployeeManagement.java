@@ -27,4 +27,6 @@ public interface InterfaceEmployeeManagement {
     public List<EntityEmployee> getAllJob();
 
     public List<EntityEmployee> getAllDepartment();
+    
+    public List<EntityEmployee> getCari(String nama);
 }
