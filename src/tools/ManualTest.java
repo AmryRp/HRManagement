@@ -6,7 +6,6 @@
 package tools;
 
 import java.sql.Connection;
-import views.RegionView;
 import views.MainMenuView;
 
 /**

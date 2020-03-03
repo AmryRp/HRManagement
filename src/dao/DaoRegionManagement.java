@@ -38,7 +38,7 @@ public class DaoRegionManagement implements InterfaceRegionManagement {
 
     @Override
     public boolean insertOrUpdate(EntityRegion Er, boolean isInsert) {
-        
+
         try {
             pst = (isInsert) ? c.prepareStatement(insert) : c.prepareStatement(update);
             pst.setString(1, Er.getName());

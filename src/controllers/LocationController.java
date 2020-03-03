@@ -10,7 +10,7 @@ import dao.DaoLocationManagement;
 import java.util.List;
 import models.EntityCountry;
 import models.EntityLocation;
-import views.LocationView;
+import views.LocInternalVIew;
 import dao.InterfaceCountryManagement;
 import dao.InterfaceLocationManagement;
 import java.util.ArrayList;
@@ -24,14 +24,14 @@ public class LocationController {
     public LocationController() {
     }
 
-    LocationView LocView;
+    LocInternalVIew LocView;
     InterfaceLocationManagement IntrfcLM;
     List<EntityLocation> ListLoc;
     EntityLocation EL = new EntityLocation();
     List<EntityCountry> ListCountry;
     InterfaceCountryManagement IntrfcCM;
 
-    public LocationController(LocationView frame) {
+    public LocationController(LocInternalVIew frame) {
         this.LocView = frame;
         IntrfcLM = new DaoLocationManagement();
         ListLoc = IntrfcLM.getALL();
@@ -41,7 +41,7 @@ public class LocationController {
     }
 
     public String Save(String Id, String Address, String ZipCode, String City, String Province, String idCountry, boolean isSave) {
-
+        IntrfcLM = new DaoLocationManagement();
         return (IntrfcLM.insertOrUpdate(new EntityLocation(Integer.parseInt(Id), Address, ZipCode, City, Province, getValueBox(idCountry)),
                 isSave)) ? "sukses" : "failed";
 
@@ -52,6 +52,7 @@ public class LocationController {
     }
 
     private ArrayList getValueFK() {
+          IntrfcCM = new DaoCountryManagement();
         ListCountry = IntrfcCM.getALL();
         ArrayList FK = new ArrayList<String>();
         String[] countryname = new String[ListCountry.size()];

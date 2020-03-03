@@ -19,6 +19,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import models.EntityDepartment;
 import models.EntityEmployee;
@@ -28,8 +29,24 @@ import models.EntityLocation;
  *
  * @author amry4
  */
-public class DepartmentView extends javax.swing.JFrame {
+public class DepartmentInternalView extends javax.swing.JInternalFrame {
 
+    /**
+     * Creates new form DepartmentInternalView
+     */
+    public DepartmentInternalView() {
+        initComponents();Dct = new DepartmentController();
+        idm = new DaoDepartmentManagement();
+        ListDM = idm.getALL();
+        ilm = new DaoLocationManagement();
+        ListLM = ilm.getALL();
+        iem = new DaoEmployeeManagement();
+        ListEM = iem.getAllManager();
+        bindingTable(TblDM);
+        FillcboxM(CmbDMMan);
+        FillcboxL(CmbDMLoc);
+        
+    }
     DepartmentController Dct;
     InterfaceDepartmentManagement idm;
     List<EntityDepartment> ListDM;
@@ -42,20 +59,7 @@ public class DepartmentView extends javax.swing.JFrame {
     /**
      * Creates new form DepartmentsManagement
      */
-    public DepartmentView() {
-        initComponents();
-        Dct = new DepartmentController(this);
-        idm = new DaoDepartmentManagement();
-        ListDM = idm.getALL();
-        ilm = new DaoLocationManagement();
-        ListLM = ilm.getALL();
-        iem = new DaoEmployeeManagement();
-        ListEM = iem.getAllManager();
-        bindingTable(TblDM);
-        FillcboxM(CmbDMMan);
-        FillcboxL(CmbDMLoc);
-        
-    }
+    
 
     public void FillcboxM(JComboBox Jbox) {
 
@@ -120,6 +124,7 @@ public class DepartmentView extends javax.swing.JFrame {
     private boolean IsEmptyField() {
         return TxtDMId.getText().trim().equals("");
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -142,13 +147,6 @@ public class DepartmentView extends javax.swing.JFrame {
         CmbDMMan = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         TblDM = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(2147, 2147));
-        setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
@@ -247,8 +245,6 @@ public class DepartmentView extends javax.swing.JFrame {
                     .addComponent(btnDelete)))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 30, 730, 220));
-
         TblDM.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -272,32 +268,53 @@ public class DepartmentView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TblDM);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 730, 290));
-
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel1.setText("DEPARTMENT MANAGEMENT");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, -1, -1));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 733, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(3, 3, 3)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 540, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(30, 30, 30)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-         if (IsEmptyField()) {
+        if (IsEmptyField()) {
             JOptionPane.showMessageDialog(rootPane, "fill id");
         } else {
 
             JOptionPane.showMessageDialog(rootPane, Dct.Save(TxtDMId.getText(),
-                    TxtDMName.getText(), CmbDMMan.getSelectedItem().toString(),
-                    CmbDMLoc.getSelectedItem().toString(),
-                    isClicked));
+                TxtDMName.getText(), CmbDMMan.getSelectedItem().toString(),
+                CmbDMLoc.getSelectedItem().toString(),
+                isClicked));
         }
         refresh();
     }//GEN-LAST:event_btnInsertActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-if (!IsEmptyField()) {
+        if (!IsEmptyField()) {
             int result = JOptionPane.showConfirmDialog(null,
-                    "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
+                "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(rootPane, Dct.delete(TxtDMId.getText()));
                 refresh();
@@ -308,50 +325,16 @@ if (!IsEmptyField()) {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void TblDMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TblDMMouseClicked
-         DefaultTableModel dm = (DefaultTableModel) TblDM.getModel();
+        DefaultTableModel dm = (DefaultTableModel) TblDM.getModel();
         int row = TblDM.getSelectedRow();
         TxtDMId.setText(dm.getValueAt(row, 0).toString());
         TxtDMName.setText(dm.getValueAt(row, 1).toString());
-        CmbDMLoc.setSelectedItem(dm.getValueAt(row, 2).toString());
-        CmbDMMan.setSelectedItem(dm.getValueAt(row, 3).toString());
+        CmbDMLoc.setSelectedItem(dm.getValueAt(row, 2));
+        CmbDMMan.setSelectedItem(dm.getValueAt(row, 3));
         TxtDMId.setEditable(false);
         isClicked = false;
     }//GEN-LAST:event_TblDMMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(DepartmentsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(DepartmentsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(DepartmentsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(DepartmentsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new DepartmentsView().setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CmbDMLoc;
@@ -361,7 +344,6 @@ if (!IsEmptyField()) {
     private javax.swing.JTextField TxtDMName;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnInsert;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -370,25 +352,23 @@ if (!IsEmptyField()) {
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
-    
-
-    public javax.swing.JTable getTblDM() {
-        return TblDM;
-    }
-
-    public javax.swing.JTextField getTxtDMId() {
-        return TxtDMId;
-    }
-
-    public javax.swing.JTextField getTxtDMName() {
-        return TxtDMName;
-    }
-
-    public javax.swing.JComboBox<String> getCmbDMLoc() {
+    public JComboBox<String> getCmbDMLoc() {
         return CmbDMLoc;
     }
 
-    public javax.swing.JComboBox<String> getCmbDMMan() {
+    public JComboBox<String> getCmbDMMan() {
         return CmbDMMan;
+    }
+
+    public JTable getTblDM() {
+        return TblDM;
+    }
+
+    public JTextField getTxtDMId() {
+        return TxtDMId;
+    }
+
+    public JTextField getTxtDMName() {
+        return TxtDMName;
     }
 }

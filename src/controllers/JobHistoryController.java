@@ -9,7 +9,7 @@ import dao.DaoJobHistoryManagement;
 import dao.InterfaceJobHistoryManagement;
 import java.util.List;
 import models.EntityJobHistory;
-import views.JobHistoryView;
+import views.JobHistoryInternalView;
 
 /**
  *
@@ -17,9 +17,9 @@ import views.JobHistoryView;
  */
 public class JobHistoryController {
     
-    JobHistoryView jhview;
+    JobHistoryInternalView jhview;
 
-    public JobHistoryController(JobHistoryView jhview) {
+    public JobHistoryController(JobHistoryInternalView jhview) {
         this.jhview = jhview;
         ijhm =  new DaoJobHistoryManagement();
         ListEJH = ijhm.getALL();

@@ -92,7 +92,6 @@ public class RegInternalForm extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -105,11 +104,8 @@ public class RegInternalForm extends javax.swing.JInternalFrame {
 
         setBorder(null);
         setForeground(java.awt.Color.white);
+        setTitle("REGION MANAGEMENT");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jLabel3.setText("REGION MANAGEMENT");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(227, 253, 227));
         jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
@@ -262,7 +258,6 @@ public class RegInternalForm extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnInsert;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblView;

@@ -15,13 +15,13 @@ public class MainMenuView extends javax.swing.JFrame {
 
     Color paneldefault;
     Color panelClicked;
+    Color panelBG;
 
     public MainMenuView() {
         initComponents();
-
-        paneldefault = new Color(0,204,204);
-        panelClicked = new Color(0,200,200);
-        PLocation.setBackground(paneldefault);
+        paneldefault = new Color(240, 240, 240);
+        panelClicked = new Color(0, 200, 200);
+        PCountry.setBackground(paneldefault);
         PRegion.setBackground(paneldefault);
     }
 
@@ -35,246 +35,188 @@ public class MainMenuView extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu2 = new javax.swing.JMenu();
-        jPanel1 = new javax.swing.JPanel();
-        PRegion = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        PCountry = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        PLocation = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        PDepartment = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        PJob = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        PEmployee = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        PJHistory = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jPane = new javax.swing.JPanel();
+        jPanel = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        PRegion = new javax.swing.JMenuItem();
+        PCountry = new javax.swing.JMenuItem();
+        PLocation = new javax.swing.JMenuItem();
+        PDepartment = new javax.swing.JMenuItem();
+        PJob = new javax.swing.JMenuItem();
+        PEmployee = new javax.swing.JMenuItem();
+        PJobHistory = new javax.swing.JMenuItem();
+        PJobGrade = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
 
         jMenu2.setText("jMenu2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("HR MANAGEMENT");
+        setIconImages(null);
 
-        jPanel1.setBackground(new java.awt.Color(0, 51, 51));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel.setBackground(new java.awt.Color(0, 153, 153));
 
-        PRegion.setBackground(new java.awt.Color(0, 204, 204));
-        PRegion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        PRegion.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        PRegion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PRegionMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                PLocationMousePressed(evt);
-            }
-        });
-        PRegion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Yu Gothic", 1, 15)); // NOI18N
-        jLabel1.setText("REGION");
-        PRegion.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
-
-        jPanel1.add(PRegion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 120, 80));
-
-        PCountry.setBackground(new java.awt.Color(0, 204, 204));
-        PCountry.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        PCountry.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        PCountry.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PCountryMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                PLocationMousePressed(evt);
-            }
-        });
-        PCountry.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel3.setFont(new java.awt.Font("Yu Gothic", 1, 15)); // NOI18N
-        jLabel3.setText("COUNTRY");
-        PCountry.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
-
-        jPanel1.add(PCountry, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 120, 80));
-
-        PLocation.setBackground(new java.awt.Color(0, 204, 204));
-        PLocation.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        PLocation.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        PLocation.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PLocationMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                PLocationMousePressed(evt);
-            }
-        });
-        PLocation.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setFont(new java.awt.Font("Yu Gothic", 1, 15)); // NOI18N
-        jLabel4.setText("LOCATION");
-        PLocation.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, 14));
-
-        jPanel1.add(PLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 120, 80));
-
-        PDepartment.setBackground(new java.awt.Color(0, 204, 204));
-        PDepartment.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        PDepartment.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        PDepartment.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PDepartmentMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                PLocationMousePressed(evt);
-            }
-        });
-        PDepartment.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel5.setFont(new java.awt.Font("Yu Gothic", 1, 15)); // NOI18N
-        jLabel5.setText("DEPARTMENT");
-        PDepartment.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, 20));
-
-        jPanel1.add(PDepartment, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 120, 80));
-
-        PJob.setBackground(new java.awt.Color(0, 204, 204));
-        PJob.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        PJob.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        PJob.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PJobMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                PLocationMousePressed(evt);
-            }
-        });
-        PJob.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel7.setFont(new java.awt.Font("Yu Gothic", 1, 15)); // NOI18N
-        jLabel7.setText("JOB");
-        PJob.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, 16));
-
-        jPanel1.add(PJob, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 120, 80));
-
-        PEmployee.setBackground(new java.awt.Color(0, 204, 204));
-        PEmployee.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        PEmployee.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        PEmployee.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PEmployeeMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                PLocationMousePressed(evt);
-            }
-        });
-        PEmployee.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel6.setFont(new java.awt.Font("Yu Gothic", 1, 15)); // NOI18N
-        jLabel6.setText("EMPLOYEE");
-        PEmployee.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, 16));
-
-        jPanel1.add(PEmployee, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 120, 80));
-
-        PJHistory.setBackground(new java.awt.Color(0, 204, 204));
-        PJHistory.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        PJHistory.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        PJHistory.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PJHistoryMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                PLocationMousePressed(evt);
-            }
-        });
-        PJHistory.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel8.setFont(new java.awt.Font("Yu Gothic", 1, 15)); // NOI18N
-        jLabel8.setText("JOB HISTORY");
-        PJHistory.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, 20));
-
-        jPanel1.add(PJHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 120, 80));
-
-        jPanel3.setBackground(new java.awt.Color(0, 51, 51));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("HR MANAGEMENT");
-        jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, 350, 50));
-
-        javax.swing.GroupLayout jPaneLayout = new javax.swing.GroupLayout(jPane);
-        jPane.setLayout(jPaneLayout);
-        jPaneLayout.setHorizontalGroup(
-            jPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
+        jPanel.setLayout(jPanelLayout);
+        jPanelLayout.setHorizontalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1163, Short.MAX_VALUE)
         );
-        jPaneLayout.setVerticalGroup(
-            jPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jPanelLayout.setVerticalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 713, Short.MAX_VALUE)
         );
+
+        jMenu1.setText("File");
+
+        PRegion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.CTRL_MASK));
+        PRegion.setText("Region");
+        PRegion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PRegionActionPerformed(evt);
+            }
+        });
+        jMenu1.add(PRegion);
+
+        PCountry.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.CTRL_MASK));
+        PCountry.setText("Country");
+        PCountry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PCountryActionPerformed(evt);
+            }
+        });
+        jMenu1.add(PCountry);
+
+        PLocation.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.CTRL_MASK));
+        PLocation.setText("Location");
+        PLocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PLocationActionPerformed(evt);
+            }
+        });
+        jMenu1.add(PLocation);
+
+        PDepartment.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_4, java.awt.event.InputEvent.CTRL_MASK));
+        PDepartment.setText("Department");
+        PDepartment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PDepartmentActionPerformed(evt);
+            }
+        });
+        jMenu1.add(PDepartment);
+
+        PJob.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_5, java.awt.event.InputEvent.CTRL_MASK));
+        PJob.setText("Job");
+        PJob.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PJobActionPerformed(evt);
+            }
+        });
+        jMenu1.add(PJob);
+
+        PEmployee.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_6, java.awt.event.InputEvent.CTRL_MASK));
+        PEmployee.setText("Employee");
+        PEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PEmployeeActionPerformed(evt);
+            }
+        });
+        jMenu1.add(PEmployee);
+
+        PJobHistory.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_7, java.awt.event.InputEvent.CTRL_MASK));
+        PJobHistory.setText("Job History");
+        PJobHistory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PJobHistoryActionPerformed(evt);
+            }
+        });
+        jMenu1.add(PJobHistory);
+
+        PJobGrade.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_8, java.awt.event.InputEvent.CTRL_MASK));
+        PJobGrade.setText("Job Grade");
+        PJobGrade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PJobGradeActionPerformed(evt);
+            }
+        });
+        jMenu1.add(PJobGrade);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu3.setText("Edit");
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 895, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap()
+                .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void PRegionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PRegionMouseClicked
-        jPane.removeAll();
+    private void PRegionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PRegionActionPerformed
+
         RegInternalForm RV = new RegInternalForm();
-        jPane.add(RV).setVisible(true);
-    }//GEN-LAST:event_PRegionMouseClicked
+        RV.show();
+        jPanel.add(RV);
 
-    private void PLocationMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PLocationMousePressed
-        PLocation.setBackground(paneldefault);
-        PRegion.setBackground(panelClicked);
-    }//GEN-LAST:event_PLocationMousePressed
+    }//GEN-LAST:event_PRegionActionPerformed
 
-    private void PCountryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PCountryMouseClicked
-        new CountryView().setVisible(true);
-    }//GEN-LAST:event_PCountryMouseClicked
+    private void PCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PCountryActionPerformed
+        CountryInternalView CV = new CountryInternalView();
+        CV.show();
+        jPanel.add(CV);
+    }//GEN-LAST:event_PCountryActionPerformed
 
-    private void PLocationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PLocationMouseClicked
-        new LocationView().setVisible(true);
-    }//GEN-LAST:event_PLocationMouseClicked
+    private void PLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PLocationActionPerformed
+        LocInternalVIew LV = new LocInternalVIew();
+        LV.show();
+        jPanel.add(LV);
+    }//GEN-LAST:event_PLocationActionPerformed
 
-    private void PDepartmentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PDepartmentMouseClicked
-        new DepartmentView().setVisible(true);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PDepartmentMouseClicked
+    private void PDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDepartmentActionPerformed
+        DepartmentInternalView DV = new DepartmentInternalView();
+        DV.show();
+        jPanel.add(DV);
+    }//GEN-LAST:event_PDepartmentActionPerformed
 
-    private void PJobMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PJobMouseClicked
-        new JobsView().setVisible(true);
-    }//GEN-LAST:event_PJobMouseClicked
+    private void PJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PJobActionPerformed
+        JobInternalView JV = new JobInternalView();
+        JV.show();
+        jPanel.add(JV);
+    }//GEN-LAST:event_PJobActionPerformed
 
-    private void PEmployeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PEmployeeMouseClicked
-     new EmployeeView().setVisible(true);
-    }//GEN-LAST:event_PEmployeeMouseClicked
+    private void PEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PEmployeeActionPerformed
+        EmployeeInternalView EmpV = new EmployeeInternalView();
+        EmpV.show();
+        jPanel.add(EmpV);
+    }//GEN-LAST:event_PEmployeeActionPerformed
 
-    private void PJHistoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PJHistoryMouseClicked
-         new JobHistoryView().setVisible(true);
-    }//GEN-LAST:event_PJHistoryMouseClicked
+    private void PJobHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PJobHistoryActionPerformed
+        JobHistoryInternalView JHV = new JobHistoryInternalView();
+        JHV.show();
+        jPanel.add(JHV);
+    }//GEN-LAST:event_PJobHistoryActionPerformed
+
+    private void PJobGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PJobGradeActionPerformed
+        JobGradeInternalView JGV = new JobGradeInternalView();
+        JGV.show();
+        jPanel.add(JGV);
+    }//GEN-LAST:event_PJobGradeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -312,24 +254,18 @@ public class MainMenuView extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PCountry;
-    private javax.swing.JPanel PDepartment;
-    private javax.swing.JPanel PEmployee;
-    private javax.swing.JPanel PJHistory;
-    private javax.swing.JPanel PJob;
-    private javax.swing.JPanel PLocation;
-    private javax.swing.JPanel PRegion;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JMenuItem PCountry;
+    private javax.swing.JMenuItem PDepartment;
+    private javax.swing.JMenuItem PEmployee;
+    private javax.swing.JMenuItem PJob;
+    private javax.swing.JMenuItem PJobGrade;
+    private javax.swing.JMenuItem PJobHistory;
+    private javax.swing.JMenuItem PLocation;
+    private javax.swing.JMenuItem PRegion;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JPanel jPane;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel;
     // End of variables declaration//GEN-END:variables
 }

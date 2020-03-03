@@ -28,7 +28,7 @@ public class DaoDepartmentManagement implements InterfaceDepartmentManagement {
             + "manager_id,location_id,department_id)VALUES(?,?,?,?)";
     final String update = "UPDATE HR.Departments SET department_NAME=?, manager_id_ID=?, location_id=? WHERE department_ID=?";
     final String delete = "DELETE FROM HR.departments WHERE department_id =?";
-    final String select = "SELECT * FROM HR.departments ORDER BY department_ID";
+    final String select = "SELECT * FROM HR.departments";
     final String selectFK = "SELECT department_name FROM HR.Departments where department_id = ?";
     PreparedStatement pst = null;
 
@@ -99,10 +99,9 @@ public class DaoDepartmentManagement implements InterfaceDepartmentManagement {
             rs = pst.getResultSet();
             while (rs.next()) {
                 temp = rs.getString(1);
-               
             }
         } catch (Exception e) {
-           System.out.println(e);
+            System.out.println(e);
         }
         return temp;
     }
@@ -112,4 +111,3 @@ public class DaoDepartmentManagement implements InterfaceDepartmentManagement {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
-

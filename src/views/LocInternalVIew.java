@@ -9,43 +9,39 @@ import controllers.CountryController;
 import controllers.LocationController;
 import dao.DaoCountryManagement;
 import dao.DaoLocationManagement;
-import java.util.ArrayList;
+import dao.InterfaceCountryManagement;
+import dao.InterfaceLocationManagement;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import models.EntityCountry;
 import models.EntityLocation;
-import dao.InterfaceCountryManagement;
-import dao.InterfaceLocationManagement;
 
 /**
  *
  * @author amry4
  */
-public final class LocationView extends javax.swing.JFrame {
-
-    LocationController Lct;
+public class LocInternalVIew extends javax.swing.JInternalFrame {
+  
+ LocationController Lct;
     InterfaceLocationManagement IntrfcLM;
     List<EntityLocation> ListLocation;
     InterfaceCountryManagement IntrfcCM;
     List<EntityCountry> ListCountry;
 
     boolean isClicked = true;
-
-    public LocationView() {
+public LocInternalVIew() {
         initComponents();
-        Lct = new LocationController(this);
+         Lct = new LocationController();
         IntrfcLM = new DaoLocationManagement();
         ListLocation = IntrfcLM.getALL();
         IntrfcCM = new DaoCountryManagement();
         ListCountry = IntrfcCM.getALL();
         bindingTable(tblViewLocation);
         Fillcbox(CmbCountryId);
-
     }
 
     public void Fillcbox(JComboBox Jbox) {
@@ -116,7 +112,7 @@ public final class LocationView extends javax.swing.JFrame {
     private boolean IsEmptyField() {
         return TxtLocationId.getText().trim().equals("");
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -143,9 +139,8 @@ public final class LocationView extends javax.swing.JFrame {
         CmbCountryId = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblViewLocation = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("LOCATIONS MANAGEMENT");
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
@@ -281,38 +276,59 @@ public final class LocationView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblViewLocation);
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel1.setText("LOCATIONS MANAGEMENT");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(360, 360, 360))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 727, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+            .addGap(0, 751, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 727, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+            .addGap(0, 467, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnInsertLoactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertLoactionActionPerformed
+        if (IsEmptyField()) {
+            JOptionPane.showMessageDialog(rootPane, "fill id");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, Lct.Save(TxtLocationId.getText(),
+                TxtStreetAddress.getText(), TxtZipCode.getText(),
+                TxtCity.getText(), TxtProvince.getText(),
+                CmbCountryId.getSelectedItem().toString(), isClicked));
+        refresh();
+
+        }
+    }//GEN-LAST:event_btnInsertLoactionActionPerformed
+
+    private void btnDeleteLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteLocationActionPerformed
+        if (!IsEmptyField()) {
+            int result = JOptionPane.showConfirmDialog(null,
+                "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(rootPane, Lct.delete(TxtLocationId.getText()));
+                refresh();
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "fill id");
+        }
+    }//GEN-LAST:event_btnDeleteLocationActionPerformed
 
     private void tblViewLocationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblViewLocationMouseClicked
 
@@ -330,68 +346,6 @@ public final class LocationView extends javax.swing.JFrame {
         isClicked = false;
     }//GEN-LAST:event_tblViewLocationMouseClicked
 
-    private void btnDeleteLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteLocationActionPerformed
-        if (!IsEmptyField()) {
-            int result = JOptionPane.showConfirmDialog(null,
-                    "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
-            if (result == JOptionPane.YES_OPTION) {
-                JOptionPane.showMessageDialog(rootPane, Lct.delete(TxtLocationId.getText()));
-                refresh();
-            }
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "fill id");
-        }
-
-    }//GEN-LAST:event_btnDeleteLocationActionPerformed
-
-    private void btnInsertLoactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertLoactionActionPerformed
-        if (IsEmptyField()) {
-            JOptionPane.showMessageDialog(rootPane, "fill id");
-        } else {
-            JOptionPane.showMessageDialog(rootPane, Lct.Save(TxtLocationId.getText(),
-                    TxtStreetAddress.getText(), TxtZipCode.getText(),
-                    TxtCity.getText(), TxtProvince.getText(),
-                    CmbCountryId.getSelectedItem().toString(), isClicked));
-            refresh();
-
-        }
-
-    }//GEN-LAST:event_btnInsertLoactionActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(LocationsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(LocationsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(LocationsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(LocationsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new LocationsView().setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CmbCountryId;
@@ -402,7 +356,6 @@ public final class LocationView extends javax.swing.JFrame {
     private javax.swing.JTextField TxtZipCode;
     private javax.swing.JButton btnDeleteLocation;
     private javax.swing.JButton btnInsertLoaction;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -434,12 +387,7 @@ public final class LocationView extends javax.swing.JFrame {
         return TxtStreetAddress;
     }
 
-    public javax.swing.JTextField getTxtZipCode() {
-        return TxtZipCode;
-    }
-
     public javax.swing.JTable getTblViewLocation() {
         return tblViewLocation;
     }
-
 }

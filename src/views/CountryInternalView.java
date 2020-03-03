@@ -8,24 +8,37 @@ package views;
 import controllers.CountryController;
 import dao.DaoCountryManagement;
 import dao.DaoRegionManagement;
+import dao.InterfaceCountryManagement;
+import dao.InterfaceRegionManagement;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import models.EntityCountry;
-import dao.InterfaceCountryManagement;
-import dao.InterfaceRegionManagement;
-import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import models.EntityRegion;
 
 /**
  *
  * @author amry4
  */
-public class CountryView extends javax.swing.JFrame {
+public class CountryInternalView extends javax.swing.JInternalFrame {
 
+    /**
+     * Creates new form CountryInternalView
+     */
+    public CountryInternalView() {
+        initComponents();
+   cct = new CountryController();
+        IntrfcRM = new DaoRegionManagement();
+        ListRegion = IntrfcRM.getALL();
+        IntrfcCM = new DaoCountryManagement();
+        ListCountry = IntrfcCM.getALL();
+        bindingTable(TblCountries);
+        Fillcbox(CmbRegionId);
+
+    }
     CountryController cct;
     InterfaceCountryManagement IntrfcCM;
     List<EntityCountry> ListCountry;
@@ -37,17 +50,7 @@ public class CountryView extends javax.swing.JFrame {
     /**
      * Creates new form CountriesManagement
      */
-    public CountryView() {
-        initComponents();
-        cct = new CountryController(this);
-        IntrfcRM = new DaoRegionManagement();
-        ListRegion = IntrfcRM.getALL();
-        IntrfcCM = new DaoCountryManagement();
-        ListCountry = IntrfcCM.getALL();
-        bindingTable(TblCountries);
-        Fillcbox(CmbRegionId);
-
-    }
+    
 
     public void Fillcbox(JComboBox Jbox) {
         ListRegion = IntrfcRM.getALL();
@@ -122,9 +125,8 @@ public class CountryView extends javax.swing.JFrame {
         CmbRegionId = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         TblCountries = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
 
-        setPreferredSize(new java.awt.Dimension(907, 599));
+        setTitle("COUNTRY MANAGEMENT");
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
@@ -224,34 +226,29 @@ public class CountryView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TblCountries);
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel1.setText("COUNTRIES MANAGEMENT");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(281, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(266, 266, 266))
+            .addGap(0, 725, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(8, 8, 8)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+            .addGap(0, 570, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(52, 52, 52)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
@@ -263,8 +260,8 @@ public class CountryView extends javax.swing.JFrame {
         } else {
 
             JOptionPane.showMessageDialog(rootPane, cct.Save(TxtCountryId.getText(),
-                    TxtCountryName.getText(), CmbRegionId.getSelectedItem().toString(),
-                    isClicked));
+                TxtCountryName.getText(), CmbRegionId.getSelectedItem().toString(),
+                isClicked));
         }
         refresh();
     }//GEN-LAST:event_btnInsertActionPerformed
@@ -272,7 +269,7 @@ public class CountryView extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if (!IsEmptyField()) {
             int result = JOptionPane.showConfirmDialog(null,
-                    "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
+                "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(rootPane, cct.delete(TxtCountryId.getText()));
                 refresh();
@@ -282,6 +279,10 @@ public class CountryView extends javax.swing.JFrame {
         }
         bindingTable(TblCountries);
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void CmbRegionIdMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CmbRegionIdMousePressed
+
+    }//GEN-LAST:event_CmbRegionIdMousePressed
 
     private void CmbRegionIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmbRegionIdActionPerformed
         // TODO add your handling code here:
@@ -297,44 +298,6 @@ public class CountryView extends javax.swing.JFrame {
         isClicked = false;
     }//GEN-LAST:event_TblCountriesMouseClicked
 
-    private void CmbRegionIdMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CmbRegionIdMousePressed
-      
-    }//GEN-LAST:event_CmbRegionIdMousePressed
-
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(CountriesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(CountriesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(CountriesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(CountriesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new CountriesView().setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CmbRegionId;
@@ -343,7 +306,6 @@ public class CountryView extends javax.swing.JFrame {
     private javax.swing.JTextField TxtCountryName;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnInsert;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -366,5 +328,4 @@ public class CountryView extends javax.swing.JFrame {
     public javax.swing.JTextField getTxtCountryName() {
         return TxtCountryName;
     }
-
 }

@@ -12,13 +12,17 @@ import dao.InterfaceDepartmentManagement;
 import dao.InterfaceEmployeeManagement;
 import dao.InterfaceJobManagement;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.EntityDepartment;
 import models.EntityEmployee;
 import models.EntityJob;
-import views.EmployeeView;
+import views.EmployeeInternalView;
 
 /**
  *
@@ -26,7 +30,7 @@ import views.EmployeeView;
  */
 public class EmployeeController {
 
-    EmployeeView EmpView;
+    EmployeeInternalView EmpView;
     //Employee
     InterfaceEmployeeManagement IntrfcEM;
     List<EntityEmployee> ListEmp;
@@ -46,7 +50,7 @@ public class EmployeeController {
 
     }
 
-    public EmployeeController(EmployeeView frame) {
+    public EmployeeController(EmployeeInternalView frame) {
         this.EmpView = frame;
         IntrfcEM = new DaoEmployeeManagement();
         ListEmp = IntrfcEM.getALL();
@@ -58,11 +62,23 @@ public class EmployeeController {
         ListDept = IntrfcDM.getALL();
     }
 
-    public String Save(String id, String firstName, String lastName, String email,
-            String phoneNumber, Date hireDate, String jobId, String Salary, String commision, String managerId, String deptId, boolean isSave) {
+    public Date toDate(String date) {
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+    java.util.Date hire = new Date(0);
+        try {
+            hire = sdf.parse(date);
+        } catch (ParseException ex) {
+            Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    java.sql.Date sqlhire =new java.sql.Date(hire.getTime());
+    return sqlhire;
+    }
 
+    public String Save(String id, String firstName, String lastName, String email,
+            String phoneNumber, String hireDate, String jobId, String Salary, String commision, String managerId, String deptId, boolean isSave) {
+        IntrfcEM = new DaoEmployeeManagement();
         return (IntrfcEM.insertOrUpdate(new EntityEmployee(Integer.parseInt(id), firstName, lastName, email, phoneNumber,
-                hireDate, getValueBoxJob(jobId), Float.valueOf(Salary), Float.valueOf(commision), getValueBoxManager(managerId.toString()), getValueBoxDept(deptId.toString())),
+                toDate(hireDate), getValueBoxJob(jobId), Float.valueOf(Salary), Float.valueOf(commision), getValueBoxManager(managerId.toString()), getValueBoxDept(deptId.toString())),
                 isSave)) ? "sukses" : "failed";
     }
 
@@ -77,6 +93,7 @@ public class EmployeeController {
     }
 
     private ArrayList getValueFKManager() {
+         IntrfcEMM = new DaoEmployeeManagement();
         ListEmpM = IntrfcEMM.getAllManager();
         String[] mName = new String[ListEmpM.size()];
         int[] mId = new int[ListEmpM.size()];
@@ -113,6 +130,7 @@ public class EmployeeController {
     }
 
     private ArrayList getValueFKJob() {
+        IntrfcJM = new DaoJobManagement();
         ListJob = IntrfcJM.getALL();
         String[] mName = new String[ListJob.size()];
         String[] mId = new String[ListJob.size()];
@@ -130,7 +148,7 @@ public class EmployeeController {
 
     public String getValueBoxJob(String Data) {
         String val = Data;
-        String idx = " ";
+        String idx = "";
         ArrayList result = new ArrayList<String>();
         result = getValueFKJob();
         String[] region_name = new String[result.size()];
@@ -146,6 +164,7 @@ public class EmployeeController {
     }
 
     private ArrayList getValueFKDept() {
+       IntrfcDM = new DaoDepartmentManagement();
         ListDept = IntrfcDM.getALL();
         String[] mName = new String[ListDept.size()];
         int[] mId = new int[ListDept.size()];

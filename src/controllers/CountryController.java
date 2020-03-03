@@ -16,7 +16,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import models.EntityCountry;
 import models.EntityRegion;
-import views.CountryView;
+import views.*;
 import dao.InterfaceCountryManagement;
 import dao.InterfaceRegionManagement;
 
@@ -26,7 +26,7 @@ import dao.InterfaceRegionManagement;
  */
 public class CountryController {
 
-    CountryView CountryView;
+    CountryInternalView CountryView;
     List<EntityCountry> ListCountry;
     InterfaceCountryManagement IntrfcCM;
 
@@ -38,7 +38,7 @@ public class CountryController {
     public CountryController() {
     }
 
-    public CountryController(CountryView frame) {
+    public CountryController(CountryInternalView frame) {
         this.CountryView = frame;
         IntrfcCM = new DaoCountryManagement();
         ListCountry = IntrfcCM.getALL();

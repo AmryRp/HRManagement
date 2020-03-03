@@ -26,12 +26,12 @@ public class DaoEmployeeManagement implements InterfaceEmployeeManagement {
     Connection c;
     final String insert = "INSERT INTO HR.Employees (First_name,Last_name,"
             + "EMail,phone_number,Hire_date,Job_id,Salary,Commission_PCT,Manager_id,"
-            + "Department_id,Employee_id)VALUES(?,?,?,?,TO_DATE(?,'dd/mm/yy'),?,?,?,?,?,?)";
+            + "Department_id,Employee_id)VALUES(?,?,?,?,TO_DATE(?,'dd-mm-yy'),?,?,?,?,?,?)";
     final String update = "UPDATE HR.Employees SET first_name = ?,"
-            + "last_name=?, Email=?, phone_number=?,hire_date=?,job_id=?,Salary=?"
+            + "last_name=?, Email=?, phone_number=?,hire_date=TO_DATE(?,'dd-mm-yy'),job_id=?,Salary=?"
             + "COmmission_pct=?,Manager_id=?,department_id=? WHERE employee_id=?";
     final String delete = "DELETE FROM HR.employees WHERE employee_id =?";
-    final String select = "SELECT * FROM HR.employees ORDER BY employee_ID";
+    final String select = "SELECT * FROM HR.employees";
     final String search = "SELECT * FROM HR.employees WHERE last_NAME LIKE ?";
     final String selectManager = "select distinct manager.employee_id,manager.last_name from HR.employees worker Join HR.employees manager ON (worker.manager_id = manager.employee_id)";
     final String selectFK = "SELECT last_name FROM HR.employees where employee_id = ?";

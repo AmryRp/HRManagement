@@ -24,9 +24,9 @@ import java.util.logging.Logger;
 public class DaoJobManagement implements InterfaceJobManagement {
 
     Connection c;
-    final String insert = "INSERT INTO HR.Employees (job_title,"
+    final String insert = "INSERT INTO HR.Jobs (job_title,"
             + "min_salary,max_salary,Job_id)VALUES(?,?,?,?)";
-    final String update = "UPDATE HR.Employees SET job_title=?,min_Salary=?"
+    final String update = "UPDATE HR.Jobs SET job_title=?,min_Salary=?"
             + ", max_Salary=? WHERE job_id=?";
     final String delete = "DELETE FROM HR.jobs WHERE job_id =?";
     final String select = "SELECT * FROM HR.jobs ORDER BY job_id";

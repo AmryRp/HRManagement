@@ -16,7 +16,7 @@ import java.util.List;
 import models.EntityDepartment;
 import models.EntityEmployee;
 import models.EntityLocation;
-import views.DepartmentView;
+import views.DepartmentInternalView;
 
 /**
  *
@@ -26,7 +26,7 @@ public class DepartmentController {
 
     public DepartmentController() {
     }
-    DepartmentView deptview;
+    DepartmentInternalView deptview;
     List<EntityDepartment> ListDept;
     InterfaceDepartmentManagement IntrfcDM;
 
@@ -37,7 +37,7 @@ public class DepartmentController {
     List<EntityEmployee> ListEmpM;
     EntityDepartment ED = new EntityDepartment();
 
-    public DepartmentController(DepartmentView CountryView) {
+    public DepartmentController(DepartmentInternalView CountryView) {
         this.deptview = CountryView;
         IntrfcDM = new DaoDepartmentManagement();
         ListDept = IntrfcDM.getALL();
@@ -51,7 +51,7 @@ public class DepartmentController {
 
     public String Save(String id, String name, String Manager, String Location, boolean isSave) {
 
-        return (IntrfcDM.insertOrUpdate(new EntityDepartment(Integer.parseInt(id), name, getValueBoxLoc(Manager), getValueBoxLoc(Location)),
+        return (IntrfcDM.insertOrUpdate(new EntityDepartment(Integer.parseInt(id), name, getValueBoxMan(Manager), getValueBoxLoc(Location)),
                 isSave)) ? "sukses" : "failed";
     }
 
@@ -73,29 +73,34 @@ public class DepartmentController {
         int[] regionId = new int[ListLoc.size()];
         int i = 0;
         while (i < ListLoc.size()) {
+              regionId[i] = ListLoc.get(i).getId();
             regionName[i] = ListLoc.get(i).getCity();
-            regionId[i] = ListLoc.get(i).getId();
+          
             i++;
         }
         ArrayList FK = new ArrayList<String>();
-        FK.add(regionName);
         FK.add(regionId);
+        FK.add(regionName);
+        
         return FK;
     }
 
     public int getValueBoxLoc(String Data) {
         String val = Data;
-        int idLocation = -1;
+        int idLocation = 0;
         ArrayList result = new ArrayList<String>();
         result = getValueFKLoc();
         String[] locationName = new String[result.size()];
-        Integer[] locationId = new Integer[result.size()];
-        locationName = (String[]) result.get(0);
+        int[] locationId = new int[result.size()];
+        locationName = (String[]) result.get(1);
+        locationId = (int[]) result.get(0);
         for (int i = 0; i < locationName.length; i++) {
             if (val.equals(locationName[i])) {
                idLocation = locationId[i];
+               
             }
         }
+         System.out.println(idLocation);
         return idLocation;
     }
      private ArrayList getValueFKMan() {
@@ -116,17 +121,19 @@ public class DepartmentController {
 
     public int getValueBoxMan(String Data) {
         String val = Data;
-        int idLocation = -1;
+        int idManage = -1;
         ArrayList result = new ArrayList<String>();
         result = getValueFKMan();
-        String[] locationName = new String[result.size()];
-        Integer[] locationId = new Integer[result.size()];
-        locationName = (String[]) result.get(0);
-        for (int i = 0; i < locationName.length; i++) {
-            if (val.equals(locationName[i])) {
-               idLocation = locationId[i];
+        String[] managerName = new String[result.size()];
+        int[] managerId = new int[result.size()];
+        managerName = (String[]) result.get(0);
+        managerId = (int[]) result.get(1);
+        for (int i = 0; i < managerName.length; i++) {
+            if (val.equals(managerName[i])) {
+               idManage = managerId[i];
+                System.out.println(idManage);
             }
         }
-        return idLocation;
+        return idManage;
     }
 }

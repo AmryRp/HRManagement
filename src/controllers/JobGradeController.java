@@ -9,18 +9,18 @@ import dao.DaoJobGradeManagement;
 import dao.InterfaceJobGradeManagement;
 import java.util.List;
 import models.EntityJobGrade;
-import views.JobGradeView;
+import views.JobGradeInternalView;
 
 /**
  *
  * @author amry4
  */
 public class JobGradeController {
-        JobGradeView JGview;
+        JobGradeInternalView JGview;
         InterfaceJobGradeManagement ijgm;
         List<EntityJobGrade> listJG;
 
-    public JobGradeController(JobGradeView JGview) {
+    public JobGradeController(JobGradeInternalView JGview) {
         this.JGview = JGview;
         ijgm = new DaoJobGradeManagement();
         listJG = ijgm.getALL();
