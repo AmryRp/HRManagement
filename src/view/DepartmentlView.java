@@ -5,15 +5,16 @@
  */
 package view;
 
-import controllers.DepartmentController;
-import controllers.EmployeeController;
-import controllers.LocationController;
-import dao.DaoDepartmentManagement;
-import dao.DaoEmployeeManagement;
-import dao.DaoLocationManagement;
-import dao.InterfaceDepartmentManagement;
-import dao.InterfaceEmployeeManagement;
-import dao.InterfaceLocationManagement;
+import controller.DepartmentController;
+import controller.EmployeeController;
+import controller.LocationController;
+import dao.DepartmentDao;
+import dao.EmployeeDao;
+import dao.LocationDao;
+import dao.IDepartmentDao;
+import dao.IEmployeeDao;
+import dao.ICountryDao;
+import dao.ILocationDao;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -21,9 +22,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import models.EntityDepartment;
-import models.EntityEmployee;
-import models.EntityLocation;
+import model.Department;
+import model.Employee;
+import model.Location;
 
 /**
  *
@@ -35,49 +36,49 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
      * Creates new form DepartmentInternalView
      */
     public DepartmentlView() {
-        initComponents();Dct = new DepartmentController();
-        idm = new DaoDepartmentManagement();
-        ListDM = idm.getALL();
-        ilm = new DaoLocationManagement();
-        ListLM = ilm.getALL();
-        iem = new DaoEmployeeManagement();
-        ListEM = iem.getAllManager();
+        initComponents();
+        Dct = new DepartmentController();
+        idm = new DepartmentDao();
+        ListDM = idm.getAll();
+        ilm = new LocationDao();
+        ListLM = ilm.getAll();
+        iem = new EmployeeDao();
+        ListEM = iem.getAll();
         bindingTable(TblDM);
         FillcboxM(CmbDMMan);
         FillcboxL(CmbDMLoc);
-        
+
     }
     DepartmentController Dct;
-    InterfaceDepartmentManagement idm;
-    List<EntityDepartment> ListDM;
-    InterfaceEmployeeManagement iem;
-    List<EntityEmployee> ListEM;
-    InterfaceLocationManagement ilm;
-    List<EntityLocation> ListLM;
+    IDepartmentDao idm;
+    List<Department> ListDM;
+    IEmployeeDao iem;
+    List<Employee> ListEM;
+    ILocationDao ilm;
+    List<Location> ListLM;
     boolean isClicked = true;
-    
+
     /**
      * Creates new form DepartmentsManagement
      */
-    
-
     public void FillcboxM(JComboBox Jbox) {
 
-        ListEM = iem.getAllManager();
-        Integer managerId = new Integer(ListEM.size());
-        String[] manager = new String[ListEM.size()];
+        ListEM = iem.getManager();
+        String[] managerId = new String[ListEM.size()];
+        int[] manager = new int[ListEM.size()];
         int i = 0;
         while (i < ListEM.size()) {
-            managerId = ListEM.get(i).getId();
-            manager[i] = ListEM.get(i).getLastName();
+            managerId[i] = ListEM.get(i).getManagerId().getLastName();
+            manager[i] = ListEM.get(i).getManagerId().getEmployeeId();
             i++;
         }
-        DefaultComboBoxModel dtm = new DefaultComboBoxModel(manager);
+        DefaultComboBoxModel dtm = new DefaultComboBoxModel(managerId);
         getCmbDMMan().setModel(dtm);
     }
+
     public void FillcboxL(JComboBox Jbox) {
 
-        ListLM = ilm.getALL();
+        ListLM = ilm.getAll();
         String[] locationname = new String[ListLM.size()];
         int i = 0;
         while (i < ListLM.size()) {
@@ -87,22 +88,24 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
         DefaultComboBoxModel dtm = new DefaultComboBoxModel(locationname);
         getCmbDMLoc().setModel(dtm);
     }
+
     public void bindingTable(JTable tabel) {
-        ListDM = idm.getALL();
-        String[] tblHeader = new String[]{"Department Id", "Department Name", "Manager","Location"};
+        ListDM = idm.getAll();
+        String[] tblHeader = new String[]{"Department Id", "Department Name", "Manager", "Location"};
         DefaultTableModel dtm = new DefaultTableModel(null, tblHeader);
         tabel.getModel();
         Object[] row;
         row = new Object[ListDM.size()];
         while (dtm.getRowCount() < ListDM.size()) {
-            row[0] = ListDM.get(dtm.getRowCount()).getId();
-            row[1] = ListDM.get(dtm.getRowCount()).getName();
-            row[2] = new EmployeeController().getById(ListDM.get(dtm.getRowCount()).getManagerId());
-            row[3] = new LocationController().getById(ListDM.get(dtm.getRowCount()).getLocationId());
+            row[0] = ListDM.get(dtm.getRowCount()).getDepartmentId();
+            row[1] = ListDM.get(dtm.getRowCount()).getDepartmentName();
+            row[2] = ListDM.get(dtm.getRowCount()).getManagerId().getManagerId().getLastName();
+            row[3] = ListDM.get(dtm.getRowCount()).getLocationId().getCity();
             dtm.addRow(row);
         }
         TblDM.setModel(dtm);
     }
+
     public void clearTable(JTable table) {
         DefaultTableModel dm = (DefaultTableModel) table.getModel();
         while (dm.getRowCount() > 0) {
@@ -305,10 +308,7 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "fill id");
         } else {
 
-            JOptionPane.showMessageDialog(rootPane, Dct.Save(TxtDMId.getText(),
-                TxtDMName.getText(), CmbDMMan.getSelectedItem().toString(),
-                CmbDMLoc.getSelectedItem().toString(),
-                isClicked));
+            JOptionPane.showMessageDialog(rootPane, Dct.Save(new Department(new Short(TxtDMId.getText()), TxtDMName.getText(),new Employee( CmbDMMan.getSelectedItem().toString()),new Location(CmbDMLoc.getSelectedItem().toString()))));
         }
         refresh();
     }//GEN-LAST:event_btnInsertActionPerformed
@@ -316,9 +316,9 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if (!IsEmptyField()) {
             int result = JOptionPane.showConfirmDialog(null,
-                "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
+                    "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
-                JOptionPane.showMessageDialog(rootPane, Dct.delete(TxtDMId.getText()));
+                JOptionPane.showMessageDialog(rootPane, Dct.delete(new Department(new Short(TxtDMId.getText()))));
                 refresh();
             }
         } else {

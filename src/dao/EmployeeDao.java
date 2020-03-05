@@ -141,4 +141,27 @@ public class EmployeeDao implements IEmployeeDao {
             return rg;
         }
     }
+
+    @Override
+    public List<Employee> getManager() {
+       Session session = sf.openSession();
+        List<Employee> Emp = null;
+        Transaction trc = null;
+        try {
+            trc = session.beginTransaction();
+            Emp = session.createQuery("FROM Employee where managerId = employeeId").list();
+            trc.commit();
+        } catch (Exception e) {
+            if (trc != null) {
+                trc.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (trc == null) {
+                //System.out.println("closed");
+                session.close();
+            }
+        }
+        return Emp;
+    }
 }

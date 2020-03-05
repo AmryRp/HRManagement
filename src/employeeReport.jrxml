@@ -126,7 +126,7 @@ FROM
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="37" splitType="Stretch">
+		<band height="23" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="20" height="20" uuid="81ea82d3-ff64-43a9-83e0-d68347c540ad"/>
 				<textElement textAlignment="Center"/>

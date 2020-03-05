@@ -201,6 +201,7 @@ public class CountryView extends javax.swing.JInternalFrame {
         BtnSearch = new javax.swing.JButton();
         jBtnReport = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("COUNTRY MANAGEMENT");
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));

@@ -19,7 +19,7 @@ public interface IEmployeeDao {
     public boolean delete(Employee R);
 
     public List<Employee> getAll();
-
+    public List<Employee> getManager();
     public List<Employee> search(Employee R);
 
     public Employee getById(int Id);

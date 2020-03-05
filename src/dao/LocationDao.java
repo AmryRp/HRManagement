@@ -77,7 +77,6 @@ public class LocationDao implements ILocationDao {
             e.printStackTrace();
         } finally {
             if (trc == null) {
-                //System.out.println("closed");
                 session.close();
             }
         }

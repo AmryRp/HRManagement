@@ -44,6 +44,8 @@ public class MainMenuView extends javax.swing.JFrame {
             report.pack();
             report.setVisible(true);
             report.setSize(1000, 800);
+            report.setFocusable(false);
+            report.isClosable();
             report.setMaximizable(rootPaneCheckingEnabled);
             jPanel.add(report);
 
