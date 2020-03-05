@@ -19,16 +19,36 @@ import model.Country;
 import model.Region;
 import dao.IRegionDao;
 import dao.ICountryDao;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
+import org.hibernate.metamodel.Metadata;
+import org.hibernate.metamodel.MetadataSources;
+import tool.HibernateUtil;
 
 /**
+ * This class for view Country that used for input and output that user use.
  *
  * @author amry4
  */
 public class CountryView extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form CountryView
-     */
     Country EC = new Country();
     Region ER = new Region();
     CountryController cct;
@@ -39,41 +59,49 @@ public class CountryView extends javax.swing.JInternalFrame {
     boolean isClicked = true;
     int idxcmb;
 
+    /**
+     *
+     */
     public CountryView() {
         initComponents();
-
         cct = new CountryController();
-
         IntrfcRM = new RegionDao();
         ListRegion = IntrfcRM.getAll(ER);
         IntrfcCM = new CountryDao();
         ListCountry = IntrfcCM.getAll();
-
         bindingTable(TblCountries);
         Fillcbox(CmbRegionId);
 
     }
 
     /**
-     * Creates new form CountriesManagement
+     * this function for filing the model for combo box that used on
+     *
+     * @param Jbox is a datatype for j combo box
      */
     public void Fillcbox(JComboBox Jbox) {
         ListRegion = IntrfcRM.getAll(ER);
         String[] regionName = new String[ListRegion.size()];
         BigDecimal[] regionId = new BigDecimal[ListRegion.size()];
-        String[] RegionsList = new String[ListRegion.size()]; 
+        String[] RegionsList = new String[ListRegion.size()];
         int i = 0;
         while (i < ListRegion.size()) {
             regionName[i] = ListRegion.get(i).getRegionName();
             regionId[i] = ListRegion.get(i).getRegionId();
-            RegionsList[i] = regionId[i]+" "+regionName[i];
+            RegionsList[i] = regionId[i] + " " + regionName[i];
             i++;
         }
         DefaultComboBoxModel dtm = new DefaultComboBoxModel(RegionsList);
         getCmbRegionId().setModel(dtm);
-        
+
     }
 
+    /**
+     * this function used for store data from object using getall() function
+     * from interface
+     *
+     * @param tabel
+     */
     public void bindingTable(JTable tabel) {
         ListCountry = IntrfcCM.getAll();
         String[] tblHeader = new String[]{"id", "Country name", "Region Id"};
@@ -84,8 +112,9 @@ public class CountryView extends javax.swing.JInternalFrame {
         while (dtm.getRowCount() < ListCountry.size()) {
             row[0] = ListCountry.get(dtm.getRowCount()).getCountryId();
             row[1] = ListCountry.get(dtm.getRowCount()).getCountryName();
-            row[2] = (ListCountry.get(dtm.getRowCount()).getRegionId()== null) ? 
-                    "" :  ListCountry.get(dtm.getRowCount()).getRegionId().getRegionId()+" "+ListCountry.get(dtm.getRowCount()).getRegionId().getRegionName();
+            row[2] = (ListCountry.get(dtm.getRowCount()).getRegionId() == null)
+                    ? "" : ListCountry.get(dtm.getRowCount()).getRegionId().getRegionId()
+                    + " " + ListCountry.get(dtm.getRowCount()).getRegionId().getRegionName();
             dtm.addRow(row);
         }
         TblCountries.setModel(dtm);
@@ -123,8 +152,8 @@ public class CountryView extends javax.swing.JInternalFrame {
         while (dtm.getRowCount() < ListCountry.size()) {
             row[0] = ListCountry.get(dtm.getRowCount()).getCountryId();
             row[1] = ListCountry.get(dtm.getRowCount()).getCountryName();
-            row[2] = (ListCountry.get(dtm.getRowCount()).getRegionId()== null) ? 
-                    "" :  ListCountry.get(dtm.getRowCount()).getRegionId().getRegionId()+" "+ListCountry.get(dtm.getRowCount()).getRegionId().getRegionName();
+            row[2] = (ListCountry.get(dtm.getRowCount()).getRegionId() == null)
+                    ? "" : ListCountry.get(dtm.getRowCount()).getRegionId().getRegionId() + " " + ListCountry.get(dtm.getRowCount()).getRegionId().getRegionName();
             dtm.addRow(row);
 
         }
@@ -133,6 +162,21 @@ public class CountryView extends javax.swing.JInternalFrame {
 
     }
 
+//    public void Report() throws JRException, SQLException {
+//        //JasperReport countryReport = JasperCompileManager.compileReport("C:\\Users\\amry4\\OneDrive\\Dokumen\\NetBeansProjects\\HibernateTest\\src\\CountryReport.jrxml");
+////        JRDataSource 
+//
+//        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//        Connection c = sessionFactory.getSessionFactoryOptions().getServiceRegistry().
+//                getService(ConnectionProvider.class).getConnection();
+//        JasperPrint countryPrint = JasperFillManager.fillReport(
+//                getClass().getClassLoader().getResourceAsStream("CountryReport.jasper"), null, c);
+//
+//        JasperExportManager.exportReportToPdfFile(countryPrint,
+//                "C:\\Users\\amry4\\OneDrive\\Dokumen\\NetBeansProjects\\HibernateTest\\src\\countryReport.pdf");
+//        System.out.println("Pdf file has been created");
+//        JasperViewer.viewReport(countryPrint);
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -155,6 +199,7 @@ public class CountryView extends javax.swing.JInternalFrame {
         TblCountries = new javax.swing.JTable();
         TxtSearch = new javax.swing.JTextField();
         BtnSearch = new javax.swing.JButton();
+        jBtnReport = new javax.swing.JButton();
 
         setTitle("COUNTRY MANAGEMENT");
 
@@ -269,15 +314,25 @@ public class CountryView extends javax.swing.JInternalFrame {
             }
         });
 
+        jBtnReport.setText("Print Data");
+        jBtnReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnReportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap(423, Short.MAX_VALUE)
-                .addComponent(TxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(BtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(TxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(BtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBtnReport, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -294,14 +349,16 @@ public class CountryView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(303, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 301, Short.MAX_VALUE)
+                .addComponent(jBtnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(52, 52, 52)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addContainerGap(65, Short.MAX_VALUE)))
         );
 
         pack();
@@ -312,8 +369,8 @@ public class CountryView extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "fill id");
         } else {
             String[] space = CmbRegionId.getSelectedItem().toString().split(" ");
-            JOptionPane.showMessageDialog(rootPane, cct.Save(TxtCountryId.getText(), 
-                    TxtCountryName.getText(), space[0]  ));
+            JOptionPane.showMessageDialog(rootPane, cct.Save(TxtCountryId.getText(),
+                    TxtCountryName.getText(), space[0]));
         }
         refresh();
     }//GEN-LAST:event_btnInsertActionPerformed
@@ -329,7 +386,7 @@ public class CountryView extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(rootPane, "fill id");
         }
-       
+
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void CmbRegionIdMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CmbRegionIdMousePressed
@@ -346,7 +403,6 @@ public class CountryView extends javax.swing.JInternalFrame {
         TxtCountryId.setText(dm.getValueAt(row, 0).toString());
         TxtCountryName.setText(dm.getValueAt(row, 1).toString());
         String Temp2 = (dm.getValueAt(row, 2) == null) ? "" : dm.getValueAt(row, 2).toString();
-       
         CmbRegionId.setSelectedItem(Temp2);
         TxtCountryId.setEditable(false);
         isClicked = false;
@@ -360,6 +416,27 @@ public class CountryView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtSearchActionPerformed
 
+    private void jBtnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnReportActionPerformed
+//        try {
+//            MainMenuView Main = new MainMenuView();
+//            Report();
+//        } catch (JRException ex) {
+//            Logger.getLogger(CountryView.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(CountryView.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        
+//        NewReport PR = new NewReport();
+//        PR.show();
+//        jPanel1.add(PR);
+        MainMenuView MM = new MainMenuView();
+//        MM.showReport();
+//        MM.getjPanel().add(PR);
+//        MM.getjPanel().revalidate();
+
+
+    }//GEN-LAST:event_jBtnReportActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnSearch;
@@ -370,6 +447,7 @@ public class CountryView extends javax.swing.JInternalFrame {
     private javax.swing.JTextField TxtSearch;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnInsert;
+    private javax.swing.JButton jBtnReport;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

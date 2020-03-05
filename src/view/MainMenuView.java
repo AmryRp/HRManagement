@@ -6,6 +6,18 @@
 package view;
 
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JInternalFrame;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.swing.JRViewer;
+import org.hibernate.SessionFactory;
+import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
+import tool.HibernateUtil;
 
 /**
  *
@@ -13,16 +25,35 @@ import java.awt.Color;
  */
 public class MainMenuView extends javax.swing.JFrame {
 
-    Color paneldefault;
-    Color panelClicked;
-    Color panelBG;
-
     public MainMenuView() {
         initComponents();
-        paneldefault = new Color(240, 240, 240);
-        panelClicked = new Color(0, 200, 200);
-        PCountry.setBackground(paneldefault);
-        PRegion.setBackground(paneldefault);
+
+    }
+
+    public void showReport(String Report) throws SQLException {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Connection c = null;
+        try {
+            c = sessionFactory.getSessionFactoryOptions().getServiceRegistry().
+                    getService(ConnectionProvider.class).getConnection();
+            JasperPrint countryPrint = JasperFillManager.fillReport(
+                    getClass().getClassLoader().getResourceAsStream(Report), null, c);
+
+            JInternalFrame report = new JInternalFrame("Report");
+            report.getContentPane().add(new JRViewer(countryPrint));
+            report.pack();
+            report.setVisible(true);
+            report.setSize(1000, 800);
+            report.setMaximizable(rootPaneCheckingEnabled);
+            jPanel.add(report);
+
+//        JasperExportManager.exportReportToPdfFile(countryPrint,
+//                "C:\\Users\\amry4\\OneDrive\\Dokumen\\NetBeansProjects\\HibernateTest\\src\\countryReport.pdf");
+//        System.out.println("Pdf file has been created");
+//            PReport.revalidate();
+        } catch (JRException ex) {
+            Logger.getLogger(PreviewReport.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -47,6 +78,12 @@ public class MainMenuView extends javax.swing.JFrame {
         PJobHistory = new javax.swing.JMenuItem();
         PJobGrade = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        btnReportCountry = new javax.swing.JMenuItem();
+        btnReportRegion = new javax.swing.JMenuItem();
+        btnReportLocation = new javax.swing.JMenuItem();
+        btnReportDepartment = new javax.swing.JMenuItem();
+        btnReportJob = new javax.swing.JMenuItem();
+        btnReportEmployee = new javax.swing.JMenuItem();
 
         jMenu2.setText("jMenu2");
 
@@ -60,7 +97,7 @@ public class MainMenuView extends javax.swing.JFrame {
         jPanel.setLayout(jPanelLayout);
         jPanelLayout.setHorizontalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1163, Short.MAX_VALUE)
+            .addGap(0, 1198, Short.MAX_VALUE)
         );
         jPanelLayout.setVerticalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,7 +180,61 @@ public class MainMenuView extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu3.setText("Edit");
+        jMenu3.setText("Report");
+        jMenu3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu3ActionPerformed(evt);
+            }
+        });
+
+        btnReportCountry.setText("Country");
+        btnReportCountry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportCountryActionPerformed(evt);
+            }
+        });
+        jMenu3.add(btnReportCountry);
+
+        btnReportRegion.setText("Region");
+        btnReportRegion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportRegionActionPerformed(evt);
+            }
+        });
+        jMenu3.add(btnReportRegion);
+
+        btnReportLocation.setText("Location");
+        btnReportLocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportLocationActionPerformed(evt);
+            }
+        });
+        jMenu3.add(btnReportLocation);
+
+        btnReportDepartment.setText("Department");
+        btnReportDepartment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportDepartmentActionPerformed(evt);
+            }
+        });
+        jMenu3.add(btnReportDepartment);
+
+        btnReportJob.setText("Job");
+        btnReportJob.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportJobActionPerformed(evt);
+            }
+        });
+        jMenu3.add(btnReportJob);
+
+        btnReportEmployee.setText("Employee");
+        btnReportEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportEmployeeActionPerformed(evt);
+            }
+        });
+        jMenu3.add(btnReportEmployee);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -177,6 +268,8 @@ public class MainMenuView extends javax.swing.JFrame {
     }//GEN-LAST:event_PRegionActionPerformed
 
     private void PCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PCountryActionPerformed
+//        PreviewReports PR = new PreviewReports();
+//        PR.show(); 
         CountryView CV = new CountryView();
         CV.show();
         jPanel.add(CV);
@@ -217,6 +310,58 @@ public class MainMenuView extends javax.swing.JFrame {
 //        JGV.show();
 //        jPanel.add(JGV);
     }//GEN-LAST:event_PJobGradeActionPerformed
+
+    private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
+//      showReport();
+    }//GEN-LAST:event_jMenu3ActionPerformed
+
+    private void btnReportCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportCountryActionPerformed
+        try {
+            showReport("countryReport.jasper");
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenuView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnReportCountryActionPerformed
+
+    private void btnReportRegionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportRegionActionPerformed
+        try {
+            showReport("regionReport.jasper");
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenuView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnReportRegionActionPerformed
+
+    private void btnReportLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportLocationActionPerformed
+        try {
+            showReport("locationReport.jasper");
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenuView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnReportLocationActionPerformed
+
+    private void btnReportDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportDepartmentActionPerformed
+      try {
+            showReport("departmentReport.jasper");
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenuView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnReportDepartmentActionPerformed
+
+    private void btnReportJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportJobActionPerformed
+        try {
+            showReport("jobReport.jasper");
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenuView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnReportJobActionPerformed
+
+    private void btnReportEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportEmployeeActionPerformed
+       try {
+            showReport("employeeReport.jasper");
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenuView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnReportEmployeeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,10 +407,20 @@ public class MainMenuView extends javax.swing.JFrame {
     private javax.swing.JMenuItem PJobHistory;
     private javax.swing.JMenuItem PLocation;
     private javax.swing.JMenuItem PRegion;
+    private javax.swing.JMenuItem btnReportCountry;
+    private javax.swing.JMenuItem btnReportDepartment;
+    private javax.swing.JMenuItem btnReportEmployee;
+    private javax.swing.JMenuItem btnReportJob;
+    private javax.swing.JMenuItem btnReportLocation;
+    private javax.swing.JMenuItem btnReportRegion;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel;
     // End of variables declaration//GEN-END:variables
+
+    public javax.swing.JPanel getjPanel() {
+        return jPanel;
+    }
 }

@@ -148,6 +148,8 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         TblDM = new javax.swing.JTable();
 
+        setClosable(true);
+
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
         jLabel2.setText("Department Id");

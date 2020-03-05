@@ -137,6 +137,7 @@ public class RegionView extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
 
         setBorder(null);
+        setClosable(true);
         setForeground(java.awt.Color.white);
         setTitle("REGION MANAGEMENT");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

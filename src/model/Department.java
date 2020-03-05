@@ -57,7 +57,11 @@ public class Department implements Serializable {
     public Department(Short departmentId) {
         this.departmentId = departmentId;
     }
-
+    /**
+     * this function for constructor that store 2 parameter for departementId and depatementName
+     * @param departmentId is a string data type for getting id from department
+     * @param departmentName is a string datatype for getting name from departmeent
+     */
     public Department(Short departmentId, String departmentName) {
         this.departmentId = departmentId;
         this.departmentName = departmentName;

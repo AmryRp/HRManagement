@@ -5,7 +5,6 @@
  */
 package dao;
 
-import java.math.BigDecimal;
 import java.util.List;
 import model.Country;
 import org.hibernate.Query;
@@ -13,7 +12,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import tool.*;
-import static tool.HibernateUtil.getSessionFactory;
 
 /**
  *
@@ -30,6 +28,19 @@ public class CountryDao implements ICountryDao {
         this.sf = HibernateUtil.getSessionFactory();
     }
 
+    public void getC() {
+        sf = HibernateUtil.getSessionFactory();
+        Session sesi = sf.openSession();
+        Transaction trc = sesi.beginTransaction();
+        
+    }
+
+    /**
+     * this function used to delete object from model.country using id and name.
+     *
+     * @param c is a country object from model.country
+     * @return boolean true or false
+     */
     @Override
     public boolean delete(Country c) {
         Session session = sf.openSession();
@@ -72,6 +83,11 @@ public class CountryDao implements ICountryDao {
 
     }
 
+    /**
+     * this function used for getting all object from model.
+     *
+     * @return to list<Model.Country>
+     */
     @Override
     public List<Country> getAll() {
         Session session = sf.openSession();
@@ -95,6 +111,12 @@ public class CountryDao implements ICountryDao {
         return country;
     }
 
+    /**
+     * This function used for search by name from object model.country.
+     *
+     * @param c is a string datatype that used for store name input
+     * @return to List<model.country>
+     */
     @Override
     public List<Country> search(String c) {
         Session session = sf.openSession();
@@ -118,15 +140,21 @@ public class CountryDao implements ICountryDao {
         return Rsearch;
     }
 
+    /**
+     * this function used for get object by id using object country
+     *
+     * @param C is an object Country
+     * @return to string datatype for getting regionName
+     */
     @Override
-    public String getById(Country R) {
+    public String getById(Country C) {
         Session session = sf.openSession();
 
         Country rg = null;
         Transaction trc = null;
         try {
             trc = session.beginTransaction();
-            rg = (Country) session.get(Country.class, R.getCountryId());
+            rg = (Country) session.get(Country.class, C.getCountryId());
             trc.commit();
             System.out.println(rg);
         } catch (Exception e) {

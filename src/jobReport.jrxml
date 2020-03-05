@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b644df5f-3ea2-4a5a-93f0-90072c3f20ac">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     JOBS."JOB_ID" AS JOBS_JOB_ID,
+     JOBS."JOB_TITLE" AS JOBS_JOB_TITLE,
+     JOBS."MIN_SALARY" AS JOBS_MIN_SALARY,
+     JOBS."MAX_SALARY" AS JOBS_MAX_SALARY
+FROM
+     "HR"."JOBS" JOBS]]>
+	</queryString>
+	<field name="JOBS_JOB_ID" class="java.lang.String"/>
+	<field name="JOBS_JOB_TITLE" class="java.lang.String"/>
+	<field name="JOBS_MIN_SALARY" class="java.math.BigDecimal"/>
+	<field name="JOBS_MAX_SALARY" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="434" y="0" width="121" height="79" uuid="979cee04-929f-4d46-96cf-70e3cf96459d"/>
+				<imageExpression><![CDATA["C:\\Users\\amry4\\OneDrive\\Pictures\\metrodata-1.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="0" width="231" height="39" uuid="42f73e2a-def3-4257-b6cf-e623070b6057"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[JOB REPORT]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="455" y="0" width="100" height="20" uuid="bbc295e4-e0ec-45be-9db1-774be60c21ab"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="231" y="0" width="100" height="20" uuid="503824ce-fb59-4bb8-9167-84c0a9a933fc"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[METRODATA]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="27" y="27" width="100" height="20" uuid="76f4472a-c11f-4b5c-8362-181a8979bb70"/>
+				<text><![CDATA[Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="26" width="100" height="20" uuid="817a0cf2-d662-4a86-bdb1-995a00ab77ef"/>
+				<text><![CDATA[Tittle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="26" width="100" height="20" uuid="3d185176-11b8-40fb-a873-d15166debc1f"/>
+				<text><![CDATA[Minimal salary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="26" width="100" height="20" uuid="0eba2ed0-ed67-4beb-9a68-b4d21f151271"/>
+				<text><![CDATA[Maximal Salary]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="27" y="0" width="100" height="20" uuid="9f23d22d-77e4-45a7-ba1f-c944cb606af0"/>
+				<textFieldExpression><![CDATA[$F{JOBS_JOB_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="163" y="0" width="100" height="20" uuid="2a3cc34c-d828-469c-939e-8a74dad690d0"/>
+				<textFieldExpression><![CDATA[$F{JOBS_JOB_TITLE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="0" width="100" height="20" uuid="c9858ccc-94e3-442f-9079-ec34da1f2a0c"/>
+				<textFieldExpression><![CDATA[$F{JOBS_MIN_SALARY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="444" y="0" width="100" height="20" uuid="9496ea0c-efee-443f-819a-fc932dd1e124"/>
+				<textFieldExpression><![CDATA[$F{JOBS_MAX_SALARY}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="435" y="0" width="80" height="20" uuid="86612333-c4f3-48e8-bbd5-414604d3a673"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="0" width="40" height="20" uuid="056f2e25-dafe-43b6-a594-fae4162727dc"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

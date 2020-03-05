@@ -98,6 +98,8 @@ public class JobView extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         TblJob = new javax.swing.JTable();
 
+        setClosable(true);
+
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
         btnInsertJob.setBackground(new java.awt.Color(51, 204, 255));

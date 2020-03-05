@@ -127,6 +127,7 @@ public LocationView() {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblViewLocation = new javax.swing.JTable();
 
+        setClosable(true);
         setTitle("LOCATIONS MANAGEMENT");
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
