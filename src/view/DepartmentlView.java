@@ -64,15 +64,17 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
     public void FillcboxM(JComboBox Jbox) {
 
         ListEM = iem.getManager();
-        String[] managerId = new String[ListEM.size()];
-        int[] manager = new int[ListEM.size()];
+        String[] Name = new String[ListEM.size()];
+        int[] Id = new int[ListEM.size()];
+        String[] ManIdName = new String[ListEM.size()];
         int i = 0;
         while (i < ListEM.size()) {
-            managerId[i] = ListEM.get(i).getManagerId().getLastName();
-            manager[i] = ListEM.get(i).getManagerId().getEmployeeId();
+            Id[i] = (ListEM.get(i).getManagerId() == null) ? 0 : ListEM.get(i).getManagerId().getEmployeeId() ;
+            Name[i] = (ListEM.get(i).getManagerId() == null) ? "" : ListEM.get(i).getManagerId().getLastName();
+            ManIdName[i] = Id[i]+" "+Name[i];
             i++;
         }
-        DefaultComboBoxModel dtm = new DefaultComboBoxModel(managerId);
+        DefaultComboBoxModel dtm = new DefaultComboBoxModel(ManIdName);
         getCmbDMMan().setModel(dtm);
     }
 
@@ -95,11 +97,13 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
         DefaultTableModel dtm = new DefaultTableModel(null, tblHeader);
         tabel.getModel();
         Object[] row;
-        row = new Object[ListDM.size()];
+        row = new Object[dtm.getColumnCount()];
         while (dtm.getRowCount() < ListDM.size()) {
             row[0] = ListDM.get(dtm.getRowCount()).getDepartmentId();
             row[1] = ListDM.get(dtm.getRowCount()).getDepartmentName();
-            row[2] = ListDM.get(dtm.getRowCount()).getManagerId().getManagerId().getLastName();
+            row[2] = (ListDM.get(dtm.getRowCount()).getManagerId() == null)
+                    ? "" : ListDM.get(dtm.getRowCount()).getManagerId().getEmployeeId()
+                    + " " + ListDM.get(dtm.getRowCount()).getManagerId().getLastName();
             row[3] = ListDM.get(dtm.getRowCount()).getLocationId().getCity();
             dtm.addRow(row);
         }
@@ -308,7 +312,7 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "fill id");
         } else {
 
-            JOptionPane.showMessageDialog(rootPane, Dct.Save(new Department(new Short(TxtDMId.getText()), TxtDMName.getText(),new Employee( CmbDMMan.getSelectedItem().toString()),new Location(CmbDMLoc.getSelectedItem().toString()))));
+            JOptionPane.showMessageDialog(rootPane, Dct.save(TxtDMId.getText(), TxtDMName.getText(), CmbDMMan.getSelectedItem().toString(), CmbDMLoc.getSelectedItem().toString()));
         }
         refresh();
     }//GEN-LAST:event_btnInsertActionPerformed
@@ -318,7 +322,7 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
             int result = JOptionPane.showConfirmDialog(null,
                     "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
-                JOptionPane.showMessageDialog(rootPane, Dct.delete(new Department(new Short(TxtDMId.getText()))));
+                JOptionPane.showMessageDialog(rootPane, Dct.delete(TxtDMId.getText()));
                 refresh();
             }
         } else {

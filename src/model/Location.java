@@ -69,18 +69,11 @@ public class Location implements Serializable {
         this.countryId = countryId;
     }
 
-    public Location(String city) {
-        this.city = city;
-    }
-
     public Location(Short locationId) {
         this.locationId = locationId;
     }
 
-    public Location(Short locationId, String city) {
-        this.locationId = locationId;
-        this.city = city;
-    }
+
 
     public Short getLocationId() {
         return locationId;

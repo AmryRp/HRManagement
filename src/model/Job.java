@@ -53,10 +53,11 @@ public class Job implements Serializable {
     public Job() {
     }
 
-    public Job(String jobTitle) {
-        this.jobTitle = jobTitle;
+    public Job(String jobId) {
+        this.jobId = jobId;
     }
 
+ 
     public Job(String jobId, String jobTitle, Integer minSalary, Integer maxSalary) {
         this.jobId = jobId;
         this.jobTitle = jobTitle;
@@ -64,10 +65,6 @@ public class Job implements Serializable {
         this.maxSalary = maxSalary;
     }
 
-    public Job(String jobId, String jobTitle) {
-        this.jobId = jobId;
-        this.jobTitle = jobTitle;
-    }
 
     public String getJobId() {
         return jobId;

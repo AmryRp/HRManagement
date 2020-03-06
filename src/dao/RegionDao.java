@@ -118,7 +118,6 @@ public class RegionDao implements IRegionDao {
  */
     public Region getById(BigDecimal Id) {
         Session session = sf.openSession();
-        
         Region rg = null;
         Transaction trc = null;
         try {

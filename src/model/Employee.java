@@ -89,8 +89,7 @@ public class Employee implements Serializable {
         this.employeeId = employeeId;
     }
 
-    public Employee(Integer employeeId, String firstName, String lastName, String email, String phoneNumber,
-            Date hireDate, BigDecimal salary, Department departmentId, Employee managerId, Job jobId) {
+    public Employee(Integer employeeId, String firstName, String lastName, String email, String phoneNumber, Date hireDate, BigDecimal salary, BigDecimal commissionPct, Department departmentId, Employee managerId, Job jobId) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -98,13 +97,16 @@ public class Employee implements Serializable {
         this.phoneNumber = phoneNumber;
         this.hireDate = hireDate;
         this.salary = salary;
+        this.commissionPct = commissionPct;
         this.departmentId = departmentId;
         this.managerId = managerId;
         this.jobId = jobId;
     }
 
-    public Employee(String firstName) {
-        this.firstName = firstName;
+  
+
+    public Employee(String lastName) {
+        this.lastName = lastName;
     }
 
     public Employee(Integer employeeId, String lastName, String email, Date hireDate) {

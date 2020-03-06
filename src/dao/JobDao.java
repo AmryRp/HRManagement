@@ -26,12 +26,12 @@ public class JobDao implements IJobDao{
 
 
    @Override
-    public boolean delete(Job l) {
+    public boolean delete(Job j) {
         Session session = sf.openSession();
         Transaction trc = null;
         try {
             trc = session.beginTransaction();
-            session.delete(l);
+            session.delete(j);
             trc.commit();
             return trc != null;
         } catch (Exception e) {
@@ -107,7 +107,7 @@ public class JobDao implements IJobDao{
     }
 
     @Override
-    public Job getById(int id) {
+    public Job getById(String id) {
         Session session = sf.openSession();
         
         Job rg = null;

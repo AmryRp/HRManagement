@@ -36,16 +36,16 @@ public class EmployeeController {
     }
 
     public String save(String employeeId, String firstName, String lastName, String email, String phoneNumber, 
-            Date hireDate, String salary, String departmentId, String managerId, String jobId) {
+            String hireDate, String salary,String Commission, String departmentId, String managerId, String jobId) {
        IntrfcJM = new EmployeeDao();
         return (IntrfcJM.insertOrUpdate(new Employee(Integer.parseInt(employeeId), firstName,lastName,email,
-                phoneNumber,hireDate,new BigDecimal(salary),new Department(new Short(departmentId)),new Employee(managerId),new Job(jobId) ))) ? "sukses" : "failed";
+                phoneNumber,new Date(hireDate),new BigDecimal(salary),new BigDecimal(Commission),new Department(new Short(departmentId)),new Employee(managerId),new Job(jobId) ))) ? "sukses" : "failed";
 
     }
 
     public String delete(String id) {
           IntrfcJM = new EmployeeDao();
-        return (IntrfcJM.delete(new Employee(id))) ? "sukses" : "failed";
+        return (IntrfcJM.delete(Integer.parseInt(id))) ? "sukses" : "failed";
 
     }
      public List<Employee> search(String Name) {

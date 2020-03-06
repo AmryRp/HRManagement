@@ -21,5 +21,5 @@ public interface IJobDao {
 
     public List<Job> search(Job j);
 
-    public Job getById(int id);
+    public Job getById(String id);
 }

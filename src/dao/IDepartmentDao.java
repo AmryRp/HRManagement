@@ -16,7 +16,7 @@ public interface IDepartmentDao {
 
     public boolean insertOrUpdate(Department R);
 
-    public boolean delete(Department R);
+    public boolean delete(short id);
 
     public List<Department> getAll();
 

@@ -11,7 +11,6 @@ import dao.IEmployeeDao;
 import dao.ILocationDao;
 import dao.LocationDao;
 import java.util.List;
-import javafx.scene.DepthTest;
 import model.Department;
 import model.Employee;
 import model.Location;
@@ -44,7 +43,7 @@ public class DepartmentController {
         ListLocation = ILocation.getAll();
     }
 
-    public String Save(String Id, String Name, String managerId, String locationId) {
+    public String save(String Id, String Name, String managerId, String locationId) {
           IDepartement = new DepartmentDao();
           ILocation = new LocationDao();
          
@@ -54,7 +53,7 @@ public class DepartmentController {
 
     public String delete(String id) {
 
-        return (IDepartement.delete(new Department(new Short(id)))) ? "sukses" : "failed";
+        return (IDepartement.delete(Short.parseShort(id))) ? "sukses" : "failed";
 
     }
 

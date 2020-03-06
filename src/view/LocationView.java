@@ -46,13 +46,17 @@ public LocationView() {
     public void Fillcbox(JComboBox Jbox) {
 
         ListCountry = IntrfcCM.getAll();
+        String[] countryId = new String[ListCountry.size()];
         String[] countryname = new String[ListCountry.size()];
+        String[] countryIdName = new String[ListCountry.size()];
         int i = 0;
         while (i < ListCountry.size()) {
+            countryId[i] = ListCountry.get(i).getCountryId();
             countryname[i] = ListCountry.get(i).getCountryName();
+            countryIdName[i] = countryId[i]+" "+ countryname[i];
             i++;
         }
-        DefaultComboBoxModel tR = new DefaultComboBoxModel(countryname);
+        DefaultComboBoxModel tR = new DefaultComboBoxModel(countryIdName);
         getCmbCountryId().setModel(tR);
     }
 
@@ -70,7 +74,9 @@ public LocationView() {
             row[2] = ListLocation.get(dtm.getRowCount()).getPostalCode();
             row[3] = ListLocation.get(dtm.getRowCount()).getCity();
             row[4] = ListLocation.get(dtm.getRowCount()).getStateProvince();
-            row[5] = ListLocation.get(dtm.getRowCount()).getCountryId().getCountryName();
+            row[5] = (ListLocation.get(dtm.getRowCount()).getCountryId() == null) ? 
+                    "": ListLocation.get(dtm.getRowCount()).getCountryId().getCountryId()+" "
+                    +ListLocation.get(dtm.getRowCount()).getCountryId().getCountryName();
             dtm.addRow(row);
         }
         tblViewLocation.setModel(dtm);
@@ -296,10 +302,10 @@ public LocationView() {
         if (IsEmptyField()) {
             JOptionPane.showMessageDialog(rootPane, "fill id");
         } else {
+            String[] space = CmbCountryId.getSelectedItem().toString().split(" ");
             JOptionPane.showMessageDialog(rootPane, Lct.Save(TxtLocationId.getText(),
                 TxtStreetAddress.getText(), TxtZipCode.getText(),
-                TxtCity.getText(), TxtProvince.getText(),
-                CmbCountryId.getSelectedItem().toString()));
+                TxtCity.getText(), TxtProvince.getText(), space[0]));
         refresh();
 
         }
@@ -329,7 +335,8 @@ public LocationView() {
         TxtCity.setText(dm.getValueAt(row, 3).toString());
         String Temp4 = (dm.getValueAt(row, 4) == null) ? "" : dm.getValueAt(row, 4).toString();
         TxtProvince.setText(Temp4);
-        CmbCountryId.setSelectedItem(dm.getValueAt(row, 5));
+        String Temp5 = (dm.getValueAt(row, 5) == null) ? "" : dm.getValueAt(row, 5).toString();
+        CmbCountryId.setSelectedItem(Temp5);
         TxtLocationId.setEditable(false);
         isClicked = false;
     }//GEN-LAST:event_tblViewLocationMouseClicked

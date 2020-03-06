@@ -47,7 +47,8 @@ public class LocationController {
     }
 
     public String delete(String Id) {
-        return (IntrfcLM.delete(new Location(Id))) ? "sukses" : "failed";
+         IntrfcLM = new LocationDao();
+        return (IntrfcLM.delete(new Location(new Short(Id)))) ? "sukses" : "failed";
     }
 
 }

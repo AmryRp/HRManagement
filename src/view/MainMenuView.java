@@ -278,27 +278,27 @@ public class MainMenuView extends javax.swing.JFrame {
     }//GEN-LAST:event_PCountryActionPerformed
 
     private void PLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PLocationActionPerformed
-//        LocInternalVIew LV = new LocInternalVIew();
-//        LV.show();
-//        jPanel.add(LV);
+        LocationView LV = new LocationView();
+        LV.show();
+        jPanel.add(LV);
     }//GEN-LAST:event_PLocationActionPerformed
 
     private void PDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDepartmentActionPerformed
-//        DepartmentInternalView DV = new DepartmentInternalView();
-//        DV.show();
-//        jPanel.add(DV);
+        DepartmentlView DV = new DepartmentlView();
+        DV.show();
+        jPanel.add(DV);
     }//GEN-LAST:event_PDepartmentActionPerformed
 
     private void PJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PJobActionPerformed
-//        JobInternalView JV = new JobInternalView();
-//        JV.show();
-//        jPanel.add(JV);
+        JobView JV = new JobView();
+        JV.show();
+        jPanel.add(JV);
     }//GEN-LAST:event_PJobActionPerformed
 
     private void PEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PEmployeeActionPerformed
-//        EmployeeInternalView EmpV = new EmployeeInternalView();
-//        EmpV.show();
-//        jPanel.add(EmpV);
+        EmployeeView EmpV = new EmployeeView();
+        EmpV.show();
+        jPanel.add(EmpV);
     }//GEN-LAST:event_PEmployeeActionPerformed
 
     private void PJobHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PJobHistoryActionPerformed

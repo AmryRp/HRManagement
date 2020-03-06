@@ -5,14 +5,14 @@
  */
 package view;
 
-import controllers.JobsController;
-import dao.DaoJobManagement;
-import dao.InterfaceJobManagement;
+import controller.JobController;
+import dao.JobDao;
+import dao.IJobDao;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import models.EntityJob;
+import model.Job;
 
 /**
  *
@@ -25,15 +25,15 @@ public class JobView extends javax.swing.JInternalFrame {
      */
     public JobView() {
         initComponents();
-        Jct = new JobsController();
-        IntrfcJM = new DaoJobManagement();
-        ListJob = IntrfcJM.getALL();
+        Jct = new JobController();
+        IntrfcJM = new JobDao();
+        ListJob = IntrfcJM.getAll();
         bindingTable(TblJob);
         
     }
-    JobsController Jct;
-    List<EntityJob> ListJob;
-    InterfaceJobManagement IntrfcJM;
+    JobController Jct;
+    List<Job> ListJob;
+    IJobDao IntrfcJM;
       boolean isClicked = true;
     /**
      * Creates new form JobsManager
@@ -59,15 +59,15 @@ public class JobView extends javax.swing.JInternalFrame {
         }
     }
       public void bindingTable(JTable tabel) {
-        ListJob = IntrfcJM.getALL();
+        ListJob = IntrfcJM.getAll();
         String[] tblHeader = new String[]{"id", "Title", "Min Salary","Max Salary"};
         DefaultTableModel dtm = new DefaultTableModel(null, tblHeader);
         tabel.getModel();
         Object[] row;
         row = new Object[ListJob.size()];
         while (dtm.getRowCount() < ListJob.size()) {
-            row[0] = ListJob.get(dtm.getRowCount()).getId();
-            row[1] = ListJob.get(dtm.getRowCount()).getTitle();
+            row[0] = ListJob.get(dtm.getRowCount()).getJobId();
+            row[1] = ListJob.get(dtm.getRowCount()).getJobTitle();
             row[2] = ListJob.get(dtm.getRowCount()).getMinSalary();
             row[3] = ListJob.get(dtm.getRowCount()).getMaxSalary();
             dtm.addRow(row);
@@ -242,9 +242,8 @@ public class JobView extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "fill id");
         } else {
 
-            JOptionPane.showMessageDialog(rootPane, Jct.Save(TxtJobId.getText(),
-                TxtJobTitle.getText(), TxtMinSal.getText() , TxtMaxSal.getText(),
-                isClicked));
+            JOptionPane.showMessageDialog(rootPane, Jct.save(TxtJobId.getText(),
+                TxtJobTitle.getText(), TxtMinSal.getText() , TxtMaxSal.getText()));
         }
         refresh();
     }//GEN-LAST:event_btnInsertJobActionPerformed

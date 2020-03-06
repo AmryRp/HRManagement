@@ -25,12 +25,13 @@ public class DepartmentDao implements IDepartmentDao {
     }
 
     @Override
-    public boolean delete(Department c) {
+    public boolean delete(short id) {
         Session session = sf.openSession();
         Transaction trc = null;
         try {
             trc = session.beginTransaction();
-            session.delete(c);
+            Department dpt = (Department) session.get(Department.class, id);
+            session.delete(dpt);
             trc.commit();
             return trc != null;
         } catch (Exception e) {
@@ -83,7 +84,7 @@ public class DepartmentDao implements IDepartmentDao {
         } finally {
             if (trc == null) {
                 //System.out.println("closed");
-                session.close();
+               // session.close();
             }
         }
         return departments;

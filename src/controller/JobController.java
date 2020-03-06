@@ -47,7 +47,7 @@ public class JobController {
         return IntrfcJM.search(new Job(Name));
     }
 
-    public boolean confirm(int id) {
+    public boolean confirm(String id) {
         IntrfcJM = new JobDao();
        return(IntrfcJM.getById(id) != null); 
     }

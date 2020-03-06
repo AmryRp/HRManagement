@@ -16,7 +16,7 @@ public interface IEmployeeDao {
     
     public boolean insertOrUpdate(Employee R);
 
-    public boolean delete(Employee R);
+    public boolean delete(int id);
 
     public List<Employee> getAll();
     public List<Employee> getManager();

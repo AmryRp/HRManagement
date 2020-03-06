@@ -26,12 +26,13 @@ public class EmployeeDao implements IEmployeeDao {
     }
 
     @Override
-    public boolean delete(Employee Emp) {
+    public boolean delete(int id) {
         Session session = sf.openSession();
         Transaction trc = null;
         try {
             trc = session.beginTransaction();
-            session.delete(Emp);
+            Employee emp = (Employee) session.get(Employee.class, id);
+            session.delete(emp);
             trc.commit();
             return trc != null;
         } catch (Exception e) {
@@ -149,7 +150,7 @@ public class EmployeeDao implements IEmployeeDao {
         Transaction trc = null;
         try {
             trc = session.beginTransaction();
-            Emp = session.createQuery("FROM Employee where managerId = employeeId").list();
+            Emp = session.createQuery("FROM Employee").list();
             trc.commit();
         } catch (Exception e) {
             if (trc != null) {
