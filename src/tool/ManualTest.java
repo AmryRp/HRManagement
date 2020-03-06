@@ -25,16 +25,16 @@ public class ManualTest {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        EmployeeDao e = new EmployeeDao();
-        e.delete(5);
-        for (Employee em : e.getAll()) {
-            System.out.println(em.getEmployeeId());
-        }
-        }
-        
-//        RegionDao drm = new RegionDao();
-//        MainMenuView mainview =  new MainMenuView();
-//        mainview.setVisible(true);
+//        EmployeeDao e = new EmployeeDao();
+//        e.delete(5);
+//        for (Employee em : e.getAll()) {
+//            System.out.println(em.getEmployeeId());
+//        }
+//        }
+
+        RegionDao drm = new RegionDao();
+        MainMenuView mainview = new MainMenuView();
+        mainview.setVisible(true);
 //
 ////       drm.delete(new Region("timor leste"));
 ////        for (Region region : drm.search("Asia")) {
@@ -44,4 +44,4 @@ public class ManualTest {
 ////        
 //        
     }
-
+}

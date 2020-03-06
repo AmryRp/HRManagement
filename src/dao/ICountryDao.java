@@ -14,10 +14,15 @@ import model.Country;
  * @author amry4
  */
 public interface ICountryDao {
+
     public boolean insertOrUpdate(Country R);
+
     public boolean delete(Country R);
+
     public List<Country> getAll();
+
     public List<Country> search(String R);
+
     public String getById(Country R);
-    
+
 }
