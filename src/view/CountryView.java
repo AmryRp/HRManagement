@@ -19,28 +19,7 @@ import model.Country;
 import model.Region;
 import dao.IRegionDao;
 import dao.ICountryDao;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.view.JasperViewer;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
-import org.hibernate.metamodel.Metadata;
-import org.hibernate.metamodel.MetadataSources;
-import tool.HibernateUtil;
+import dao.IGeneric;
 
 /**
  * This class for view Country that used for input and output that user use.
@@ -55,7 +34,7 @@ public class CountryView extends javax.swing.JInternalFrame {
     ICountryDao IntrfcCM;
     List<Country> ListCountry;
     List<Region> ListRegion;
-    IRegionDao IntrfcRM;
+    IGeneric<Region, BigDecimal, String> IntrfcRM;
     boolean isClicked = true;
     int idxcmb;
 
@@ -66,7 +45,7 @@ public class CountryView extends javax.swing.JInternalFrame {
         initComponents();
         cct = new CountryController();
         IntrfcRM = new RegionDao();
-        ListRegion = IntrfcRM.getAll(ER);
+        ListRegion = IntrfcRM.getAll();
         IntrfcCM = new CountryDao();
         ListCountry = IntrfcCM.getAll();
         bindingTable(TblCountries);
@@ -80,7 +59,7 @@ public class CountryView extends javax.swing.JInternalFrame {
      * @param Jbox is a datatype for j combo box
      */
     public void Fillcbox(JComboBox Jbox) {
-        ListRegion = IntrfcRM.getAll(ER);
+        ListRegion = IntrfcRM.getAll();
         String[] regionName = new String[ListRegion.size()];
         BigDecimal[] regionId = new BigDecimal[ListRegion.size()];
         String[] RegionsList = new String[ListRegion.size()];
@@ -430,7 +409,7 @@ public class CountryView extends javax.swing.JInternalFrame {
 //        NewReport PR = new NewReport();
 //        PR.show();
 //        jPanel1.add(PR);
-        MainMenuView MM = new MainMenuView();
+//        MainMenuView MM = new MainMenuView();
 //        MM.showReport();
 //        MM.getjPanel().add(PR);
 //        MM.getjPanel().revalidate();

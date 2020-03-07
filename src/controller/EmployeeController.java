@@ -50,7 +50,7 @@ public class EmployeeController {
     }
      public List<Employee> search(String Name) {
         IntrfcJM = new EmployeeDao();
-        return IntrfcJM.search(new Employee(Name));
+        return IntrfcJM.search(Name);
     }
 
     public boolean confirm(int id) {

@@ -32,7 +32,7 @@ public class ManualTest {
 //        }
 //        }
 
-        RegionDao drm = new RegionDao();
+//        RegionDao drm = new RegionDao();
         MainMenuView mainview = new MainMenuView();
         mainview.setVisible(true);
 //

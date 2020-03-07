@@ -6,6 +6,7 @@
 package view;
 
 import controller.RegionController;
+import dao.IGeneric;
 import dao.RegionDao;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -34,7 +35,7 @@ import tool.HibernateUtil;
 public class RegionView extends javax.swing.JInternalFrame {
 
     RegionController rct;
-    IRegionDao IntrfcRM;
+     IGeneric<Region, BigDecimal, String> IntrfcRM; 
     List<Region> ListRegion;
     boolean isClicked = true;
     Region Er = new Region();
@@ -46,7 +47,7 @@ public class RegionView extends javax.swing.JInternalFrame {
         initComponents();
         rct = new RegionController();
         IntrfcRM = new RegionDao();
-        ListRegion = IntrfcRM.getAll(Er);
+        ListRegion = IntrfcRM.getAll();
         bindingTable(tblView);
     }
 
@@ -63,7 +64,7 @@ public class RegionView extends javax.swing.JInternalFrame {
     }
 
     public void bindingTable(JTable tabel) {
-        ListRegion = IntrfcRM.getAll(Er);
+        ListRegion = IntrfcRM.getAll();
         String[] tblHeader = new String[]{"id", "name"};
         DefaultTableModel dtm = new DefaultTableModel(null, tblHeader);
         tabel.getModel();

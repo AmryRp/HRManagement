@@ -92,7 +92,7 @@ public class EmployeeDao implements IEmployeeDao {
     }
 
     @Override
-    public List<Employee> search(Employee key) {
+    public List<Employee> search(String Name) {
         Session session = sf.openSession();
         List<Employee> Dtsearch = null;
         Transaction trc = null;
@@ -101,7 +101,7 @@ public class EmployeeDao implements IEmployeeDao {
             trc = session.beginTransaction();
             String hql = "FROM Employee where lastName =:keyword OR firstName =:keyword ";
             Query q = session.createQuery(hql);
-            q.setString("keyword", "%" + key + "%");
+            q.setString("keyword", "%" + Name + "%");
             Dtsearch = q.list();
             trc.commit();
         } catch (Exception e) {
@@ -143,26 +143,5 @@ public class EmployeeDao implements IEmployeeDao {
         }
     }
 
-    @Override
-    public List<Employee> getManager() {
-       Session session = sf.openSession();
-        List<Employee> Emp = null;
-        Transaction trc = null;
-        try {
-            trc = session.beginTransaction();
-            Emp = session.createQuery("FROM Employee").list();
-            trc.commit();
-        } catch (Exception e) {
-            if (trc != null) {
-                trc.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            if (trc == null) {
-                //System.out.println("closed");
-                session.close();
-            }
-        }
-        return Emp;
-    }
+   
 }

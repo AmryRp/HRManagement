@@ -63,7 +63,7 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
      */
     public void FillcboxM(JComboBox Jbox) {
 
-        ListEM = iem.getManager();
+        ListEM = iem.getAll();
         String[] Name = new String[ListEM.size()];
         int[] Id = new int[ListEM.size()];
         String[] ManIdName = new String[ListEM.size()];

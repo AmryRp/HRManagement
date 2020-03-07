@@ -40,7 +40,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         IntrfcEM = new EmployeeDao();
         ListEmployee = IntrfcEM.getAll();
         IntrfcEMM = new EmployeeDao();
-        ListEmpM = IntrfcEMM.getManager();
+        ListEmpM = IntrfcEMM.getAll();
         ijm = new JobDao();
         idm = new DepartmentDao();
         bindingTable(TblEmployee);
@@ -133,7 +133,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
     }
 
     public void FillcboxManager(JComboBox Jbox) {
-        ListEmpM = IntrfcEMM.getManager();
+        ListEmpM = IntrfcEMM.getAll();
         int[] managerId = new int[ListEmpM.size()];
         String[] managerName = new String[ListEmpM.size()];
         String[] manIdName= new String[ListEmpM.size()];

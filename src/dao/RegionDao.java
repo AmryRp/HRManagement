@@ -19,7 +19,7 @@ import static tool.HibernateUtil.getSessionFactory;
  *
  * @author amry4
  */
-public class RegionDao implements IRegionDao {
+public class RegionDao implements IGeneric<Region, BigDecimal, String> {
 
 //    //SessionFactory sf;
 //    private Session session;
@@ -30,23 +30,22 @@ public class RegionDao implements IRegionDao {
         this.sf = HibernateUtil.getSessionFactory();
     }
 
-    @Override
-    public boolean delete(Region r) {
-        Session session = sf.openSession();
-        Transaction trc = null;
-        try {
-            trc = session.beginTransaction();
-            session.delete(r);
-            trc.commit();
-            return trc != null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return trc == null;
-        } finally {
-            session.close();
-        }
-    }
-
+//    @Override
+//    public boolean delete(int r) {
+//        Session session = sf.openSession();
+//        Transaction trc = null;
+//        try {
+//            trc = session.beginTransaction();
+//            session.delete(r);
+//            trc.commit();
+//            return trc != null;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return trc == null;
+//        } finally {
+//            session.close();
+//        }
+//    }
     @Override
     public boolean insertOrUpdate(Region R) {
         Session session = sf.openSession();
@@ -66,29 +65,28 @@ public class RegionDao implements IRegionDao {
 
     }
 
-    @Override
-    public List<Region> getAll(Region R) {
-        Session session = sf.openSession();
-        List<Region> Region = null;
-        Transaction trc = null;
-        try {
-            trc = session.beginTransaction();
-            Region = session.createQuery("From Region").list();
-            trc.commit();
-        } catch (Exception e) {
-            if (trc != null) {
-                trc.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            if (trc == null) {
-                //System.out.println("closed");
-                session.close();
-            }
-        }
-        return Region;
-    }
-
+//    @Override
+//    public List<Region> getAll(Region R) {
+//        Session session = sf.openSession();
+//        List<Region> Region = null;
+//        Transaction trc = null;
+//        try {
+//            trc = session.beginTransaction();
+//            Region = session.createQuery("From Region").list();
+//            trc.commit();
+//        } catch (Exception e) {
+//            if (trc != null) {
+//                trc.rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            if (trc == null) {
+//                //System.out.println("closed");
+//                session.close();
+//            }
+//        }
+//        return Region;
+//    }
     @Override
     public List<Region> search(String R) {
         Session session = sf.openSession();
@@ -111,11 +109,14 @@ public class RegionDao implements IRegionDao {
 
         return Rsearch;
     }
-/**
- * this function used for get Id values from table
- * @param Id is bigDecimal datatype
- * @return 
- */
+
+    /**
+     * this function used for get Id values from table
+     *
+     * @param Id is bigDecimal datatype
+     * @return
+     */
+      @Override
     public Region getById(BigDecimal Id) {
         Session session = sf.openSession();
         Region rg = null;
@@ -143,6 +144,46 @@ public class RegionDao implements IRegionDao {
         }
     }
 
-   
+
+    @Override
+    public List<Region> getAll() {
+       Session session = sf.openSession();
+        List<Region> Region = null;
+        Transaction trc = null;
+        try {
+            trc = session.beginTransaction();
+            Region = session.createQuery("From Region").list();
+            trc.commit();
+        } catch (Exception e) {
+            if (trc != null) {
+                trc.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (trc == null) {
+                //System.out.println("closed");
+                session.close();
+            }
+        }
+        return Region; 
+    }
+
+    @Override
+    public boolean delete(BigDecimal id) {
+       Session session = sf.openSession();
+        Transaction trc = null;
+        try {
+            trc = session.beginTransaction();
+              Region reg = (Region) session.get(Region.class, id);
+            session.delete(reg);
+            trc.commit();
+            return trc != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return trc == null;
+        } finally {
+            session.close();
+        } 
+    }
 
 }
