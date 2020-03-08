@@ -17,36 +17,41 @@ import tool.HibernateUtil;
  *
  * @author amry4
  */
-public class EmployeeDao implements IEmployeeDao {
+public class EmployeeDao implements IGeneric<Employee, Integer, String> {
 
     private SessionFactory sf;
 
     public EmployeeDao() {
         this.sf = HibernateUtil.getSessionFactory();
     }
-
+/**
+ * this function for deleting table data with id
+ * by : bootcamp34
+ * @param id is a data type Integer that referencing Number on table
+ * @return to boolean true or false
+ */
     @Override
-    public boolean delete(int id) {
-        Session session = sf.openSession();
+    public boolean delete(Integer id) {
+        Session ss = sf.openSession();
         Transaction trc = null;
         try {
-            trc = session.beginTransaction();
-            Employee emp = (Employee) session.get(Employee.class, id);
-            session.delete(emp);
+            trc = ss.beginTransaction();
+            Employee emp = (Employee) ss.get(Employee.class, id);
+            ss.delete(emp);
             trc.commit();
             return trc != null;
         } catch (Exception e) {
             e.printStackTrace();
             return trc == null;
         } finally {
-            session.close();
+            ss.close();
         }
     }
 
     /**
-     * function insertOrUpdate used for save and update , by : bootcamp34
+     * this function(insertOrUpdate) used for save and update , by : bootcamp34
      *
-     * @param Emp is a Department object from model.department
+     * @param Emp is a Employee object from model.Employee
      * @return boolean true or false;
      */
     @Override
@@ -67,7 +72,11 @@ public class EmployeeDao implements IEmployeeDao {
         }
 
     }
-
+/**
+ * this function is for get all table data using query(hql) from Employee, 
+ * that mean get data from table Employee by : bootcamp34
+ * @return to list<object> , object = Employee from model.location; 
+ */
     @Override
     public List<Employee> getAll() {
         Session session = sf.openSession();
@@ -90,7 +99,12 @@ public class EmployeeDao implements IEmployeeDao {
         }
         return Emp;
     }
-
+/**
+ * this function for searching table data that using keyword : name 
+ * by : bootcamp34
+ * @param Name
+ * @return 
+ */
     @Override
     public List<Employee> search(String Name) {
         Session session = sf.openSession();
@@ -113,9 +127,15 @@ public class EmployeeDao implements IEmployeeDao {
 
         return Dtsearch;
     }
-
+/**
+ * this function is used for get data row from table using 
+ * parameter id or unique identity by : bootcamp34
+ * @param Id is a data type for Integer that referencing Number from 
+ * model.location table
+ * @return to Employee entity model
+ */
     @Override
-    public Employee getById(int Id) {
+    public Employee getById(Integer Id) {
         Session session = sf.openSession();
 
         Employee rg = null;

@@ -9,9 +9,7 @@ import controller.EmployeeController;
 import controller.JobController;
 import dao.DepartmentDao;
 import dao.EmployeeDao;
-import dao.IDepartmentDao;
-import dao.IEmployeeDao;
-import dao.IJobDao;
+import dao.IGeneric;
 import dao.JobDao;
 import java.util.Calendar;
 import java.util.List;
@@ -63,10 +61,10 @@ public class EmployeeView extends javax.swing.JInternalFrame {
     List<Employee> ListEmpM;
     List<Job> ListJob;
     List<Department> ListDept;
-    IEmployeeDao IntrfcEM;
-    IEmployeeDao IntrfcEMM;
-    IDepartmentDao idm;
-    IJobDao ijm;
+    IGeneric<Employee, Integer, String> IntrfcEM;
+    IGeneric<Employee, Integer, String> IntrfcEMM;
+    IGeneric<Department, Short, String> idm;
+    IGeneric<Job, String, String> ijm;
     boolean isClicked = true;
     
     /**

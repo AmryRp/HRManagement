@@ -170,19 +170,19 @@ public class RegionDao implements IGeneric<Region, BigDecimal, String> {
 
     @Override
     public boolean delete(BigDecimal id) {
-       Session session = sf.openSession();
+       Session ss = sf.openSession();
         Transaction trc = null;
         try {
-            trc = session.beginTransaction();
-              Region reg = (Region) session.get(Region.class, id);
-            session.delete(reg);
+            trc = ss.beginTransaction();
+            Region reg = (Region) ss.get(Region.class, id);
+            ss.delete(reg);
             trc.commit();
             return trc != null;
         } catch (Exception e) {
             e.printStackTrace();
             return trc == null;
         } finally {
-            session.close();
+            ss.close();
         } 
     }
 

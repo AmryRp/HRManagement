@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.Region;
-import dao.IRegionDao;
 import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;

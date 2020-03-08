@@ -11,8 +11,9 @@ import java.util.List;
 import model.Country;
 import model.Location;
 import view.LocationView;
-import dao.ILocationDao;
-import dao.ICountryDao;
+import dao.IGeneric;
+import java.math.BigDecimal;
+import model.Region;
 
 /**
  *
@@ -24,11 +25,11 @@ public class LocationController {
     }
 
     LocationView LocView;
-    ILocationDao IntrfcLM;
+    IGeneric<Location, Short, String> IntrfcLM;
     List<Location> ListLoc;
     Location EL = new Location();
     List<Country> ListCountry;
-    ICountryDao IntrfcCM;
+    IGeneric<Country, String, String>  IntrfcCM;
     Country EC = new Country();
 
     public LocationController(LocationView frame) {
@@ -48,7 +49,7 @@ public class LocationController {
 
     public String delete(String Id) {
          IntrfcLM = new LocationDao();
-        return (IntrfcLM.delete(new Location(new Short(Id)))) ? "sukses" : "failed";
+        return (IntrfcLM.delete(new Short(Id))) ? "sukses" : "failed";
     }
 
 }

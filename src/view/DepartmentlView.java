@@ -10,11 +10,8 @@ import controller.EmployeeController;
 import controller.LocationController;
 import dao.DepartmentDao;
 import dao.EmployeeDao;
+import dao.IGeneric;
 import dao.LocationDao;
-import dao.IDepartmentDao;
-import dao.IEmployeeDao;
-import dao.ICountryDao;
-import dao.ILocationDao;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -50,11 +47,11 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
 
     }
     DepartmentController Dct;
-    IDepartmentDao idm;
+    IGeneric<Department, Short, String> idm;
     List<Department> ListDM;
-    IEmployeeDao iem;
+    IGeneric<Employee, Integer, String> iem;
     List<Employee> ListEM;
-    ILocationDao ilm;
+    IGeneric<Location, Short, String> ilm;
     List<Location> ListLM;
     boolean isClicked = true;
 

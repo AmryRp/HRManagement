@@ -17,8 +17,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.Country;
 import model.Region;
-import dao.IRegionDao;
-import dao.ICountryDao;
 import dao.IGeneric;
 
 /**
@@ -31,7 +29,7 @@ public class CountryView extends javax.swing.JInternalFrame {
     Country EC = new Country();
     Region ER = new Region();
     CountryController cct;
-    ICountryDao IntrfcCM;
+    IGeneric<Country, String, String> IntrfcCM;
     List<Country> ListCountry;
     List<Region> ListRegion;
     IGeneric<Region, BigDecimal, String> IntrfcRM;

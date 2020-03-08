@@ -5,10 +5,9 @@
  */
 package controller;
 
+
 import dao.DepartmentDao;
-import dao.IDepartmentDao;
-import dao.IEmployeeDao;
-import dao.ILocationDao;
+import dao.IGeneric;
 import dao.LocationDao;
 import java.util.List;
 import model.Department;
@@ -23,13 +22,13 @@ import view.DepartmentlView;
 public class DepartmentController {
     DepartmentlView dv;
     List<Department> ListDept;
-    IDepartmentDao  IDepartement;
+    IGeneric<Department, Short, String>  IDepartement;
 
     List< Location> ListLocation;
-    ILocationDao  ILocation;
+    IGeneric<Location, Short, String>  ILocation;
     
      List< Employee> ListEmployee;
-    IEmployeeDao  IEmployee;
+    IGeneric<Employee, Integer, String>  IEmployee;
     
      Department EC = new  Department();
     Location ER = new  Location();

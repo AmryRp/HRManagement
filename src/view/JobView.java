@@ -6,8 +6,8 @@
 package view;
 
 import controller.JobController;
+import dao.IGeneric;
 import dao.JobDao;
-import dao.IJobDao;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -33,7 +33,7 @@ public class JobView extends javax.swing.JInternalFrame {
     }
     JobController Jct;
     List<Job> ListJob;
-    IJobDao IntrfcJM;
+    IGeneric<Job, String, String> IntrfcJM;
       boolean isClicked = true;
     /**
      * Creates new form JobsManager

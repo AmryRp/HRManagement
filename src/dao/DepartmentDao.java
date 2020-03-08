@@ -17,7 +17,7 @@ import tool.HibernateUtil;
  *
  * @author amry4
  */
-public class DepartmentDao implements IDepartmentDao {
+public class DepartmentDao implements IGeneric<Department, Short, String> {
     private SessionFactory sf;
 
     public DepartmentDao() {
@@ -25,7 +25,7 @@ public class DepartmentDao implements IDepartmentDao {
     }
 
     @Override
-    public boolean delete(short id) {
+    public boolean delete(Short id) {
         Session session = sf.openSession();
         Transaction trc = null;
         try {
@@ -114,7 +114,7 @@ public class DepartmentDao implements IDepartmentDao {
     }
 
     @Override
-    public Department getById(int R) {
+    public Department getById(Short R) {
         Session session = sf.openSession();
         Department DT = new Department();
         Department rg = null;
@@ -142,4 +142,7 @@ public class DepartmentDao implements IDepartmentDao {
         }
     }
 
+   
+
+    
 }

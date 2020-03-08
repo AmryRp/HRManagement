@@ -17,32 +17,32 @@ import tool.HibernateUtil;
  *
  * @author amry4
  */
-public class JobDao implements IJobDao{
+public class JobDao implements IGeneric<Job, String, String> {
+
     private SessionFactory sf;
 
     public JobDao() {
         this.sf = HibernateUtil.getSessionFactory();
     }
 
-
-   @Override
-    public boolean delete(Job j) {
-        Session session = sf.openSession();
+    @Override
+    public boolean delete(String id) {
+        Session ss = sf.openSession();
         Transaction trc = null;
         try {
-            trc = session.beginTransaction();
-            session.delete(j);
+            trc = ss.beginTransaction();
+            Job jb = (Job) ss.get(Job.class, id);
+            ss.delete(jb);
             trc.commit();
             return trc != null;
         } catch (Exception e) {
             e.printStackTrace();
             return trc == null;
         } finally {
-            session.close();
+            ss.close();
         }
     }
 
-   
     @Override
     public boolean insertOrUpdate(Job l) {
         Session session = sf.openSession();
@@ -57,7 +57,7 @@ public class JobDao implements IJobDao{
             return false;
         } finally {
             session.close();
-           
+
         }
 
     }
@@ -82,14 +82,16 @@ public class JobDao implements IJobDao{
                 session.close();
             }
         }
-        return Region;}
+        return Region;
+    }
+
     @Override
-    public List<Job> search(Job l) {
+    public List<Job> search(String l) {
         Session session = sf.openSession();
         List<Job> Rsearch = null;
         Transaction trc = null;
         try {
-            
+
             trc = session.beginTransaction();
             String hql = "FROM Job where jobTittle =:keyword";
             Query q = session.createQuery(hql);
@@ -109,7 +111,7 @@ public class JobDao implements IJobDao{
     @Override
     public Job getById(String id) {
         Session session = sf.openSession();
-        
+
         Job rg = null;
         Transaction trc = null;
         try {
@@ -132,5 +134,6 @@ public class JobDao implements IJobDao{
             return null;
         } else {
             return rg;
-        }}
+        }
+    }
 }

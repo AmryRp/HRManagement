@@ -12,7 +12,6 @@ import model.Country;
 import model.Region;
 import java.math.BigDecimal;
 import view.CountryView;
-import dao.ICountryDao;
 import dao.IGeneric;
 
 /**
@@ -23,7 +22,7 @@ public class CountryController {
 
     CountryView CountryView;
     List< Country> ListCountry;
-    ICountryDao IntrfcCM;
+    IGeneric<Country, String, String>  IntrfcCM;
     List< Region> ListRegion;
     IGeneric<Region, BigDecimal, String> IntrfcRM;
 
@@ -50,7 +49,7 @@ public class CountryController {
 
     public String delete(String id) {
         IntrfcCM = new CountryDao();
-        return (IntrfcCM.delete(new Country(id))) ? "sukses" : "failed";
+        return (IntrfcCM.delete(id)) ? "sukses" : "failed";
 
     }
 

@@ -5,8 +5,8 @@
  */
 package controller;
 
-import dao.IEmployeeDao;
 import dao.EmployeeDao;
+import dao.IGeneric;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +25,7 @@ public class EmployeeController {
     }
 
     EmployeeView frame;
-    IEmployeeDao IntrfcJM;
+    IGeneric<Employee, Integer, String> IntrfcJM;
     List<Employee> ListJob;
     Employee EJ = new Employee();
 

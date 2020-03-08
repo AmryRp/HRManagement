@@ -17,7 +17,7 @@ import tool.*;
  *
  * @author amry4
  */
-public class CountryDao implements ICountryDao {
+public class CountryDao implements IGeneric<Country, String, String> {
 
 //    //SessionFactory sf;
 //    private Session session;
@@ -28,33 +28,27 @@ public class CountryDao implements ICountryDao {
         this.sf = HibernateUtil.getSessionFactory();
     }
 
-    public void getC() {
-        sf = HibernateUtil.getSessionFactory();
-        Session sesi = sf.openSession();
-        Transaction trc = sesi.beginTransaction();
-        
-    }
-
     /**
      * this function used to delete object from model.country using id and name.
      *
-     * @param c is a country object from model.country
+     * @param id is a country object from model.country
      * @return boolean true or false
      */
     @Override
-    public boolean delete(Country c) {
-        Session session = sf.openSession();
+    public boolean delete(String id) {
+        Session ss = sf.openSession();
         Transaction trc = null;
         try {
-            trc = session.beginTransaction();
-            session.delete(c);
+            trc = ss.beginTransaction();
+            Country C = (Country) ss.get(Country.class, id);
+            ss.delete(C);
             trc.commit();
             return trc != null;
         } catch (Exception e) {
             e.printStackTrace();
             return trc == null;
         } finally {
-            session.close();
+            ss.close();
         }
     }
 
@@ -147,16 +141,15 @@ public class CountryDao implements ICountryDao {
      * @return to string datatype for getting regionName
      */
     @Override
-    public String getById(Country C) {
+    public Country getById(String C) {
         Session session = sf.openSession();
 
         Country rg = null;
         Transaction trc = null;
         try {
             trc = session.beginTransaction();
-            rg = (Country) session.get(Country.class, C.getCountryId());
+            rg = (Country) session.get(Country.class, C);
             trc.commit();
-            System.out.println(rg);
         } catch (Exception e) {
             if (trc != null) {
                 trc.rollback();
@@ -169,9 +162,9 @@ public class CountryDao implements ICountryDao {
             }
         }
         if (rg == null) {
-            return "";
+            return rg;
         } else {
-            return rg.getCountryName();
+            return rg;
         }
     }
 

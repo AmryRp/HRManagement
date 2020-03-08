@@ -5,7 +5,7 @@
  */
 package controller;
 
-import dao.IJobDao;
+import dao.IGeneric;
 import dao.JobDao;
 import java.util.List;
 import model.Job;
@@ -21,7 +21,7 @@ public class JobController {
     }
 
     JobView frame;
-    IJobDao IntrfcJM;
+    IGeneric<Job, String, String> IntrfcJM;
     List<Job> ListJob;
     Job EJ = new Job();
 
@@ -39,12 +39,12 @@ public class JobController {
 
     public String delete(String id) {
           IntrfcJM = new JobDao();
-        return (IntrfcJM.delete(new Job(id))) ? "sukses" : "failed";
+        return (IntrfcJM.delete(id)) ? "sukses" : "failed";
 
     }
      public List<Job> search(String Name) {
         IntrfcJM = new JobDao();
-        return IntrfcJM.search(new Job(Name));
+        return IntrfcJM.search(Name);
     }
 
     public boolean confirm(String id) {

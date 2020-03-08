@@ -8,9 +8,8 @@ package view;
 import controller.CountryController;
 import controller.LocationController;
 import dao.CountryDao;
+import dao.IGeneric;
 import dao.LocationDao;
-import dao.ICountryDao;
-import dao.ILocationDao;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -27,9 +26,9 @@ import model.Location;
 public class LocationView extends javax.swing.JInternalFrame {
   
  LocationController Lct;
-    ILocationDao IntrfcLM;
+    IGeneric<Location, Short, String> IntrfcLM;
     List<Location> ListLocation;
-    ICountryDao IntrfcCM;
+    IGeneric<Country, String, String> IntrfcCM;
     List<Country> ListCountry;
     boolean isClicked = true;
 public LocationView() {
