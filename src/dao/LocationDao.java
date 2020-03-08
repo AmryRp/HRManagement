@@ -101,8 +101,8 @@ public class LocationDao implements IGeneric<Location, Short, String> {
 /**
  * this function for searching table data that using keyword : name 
  * by : bootcamp34
- * @param name
- * @return 
+ * @param name is a String data type for search keyword
+ * @return to List<model.Location> 
  */
     @Override
     public List<Location> search(String name) {

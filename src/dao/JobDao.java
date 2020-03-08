@@ -24,7 +24,12 @@ public class JobDao implements IGeneric<Job, String, String> {
     public JobDao() {
         this.sf = HibernateUtil.getSessionFactory();
     }
-
+/**
+ * this function for deleting table data with id
+ * by : bootcamp34
+ * @param id is a data type String that referencing Number on table
+ * @return to boolean true or false
+ */
     @Override
     public boolean delete(String id) {
         Session ss = sf.openSession();
@@ -42,14 +47,20 @@ public class JobDao implements IGeneric<Job, String, String> {
             ss.close();
         }
     }
-
+ /**
+     * this function(insertOrUpdate) used for save and update .
+     * by : bootcamp34
+     *
+     * @param jb is a Job object from model.Job
+     * @return boolean true or false;
+     */
     @Override
-    public boolean insertOrUpdate(Job l) {
+    public boolean insertOrUpdate(Job jb) {
         Session session = sf.openSession();
         Transaction trc = null;
         try {
             trc = session.beginTransaction();
-            session.saveOrUpdate(l);
+            session.saveOrUpdate(jb);
             trc.commit();
             return true;
         } catch (Exception e) {
@@ -61,7 +72,13 @@ public class JobDao implements IGeneric<Job, String, String> {
         }
 
     }
-
+/**
+ * this function is for get all table data using query(hql) from Job, 
+ * that mean get data from table Job. 
+ * by : bootcamp34
+ * 
+ * @return to list<object> , object = Job from model.Job; 
+ */
     @Override
     public List<Job> getAll() {
         Session session = sf.openSession();
@@ -84,9 +101,14 @@ public class JobDao implements IGeneric<Job, String, String> {
         }
         return Region;
     }
-
+/**
+ * this function for searching table data that using keyword : name 
+ * by : bootcamp34
+ * @param Name is a String data type for search keyword
+ * @return to list<Job> 
+ */
     @Override
-    public List<Job> search(String l) {
+    public List<Job> search(String Name) {
         Session session = sf.openSession();
         List<Job> Rsearch = null;
         Transaction trc = null;
@@ -95,7 +117,7 @@ public class JobDao implements IGeneric<Job, String, String> {
             trc = session.beginTransaction();
             String hql = "FROM Job where jobTittle =:keyword";
             Query q = session.createQuery(hql);
-            q.setParameter("keyword", l);
+            q.setParameter("keyword", Name);
             Rsearch = q.list();
             trc.commit();
         } catch (Exception e) {
@@ -107,7 +129,13 @@ public class JobDao implements IGeneric<Job, String, String> {
 
         return Rsearch;
     }
-
+/**
+ * this function is used for get data row from table using 
+ * parameter id or unique identity by : bootcamp34
+ * @param id is a data type for String that referencing Char from 
+ * model.Job table
+ * @return to Job entity model
+ */
     @Override
     public Job getById(String id) {
         Session session = sf.openSession();

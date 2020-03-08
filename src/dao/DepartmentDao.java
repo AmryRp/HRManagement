@@ -23,7 +23,12 @@ public class DepartmentDao implements IGeneric<Department, Short, String> {
     public DepartmentDao() {
         this.sf = HibernateUtil.getSessionFactory();
     }
-
+/**
+ * this function for deleting table data with id
+ * by : bootcamp34
+ * @param id is a data type short that referencing decimal on table
+ * @return to boolean true or false
+ */
     @Override
     public boolean delete(Short id) {
         Session session = sf.openSession();
@@ -66,7 +71,11 @@ public class DepartmentDao implements IGeneric<Department, Short, String> {
         }
 
     }
-
+/**
+ * this function is for get all table data using query(hql) from Department, 
+ * that mean get data from table Department by : bootcamp34
+ * @return to list<object> , object = Department from model.Department; 
+ */
     @Override
     public List<Department> getAll() {
         Session session = sf.openSession();
@@ -89,9 +98,14 @@ public class DepartmentDao implements IGeneric<Department, Short, String> {
         }
         return departments;
     }
-
+/**
+ * this function for searching table data that using keyword : name 
+ * by : bootcamp34
+ * @param name is a String data type for search keyword
+ * @return 
+ */
     @Override
-    public List<Department> search(String c) {
+    public List<Department> search(String name) {
         Session session = sf.openSession();
         List<Department> Dtsearch = null;
         Transaction trc = null;
@@ -100,7 +114,7 @@ public class DepartmentDao implements IGeneric<Department, Short, String> {
             trc = session.beginTransaction();
             String hql = "FROM Department where departmentName =:keyword";
             Query q = session.createQuery(hql);
-            q.setString("keyword", "%" + c + "%");
+            q.setString("keyword", "%" + name + "%");
             Dtsearch = q.list();
             trc.commit();
         } catch (Exception e) {
@@ -112,16 +126,22 @@ public class DepartmentDao implements IGeneric<Department, Short, String> {
 
         return Dtsearch;
     }
-
+/**
+ * this function is used for get data row from table using 
+ * parameter id or unique identity by : bootcamp34
+ * @param id is a data type for short that referencing decimal from 
+ * model.Department table
+ * @return to Department entity model
+ */
     @Override
-    public Department getById(Short R) {
+    public Department getById(Short id) {
         Session session = sf.openSession();
         Department DT = new Department();
         Department rg = null;
         Transaction trc = null;
         try {
             trc = session.beginTransaction();
-            rg = (Department) session.get(Department.class, R);
+            rg = (Department) session.get(Department.class, id);
             trc.commit();
             System.out.println(rg);
         } catch (Exception e) {

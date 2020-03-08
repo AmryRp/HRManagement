@@ -29,23 +29,12 @@ public class RegionDao implements IGeneric<Region, BigDecimal, String> {
     public RegionDao() {
         this.sf = HibernateUtil.getSessionFactory();
     }
-
-//    @Override
-//    public boolean delete(int r) {
-//        Session session = sf.openSession();
-//        Transaction trc = null;
-//        try {
-//            trc = session.beginTransaction();
-//            session.delete(r);
-//            trc.commit();
-//            return trc != null;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return trc == null;
-//        } finally {
-//            session.close();
-//        }
-//    }
+/**
+     * function insertOrUpdate used for save and update , by : bootcamp34
+     *
+     * @param R is a country object from model.Region
+     * @return boolean true or false;
+     */
     @Override
     public boolean insertOrUpdate(Region R) {
         Session session = sf.openSession();
@@ -64,31 +53,15 @@ public class RegionDao implements IGeneric<Region, BigDecimal, String> {
         }
 
     }
-
-//    @Override
-//    public List<Region> getAll(Region R) {
-//        Session session = sf.openSession();
-//        List<Region> Region = null;
-//        Transaction trc = null;
-//        try {
-//            trc = session.beginTransaction();
-//            Region = session.createQuery("From Region").list();
-//            trc.commit();
-//        } catch (Exception e) {
-//            if (trc != null) {
-//                trc.rollback();
-//            }
-//            e.printStackTrace();
-//        } finally {
-//            if (trc == null) {
-//                //System.out.println("closed");
-//                session.close();
-//            }
-//        }
-//        return Region;
-//    }
+/**
+     * This function used for search by name from object model.Region. by :
+     * bootcamp34
+     *
+     * @param Name is a string datatype that used for store name input
+     * @return to List<model.Region>
+     */
     @Override
-    public List<Region> search(String R) {
+    public List<Region> search(String Name) {
         Session session = sf.openSession();
         List<Region> Rsearch = null;
         Transaction trc = null;
@@ -96,7 +69,7 @@ public class RegionDao implements IGeneric<Region, BigDecimal, String> {
             trc = session.beginTransaction();
             String hql = "FROM Region where regionName like :keyword";
             Query q = session.createQuery(hql);
-            q.setString("keyword", "%" + R + "%");
+            q.setString("keyword", "%" + Name + "%");
 //            q.setParameter("keyword", R);
             Rsearch = q.list();
             trc.commit();
@@ -111,10 +84,10 @@ public class RegionDao implements IGeneric<Region, BigDecimal, String> {
     }
 
     /**
-     * this function used for get Id values from table
+     * this function used for get Id values/object list from table region
      *
      * @param Id is bigDecimal datatype
-     * @return
+     * @return to object Region from model.Region
      */
       @Override
     public Region getById(BigDecimal Id) {
@@ -144,7 +117,11 @@ public class RegionDao implements IGeneric<Region, BigDecimal, String> {
         }
     }
 
-
+/**
+ * this function is for get all table data using query(hql) from Region, 
+ * that mean get data from table Region by : bootcamp34
+ * @return to list<object> , object = Region from model.Region; 
+ */
     @Override
     public List<Region> getAll() {
        Session session = sf.openSession();
@@ -167,7 +144,12 @@ public class RegionDao implements IGeneric<Region, BigDecimal, String> {
         }
         return Region; 
     }
-
+/**
+ * this function for deleting table data with id
+ * by : bootcamp34
+ * @param id is a data type BigDecimal that referencing Decimal on table
+ * @return to boolean true or false
+ */
     @Override
     public boolean delete(BigDecimal id) {
        Session ss = sf.openSession();

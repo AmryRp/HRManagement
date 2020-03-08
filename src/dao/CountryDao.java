@@ -30,6 +30,7 @@ public class CountryDao implements IGeneric<Country, String, String> {
 
     /**
      * this function used to delete object from model.country using id and name.
+     * by : bootcamp34
      *
      * @param id is a country object from model.country
      * @return boolean true or false
@@ -78,7 +79,8 @@ public class CountryDao implements IGeneric<Country, String, String> {
     }
 
     /**
-     * this function used for getting all object from model.
+     * this function used for getting all object data from model.Country by :
+     * bootcamp34
      *
      * @return to list<Model.Country>
      */
@@ -106,13 +108,14 @@ public class CountryDao implements IGeneric<Country, String, String> {
     }
 
     /**
-     * This function used for search by name from object model.country.
+     * This function used for search by name from object model.country. by :
+     * bootcamp34
      *
-     * @param c is a string datatype that used for store name input
+     * @param Name is a string datatype that used for store name input
      * @return to List<model.country>
      */
     @Override
-    public List<Country> search(String c) {
+    public List<Country> search(String Name) {
         Session session = sf.openSession();
         List<Country> Rsearch = null;
         Transaction trc = null;
@@ -121,7 +124,7 @@ public class CountryDao implements IGeneric<Country, String, String> {
             trc = session.beginTransaction();
             String hql = "FROM Country where countryName =:keyword";
             Query q = session.createQuery(hql);
-            q.setString("keyword", "%" + c + "%");
+            q.setString("keyword", "%" + Name + "%");
             Rsearch = q.list();
             trc.commit();
         } catch (Exception e) {
@@ -135,20 +138,21 @@ public class CountryDao implements IGeneric<Country, String, String> {
     }
 
     /**
-     * this function used for get object by id using object country
+     * this function used for get object by id using object country by :
+     * bootcamp34
      *
-     * @param C is an object Country
+     * @param Id is an object Country
      * @return to string datatype for getting regionName
      */
     @Override
-    public Country getById(String C) {
+    public Country getById(String Id) {
         Session session = sf.openSession();
 
         Country rg = null;
         Transaction trc = null;
         try {
             trc = session.beginTransaction();
-            rg = (Country) session.get(Country.class, C);
+            rg = (Country) session.get(Country.class, Id);
             trc.commit();
         } catch (Exception e) {
             if (trc != null) {

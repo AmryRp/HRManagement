@@ -74,7 +74,8 @@ public class EmployeeDao implements IGeneric<Employee, Integer, String> {
     }
 /**
  * this function is for get all table data using query(hql) from Employee, 
- * that mean get data from table Employee by : bootcamp34
+ * that mean get data from table Employee .
+ * by : bootcamp34
  * @return to list<object> , object = Employee from model.location; 
  */
     @Override
@@ -103,7 +104,7 @@ public class EmployeeDao implements IGeneric<Employee, Integer, String> {
  * this function for searching table data that using keyword : name 
  * by : bootcamp34
  * @param Name
- * @return 
+ * @return to list<model.Employee> 
  */
     @Override
     public List<Employee> search(String Name) {

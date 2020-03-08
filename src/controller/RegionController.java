@@ -14,12 +14,14 @@ import model.RegionGeneric;
 import view.RegionView;
 
 /**
- *class regioncontroller using for parsing input from view
+ * class regioncontroller using for parsing input from view
+ *
  * @author amry4
  */
 public class RegionController {
-    /** 
-     * empty parameter constructor for regionController 
+
+    /**
+     * empty parameter constructor for regionController
      */
     public RegionController() {
     }
@@ -31,10 +33,12 @@ public class RegionController {
     List<Region> ListReg;
     RegionGeneric<BigDecimal> rg = new RegionGeneric<>();
     RegionGeneric<String> rg1 = new RegionGeneric<>();
-/**
- * Constructor for regionController that has frame parameter from RegionView
- * @param frame is view.RegionView 
- */
+
+    /**
+     * Constructor for regionController that has frame parameter from RegionView
+     *
+     * @param frame is view.RegionView
+     */
     public RegionController(RegionView frame) {
         IntrfcRM = new RegionDao();
         ListReg = IntrfcRM.getAll();
@@ -55,11 +59,13 @@ public class RegionController {
         return (IntrfcRM.insertOrUpdate(new Region(rg.getT(), rg1.getT()))) ? "sukses" : "failed";
 
     }
+
     /**
      * this function is used for delete data on table region
-     * 
+     *
      * @param id is String data type for delete data by regionId
-     * @return to model.region using delete function from IRegionDao List<Region>
+     * @return to model.region using delete function from IRegionDao
+     * List<Region>
      */
     public String delete(String id) {
         IntrfcRM = new RegionDao();
@@ -67,11 +73,23 @@ public class RegionController {
 
     }
 
+    /**
+     * this function used for search a data from
+     *
+     * @param Name is String Datatype
+     * @return to List Region
+     */
     public List<Region> search(String Name) {
         IntrfcRM = new RegionDao();
         return IntrfcRM.search(Name);
     }
 
+    /**
+     * this function used for confirm if id is not null
+     *
+     * @param id is BigDecimal Datatype
+     * @return to boolean true or false
+     */
     public boolean confirm(BigDecimal id) {
         IntrfcRM = new RegionDao();
         return (IntrfcRM.getById(id) != null);
