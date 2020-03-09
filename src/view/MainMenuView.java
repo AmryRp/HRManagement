@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
+import static jdk.nashorn.internal.objects.NativeError.printStackTrace;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -29,7 +30,11 @@ public class MainMenuView extends javax.swing.JFrame {
         initComponents();
 
     }
-
+/**
+ * this function is used for showing a report internal form on a panel
+ * @param Report is string datatype that referring from report file(*name*.jrxml) 
+ * @throws SQLException 
+ */
     public void showReport(String Report) throws SQLException {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Connection c = null;
@@ -47,14 +52,14 @@ public class MainMenuView extends javax.swing.JFrame {
             report.setFocusable(false);
             report.isClosable();
             report.setMaximizable(rootPaneCheckingEnabled);
-            jPanel.add(report);
+            MainPanel.add(report);
 
 //        JasperExportManager.exportReportToPdfFile(countryPrint,
 //                "C:\\Users\\amry4\\OneDrive\\Dokumen\\NetBeansProjects\\HibernateTest\\src\\countryReport.pdf");
 //        System.out.println("Pdf file has been created");
 //            PReport.revalidate();
         } catch (JRException ex) {
-            Logger.getLogger(PreviewReport.class.getName()).log(Level.SEVERE, null, ex);
+            printStackTrace(ex);
         }
     }
 
@@ -68,7 +73,7 @@ public class MainMenuView extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu2 = new javax.swing.JMenu();
-        jPanel = new javax.swing.JPanel();
+        MainPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         PRegion = new javax.swing.JMenuItem();
@@ -93,16 +98,16 @@ public class MainMenuView extends javax.swing.JFrame {
         setTitle("HR MANAGEMENT");
         setIconImages(null);
 
-        jPanel.setBackground(new java.awt.Color(0, 153, 153));
+        MainPanel.setBackground(new java.awt.Color(0, 153, 153));
 
-        javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
-        jPanel.setLayout(jPanelLayout);
-        jPanelLayout.setHorizontalGroup(
-            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
+        MainPanel.setLayout(MainPanelLayout);
+        MainPanelLayout.setHorizontalGroup(
+            MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1198, Short.MAX_VALUE)
         );
-        jPanelLayout.setVerticalGroup(
-            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        MainPanelLayout.setVerticalGroup(
+            MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 713, Short.MAX_VALUE)
         );
 
@@ -247,14 +252,14 @@ public class MainMenuView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -265,7 +270,7 @@ public class MainMenuView extends javax.swing.JFrame {
 
         RegionView RV = new RegionView();
         RV.show();
-        jPanel.add(RV);
+        MainPanel.add(RV);
 
     }//GEN-LAST:event_PRegionActionPerformed
 
@@ -274,43 +279,43 @@ public class MainMenuView extends javax.swing.JFrame {
 //        PR.show(); 
         CountryView CV = new CountryView();
         CV.show();
-        jPanel.add(CV);
+        MainPanel.add(CV);
     }//GEN-LAST:event_PCountryActionPerformed
 
     private void PLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PLocationActionPerformed
         LocationView LV = new LocationView();
         LV.show();
-        jPanel.add(LV);
+        MainPanel.add(LV);
     }//GEN-LAST:event_PLocationActionPerformed
 
     private void PDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDepartmentActionPerformed
         DepartmentlView DV = new DepartmentlView();
         DV.show();
-        jPanel.add(DV);
+        MainPanel.add(DV);
     }//GEN-LAST:event_PDepartmentActionPerformed
 
     private void PJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PJobActionPerformed
         JobView JV = new JobView();
         JV.show();
-        jPanel.add(JV);
+        MainPanel.add(JV);
     }//GEN-LAST:event_PJobActionPerformed
 
     private void PEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PEmployeeActionPerformed
         EmployeeView EmpV = new EmployeeView();
         EmpV.show();
-        jPanel.add(EmpV);
+        MainPanel.add(EmpV);
     }//GEN-LAST:event_PEmployeeActionPerformed
 
     private void PJobHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PJobHistoryActionPerformed
 //        JobHistoryInternalView JHV = new JobHistoryInternalView();
 //        JHV.show();
-//        jPanel.add(JHV);
+//        MainPanel.add(JHV);
     }//GEN-LAST:event_PJobHistoryActionPerformed
 
     private void PJobGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PJobGradeActionPerformed
 //        JobGradeInternalView JGV = new JobGradeInternalView();
 //        JGV.show();
-//        jPanel.add(JGV);
+//        MainPanel.add(JGV);
     }//GEN-LAST:event_PJobGradeActionPerformed
 
     private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
@@ -401,6 +406,7 @@ public class MainMenuView extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel MainPanel;
     private javax.swing.JMenuItem PCountry;
     private javax.swing.JMenuItem PDepartment;
     private javax.swing.JMenuItem PEmployee;
@@ -419,10 +425,9 @@ public class MainMenuView extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel;
     // End of variables declaration//GEN-END:variables
 
     public javax.swing.JPanel getjPanel() {
-        return jPanel;
+        return MainPanel;
     }
 }

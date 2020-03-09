@@ -29,10 +29,10 @@ public class CountryView extends javax.swing.JInternalFrame {
     Country EC = new Country();
     Region ER = new Region();
     CountryController cct;
-    IGeneric<Country, String, String> IntrfcCM;
+    IGeneric<Country> IntrfcCM;
     List<Country> ListCountry;
     List<Region> ListRegion;
-    IGeneric<Region, BigDecimal, String> IntrfcRM;
+    IGeneric<Region> IntrfcRM;
     boolean isClicked = true;
     int idxcmb;
 
@@ -77,7 +77,8 @@ public class CountryView extends javax.swing.JInternalFrame {
      * this function used for store data from object using getall() function
      * from interface
      *
-     * @param tabel
+     * @param tabel is JTable datatype for referencing JTable that used for
+     * showing data table
      */
     public void bindingTable(JTable tabel) {
         ListCountry = IntrfcCM.getAll();
@@ -98,10 +99,21 @@ public class CountryView extends javax.swing.JInternalFrame {
 
     }
 
+    /**
+     * this function used for checking empty field
+     *
+     * @return to boolean true or false
+     */
     private boolean IsEmptyField() {
         return TxtCountryId.getText().trim().equals("");
     }
 
+    /**
+     * this function used for clearing table that used for refresh
+     *
+     * @param table is JTable datatype for referencing JTable that used for
+     * showing data table
+     */
     public void clearTable(JTable table) {
         DefaultTableModel dm = (DefaultTableModel) table.getModel();
         while (dm.getRowCount() > 0) {
@@ -109,6 +121,9 @@ public class CountryView extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * this function used for refreshing input fields
+     */
     public void refresh() {
         clearTable(TblCountries);
         bindingTable(TblCountries);
@@ -119,6 +134,14 @@ public class CountryView extends javax.swing.JInternalFrame {
         isClicked = true;
     }
 
+    /**
+     * this function used for store data from object using search(keyword)
+     * function from interface
+     *
+     * @param tabel is JTable datatype for referencing JTable that used for
+     * showing data table
+     * @param key is string datatype for search keyword
+     */
     public void bindTblSearch(JTable tabel, String key) {
         ListCountry = IntrfcCM.search(key);
         String[] tblHeader = new String[]{"id", "name", "region"};
@@ -139,21 +162,6 @@ public class CountryView extends javax.swing.JInternalFrame {
 
     }
 
-//    public void Report() throws JRException, SQLException {
-//        //JasperReport countryReport = JasperCompileManager.compileReport("C:\\Users\\amry4\\OneDrive\\Dokumen\\NetBeansProjects\\HibernateTest\\src\\CountryReport.jrxml");
-////        JRDataSource 
-//
-//        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-//        Connection c = sessionFactory.getSessionFactoryOptions().getServiceRegistry().
-//                getService(ConnectionProvider.class).getConnection();
-//        JasperPrint countryPrint = JasperFillManager.fillReport(
-//                getClass().getClassLoader().getResourceAsStream("CountryReport.jasper"), null, c);
-//
-//        JasperExportManager.exportReportToPdfFile(countryPrint,
-//                "C:\\Users\\amry4\\OneDrive\\Dokumen\\NetBeansProjects\\HibernateTest\\src\\countryReport.pdf");
-//        System.out.println("Pdf file has been created");
-//        JasperViewer.viewReport(countryPrint);
-//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -403,7 +411,7 @@ public class CountryView extends javax.swing.JInternalFrame {
 //        } catch (SQLException ex) {
 //            Logger.getLogger(CountryView.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        
+
 //        NewReport PR = new NewReport();
 //        PR.show();
 //        jPanel1.add(PR);
@@ -411,7 +419,6 @@ public class CountryView extends javax.swing.JInternalFrame {
 //        MM.showReport();
 //        MM.getjPanel().add(PR);
 //        MM.getjPanel().revalidate();
-
 
     }//GEN-LAST:event_jBtnReportActionPerformed
 

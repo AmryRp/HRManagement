@@ -20,29 +20,33 @@ import model.Job;
  */
 public class JobView extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form JobInternalView
-     */
+    
     public JobView() {
         initComponents();
         Jct = new JobController();
         IntrfcJM = new JobDao();
         ListJob = IntrfcJM.getAll();
         bindingTable(TblJob);
-        
+
     }
     JobController Jct;
     List<Job> ListJob;
-    IGeneric<Job, String, String> IntrfcJM;
-      boolean isClicked = true;
+    IGeneric<Job> IntrfcJM;
+    boolean isClicked = true;
+
     /**
-     * Creates new form JobsManager
+     * this function used for checking empty field
+     *
+     * @return to boolean true or false
      */
-   
     private boolean IsEmptyField() {
         return TxtJobId.getText().trim().equals("");
     }
-     public void refresh() {
+
+    /**
+     * this function used for refreshing input fields
+     */
+    public void refresh() {
         clearTable(TblJob);
         bindingTable(TblJob);
         TxtJobId.setText("");
@@ -52,19 +56,59 @@ public class JobView extends javax.swing.JInternalFrame {
         TxtJobId.setEditable(true);
         isClicked = true;
     }
-      public void clearTable(JTable table) {
+
+    /**
+     * this function used for clearing table that used for refresh
+     *
+     * @param table is JTable datatype for referencing JTable that used for
+     * showing data table
+     */
+    public void clearTable(JTable table) {
         DefaultTableModel dm = (DefaultTableModel) table.getModel();
         while (dm.getRowCount() > 0) {
             dm.removeRow(0);
         }
     }
-      public void bindingTable(JTable tabel) {
+
+    /**
+     * this function used for store data from object using getall() function
+     * from interface
+     *
+     * @param tabel is JTable datatype for referencing JTable that used for
+     * showing data table
+     */
+    public void bindingTable(JTable tabel) {
         ListJob = IntrfcJM.getAll();
-        String[] tblHeader = new String[]{"id", "Title", "Min Salary","Max Salary"};
+        String[] tblHeader = new String[]{"id", "Title", "Min Salary", "Max Salary"};
         DefaultTableModel dtm = new DefaultTableModel(null, tblHeader);
         tabel.getModel();
         Object[] row;
         row = new Object[ListJob.size()];
+        while (dtm.getRowCount() < ListJob.size()) {
+            row[0] = ListJob.get(dtm.getRowCount()).getJobId();
+            row[1] = ListJob.get(dtm.getRowCount()).getJobTitle();
+            row[2] = ListJob.get(dtm.getRowCount()).getMinSalary();
+            row[3] = ListJob.get(dtm.getRowCount()).getMaxSalary();
+            dtm.addRow(row);
+        }
+        TblJob.setModel(dtm);
+    }
+
+    /**
+     * this function used for store data from object using search(keyword)
+     * function from interface
+     *
+     * @param tabel is JTable datatype for referencing JTable that used for
+     * showing data table
+     * @param key is string datatype for search keyword
+     */
+    public void bindTblSearch(JTable tabel, String key) {
+        ListJob = IntrfcJM.search(key);
+        String[] tblHeader = new String[]{"id", "name", "region"};
+        DefaultTableModel dtm = new DefaultTableModel(null, tblHeader);
+        tabel.getModel();
+        Object[] row;
+        row = new Object[dtm.getColumnCount()];
         while (dtm.getRowCount() < ListJob.size()) {
             row[0] = ListJob.get(dtm.getRowCount()).getJobId();
             row[1] = ListJob.get(dtm.getRowCount()).getJobTitle();
@@ -97,8 +141,11 @@ public class JobView extends javax.swing.JInternalFrame {
         TxtMaxSal = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         TblJob = new javax.swing.JTable();
+        BtnSearch = new javax.swing.JButton();
+        TxtSearch = new javax.swing.JTextField();
 
         setClosable(true);
+        setTitle("JOB MANAGEMENT");
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
@@ -209,11 +256,29 @@ public class JobView extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(TblJob);
 
+        BtnSearch.setText("SEARCH");
+        BtnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSearchActionPerformed(evt);
+            }
+        });
+
+        TxtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 772, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(470, Short.MAX_VALUE)
+                .addComponent(TxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(BtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -224,12 +289,17 @@ public class JobView extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 499, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(233, 233, 233)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(277, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(30, 30, 30)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
@@ -243,7 +313,7 @@ public class JobView extends javax.swing.JInternalFrame {
         } else {
 
             JOptionPane.showMessageDialog(rootPane, Jct.save(TxtJobId.getText(),
-                TxtJobTitle.getText(), TxtMinSal.getText() , TxtMaxSal.getText()));
+                    TxtJobTitle.getText(), TxtMinSal.getText(), TxtMaxSal.getText()));
         }
         refresh();
     }//GEN-LAST:event_btnInsertJobActionPerformed
@@ -251,7 +321,7 @@ public class JobView extends javax.swing.JInternalFrame {
     private void btnDeleteJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteJobActionPerformed
         if (!IsEmptyField()) {
             int result = JOptionPane.showConfirmDialog(null,
-                "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
+                    "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(rootPane, Jct.delete(TxtJobId.getText()));
                 refresh();
@@ -273,13 +343,23 @@ public class JobView extends javax.swing.JInternalFrame {
         isClicked = false;
     }//GEN-LAST:event_TblJobMouseClicked
 
+    private void BtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSearchActionPerformed
+        bindTblSearch(TblJob, TxtSearch.getText());
+    }//GEN-LAST:event_BtnSearchActionPerformed
+
+    private void TxtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtSearchActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnSearch;
     private javax.swing.JTable TblJob;
     private javax.swing.JTextField TxtJobId;
     private javax.swing.JTextField TxtJobTitle;
     private javax.swing.JTextField TxtMaxSal;
     private javax.swing.JTextField TxtMinSal;
+    private javax.swing.JTextField TxtSearch;
     private javax.swing.JButton btnDeleteJob;
     private javax.swing.JButton btnInsertJob;
     private javax.swing.JLabel jLabel1;

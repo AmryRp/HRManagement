@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.io.Serializable;
 import java.util.List;
 import model.Job;
 import org.hibernate.Query;
@@ -17,7 +18,7 @@ import tool.HibernateUtil;
  *
  * @author amry4
  */
-public class JobDao implements IGeneric<Job, String, String> {
+public class JobDao implements IGeneric<Job> {
 
     private SessionFactory sf;
 
@@ -31,7 +32,7 @@ public class JobDao implements IGeneric<Job, String, String> {
  * @return to boolean true or false
  */
     @Override
-    public boolean delete(String id) {
+    public boolean delete(Serializable id) {
         Session ss = sf.openSession();
         Transaction trc = null;
         try {
@@ -137,7 +138,7 @@ public class JobDao implements IGeneric<Job, String, String> {
  * @return to Job entity model
  */
     @Override
-    public Job getById(String id) {
+    public Job getById(Serializable id) {
         Session session = sf.openSession();
 
         Job rg = null;

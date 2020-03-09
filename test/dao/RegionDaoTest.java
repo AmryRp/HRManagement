@@ -67,7 +67,10 @@ public class RegionDaoTest {
         System.out.println("search");
         String R = "Am";
         RegionDao instance = new RegionDao();
-        List<Region> expResult =  null;
+         List<Region> itemsToAdd = new ArrayList<>();
+        itemsToAdd.add(new Region(new BigDecimal("2")));
+        System.out.println(itemsToAdd);
+        List<Region> expResult =  itemsToAdd;
         List<Region> result = instance.search(R);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
@@ -103,13 +106,13 @@ public class RegionDaoTest {
         List<Region> result = instance.getAll();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
-//
-//    /**
-//     * Test of delete method, of class RegionDao.
-//     */
-//
+    
+    /**
+     * Test of delete method, of class RegionDao.
+     */
+
         @Test
     public void testDelete() {
         System.out.println("delete");

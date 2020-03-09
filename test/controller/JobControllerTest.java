@@ -5,10 +5,8 @@
  */
 package controller;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import model.Region;
+import model.Job;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,90 +18,88 @@ import static org.junit.Assert.*;
  *
  * @author amry4
  */
-public class RegionControllerTest {
-
-    public RegionControllerTest() {
+public class JobControllerTest {
+    
+    public JobControllerTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
     }
-
+    
     @After
     public void tearDown() {
     }
 
     /**
-     * Test of Save method, of class RegionController.
+     * Test of save method, of class JobController.
      */
     @Test
     public void testSave() {
-        System.out.println("Save");
-        String id = "10";
-        String name = "lll";
-        RegionController instance = new RegionController();
-        String expResult = "sukses";
-        String result = instance.Save(id, name);
+        System.out.println("save");
+        String id = "";
+        String title = "";
+        String minSalary = "";
+        String maxSalary = "";
+        JobController instance = new JobController();
+        String expResult = "";
+        String result = instance.save(id, title, minSalary, maxSalary);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        fail("The test case is a prototype.");
     }
+
     /**
-     * Test of delete method, of class RegionController.
+     * Test of delete method, of class JobController.
      */
     @Test
     public void testDelete() {
         System.out.println("delete");
         String id = "";
-        RegionController instance = new RegionController();
+        JobController instance = new JobController();
         String expResult = "";
         String result = instance.delete(id);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        fail("The test case is a prototype.");
     }
+
     /**
-     * Test of search method, of class RegionController.
+     * Test of search method, of class JobController.
      */
     @Test
     public void testSearch() {
         System.out.println("search");
-        String Name = "Am";
-        RegionController instance = new RegionController();
-        List<Region> itemsToAdd = new ArrayList<>();
-        itemsToAdd.add(new Region(new BigDecimal("2")));
-        System.out.println(itemsToAdd);
-        List<Region> expResult = itemsToAdd;
-        List<Region> result = instance.search(Name);
-        System.out.println(expResult);
-        System.out.println(result);
+        String Name = "";
+        JobController instance = new JobController();
+        List<Job> expResult = null;
+        List<Job> result = instance.search(Name);
         assertEquals(expResult, result);
-
         // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of confirm method, of class RegionController.
+     * Test of confirm method, of class JobController.
      */
     @Test
     public void testConfirm() {
         System.out.println("confirm");
-        BigDecimal id = null;
-        RegionController instance = new RegionController();
+        String id = "";
+        JobController instance = new JobController();
         boolean expResult = false;
         boolean result = instance.confirm(id);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        fail("The test case is a prototype.");
     }
-
+    
 }

@@ -10,7 +10,6 @@ import java.util.List;
 import model.Region;
 import dao.*;
 import java.math.BigDecimal;
-import model.RegionGeneric;
 import view.RegionView;
 
 /**
@@ -25,14 +24,12 @@ public class RegionController {
      */
     public RegionController() {
     }
-    RegionGeneric<Object> regionGeneric;
     RegionView regView;
     List<Region> ListRegion;
     Region Er = new Region();
-    IGeneric<Region, BigDecimal, String> IntrfcRM;
+    IGeneric<Region> IntrfcRM;
     List<Region> ListReg;
-    RegionGeneric<BigDecimal> rg = new RegionGeneric<>();
-    RegionGeneric<String> rg1 = new RegionGeneric<>();
+  
 
     /**
      * Constructor for regionController that has frame parameter from RegionView
@@ -53,10 +50,8 @@ public class RegionController {
      * @return to model.region using insertOrUpdate from IRegionDao List<Region>
      */
     public String Save(String id, String name) {
-        IntrfcRM = new RegionDao();
-        rg.setT(new BigDecimal(id));
-        rg1.setT(name);
-        return (IntrfcRM.insertOrUpdate(new Region(rg.getT(), rg1.getT()))) ? "sukses" : "failed";
+      
+        return (IntrfcRM.insertOrUpdate(new Region(new BigDecimal(id), name))) ? "sukses" : "failed";
 
     }
 

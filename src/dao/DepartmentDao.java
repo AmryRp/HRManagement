@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.io.Serializable;
 import java.util.List;
 import model.Department;
 import org.hibernate.Query;
@@ -17,7 +18,7 @@ import tool.HibernateUtil;
  *
  * @author amry4
  */
-public class DepartmentDao implements IGeneric<Department, Short, String> {
+public class DepartmentDao implements IGeneric<Department> {
     private SessionFactory sf;
 
     public DepartmentDao() {
@@ -30,7 +31,7 @@ public class DepartmentDao implements IGeneric<Department, Short, String> {
  * @return to boolean true or false
  */
     @Override
-    public boolean delete(Short id) {
+    public boolean delete(Serializable id) {
         Session session = sf.openSession();
         Transaction trc = null;
         try {
@@ -134,7 +135,7 @@ public class DepartmentDao implements IGeneric<Department, Short, String> {
  * @return to Department entity model
  */
     @Override
-    public Department getById(Short id) {
+    public Department getById(Serializable id) {
         Session session = sf.openSession();
         Department DT = new Department();
         Department rg = null;

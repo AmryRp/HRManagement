@@ -5,10 +5,8 @@
  */
 package controller;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import model.Region;
+import model.Location;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,90 +18,90 @@ import static org.junit.Assert.*;
  *
  * @author amry4
  */
-public class RegionControllerTest {
-
-    public RegionControllerTest() {
+public class LocationControllerTest {
+    
+    public LocationControllerTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
     }
-
+    
     @After
     public void tearDown() {
     }
 
     /**
-     * Test of Save method, of class RegionController.
+     * Test of Save method, of class LocationController.
      */
     @Test
     public void testSave() {
         System.out.println("Save");
-        String id = "10";
-        String name = "lll";
-        RegionController instance = new RegionController();
-        String expResult = "sukses";
-        String result = instance.Save(id, name);
+        String Id = "";
+        String Address = "";
+        String ZipCode = "";
+        String City = "";
+        String Province = "";
+        String idCountry = "";
+        LocationController instance = new LocationController();
+        String expResult = "";
+        String result = instance.Save(Id, Address, ZipCode, City, Province, idCountry);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        fail("The test case is a prototype.");
     }
+
     /**
-     * Test of delete method, of class RegionController.
+     * Test of delete method, of class LocationController.
      */
     @Test
     public void testDelete() {
         System.out.println("delete");
-        String id = "";
-        RegionController instance = new RegionController();
+        String Id = "";
+        LocationController instance = new LocationController();
         String expResult = "";
-        String result = instance.delete(id);
+        String result = instance.delete(Id);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        fail("The test case is a prototype.");
     }
+
     /**
-     * Test of search method, of class RegionController.
+     * Test of search method, of class LocationController.
      */
     @Test
     public void testSearch() {
         System.out.println("search");
-        String Name = "Am";
-        RegionController instance = new RegionController();
-        List<Region> itemsToAdd = new ArrayList<>();
-        itemsToAdd.add(new Region(new BigDecimal("2")));
-        System.out.println(itemsToAdd);
-        List<Region> expResult = itemsToAdd;
-        List<Region> result = instance.search(Name);
-        System.out.println(expResult);
-        System.out.println(result);
+        String Name = "";
+        LocationController instance = new LocationController();
+        List<Location> expResult = null;
+        List<Location> result = instance.search(Name);
         assertEquals(expResult, result);
-
         // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of confirm method, of class RegionController.
+     * Test of confirm method, of class LocationController.
      */
     @Test
     public void testConfirm() {
         System.out.println("confirm");
-        BigDecimal id = null;
-        RegionController instance = new RegionController();
+        Short id = null;
+        LocationController instance = new LocationController();
         boolean expResult = false;
         boolean result = instance.confirm(id);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        fail("The test case is a prototype.");
     }
-
+    
 }

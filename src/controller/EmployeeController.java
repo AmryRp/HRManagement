@@ -8,6 +8,8 @@ package controller;
 import dao.EmployeeDao;
 import dao.IGeneric;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import model.Department;
@@ -26,7 +28,7 @@ public class EmployeeController {
     }
 
     EmployeeView frame;
-    IGeneric<Employee, Integer, String> IntrfcJM;
+    IGeneric<Employee> IntrfcJM;
     List<Employee> ListJob;
     Employee EJ = new Employee();
 
@@ -37,8 +39,9 @@ public class EmployeeController {
     }
 
     /**
-     * This function is used for save,update or input data on table Employee 
+     * This function is used for save,update or input data on table Employee
      * by:bootcamp34
+     *
      * @param employeeId is String Datatype for employeeId
      * @param firstName is String Datatype for firstName
      * @param lastName is String Datatype for lastName
@@ -61,8 +64,7 @@ public class EmployeeController {
     }
 
     /**
-     * delete function is used for deleting data from table 
-     * by: bootcamp34
+     * delete function is used for deleting data from table by: bootcamp34
      *
      * @param Id is string datatype converted to Integer for deleting data
      * @return to String to delete from object Employee
@@ -93,5 +95,12 @@ public class EmployeeController {
     public boolean confirm(int id) {
         IntrfcJM = new EmployeeDao();
         return (IntrfcJM.getById(id) != null);
+    }
+
+    public Date toDate(String Date) throws ParseException {
+        SimpleDateFormat sdf =  new SimpleDateFormat("MM/dd/yy");
+        java.util.Date Dates = sdf.parse(Date);
+        java.sql.Date sqlDate = new java.sql.Date(Dates.getTime());
+        return sqlDate;
     }
 }

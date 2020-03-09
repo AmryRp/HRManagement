@@ -34,7 +34,7 @@ import tool.HibernateUtil;
 public class RegionView extends javax.swing.JInternalFrame {
 
     RegionController rct;
-     IGeneric<Region, BigDecimal, String> IntrfcRM; 
+    IGeneric<Region> IntrfcRM;
     List<Region> ListRegion;
     boolean isClicked = true;
     Region Er = new Region();
@@ -62,6 +62,13 @@ public class RegionView extends javax.swing.JInternalFrame {
         return txtId.getText().trim().equals("");
     }
 
+    /**
+     * this function used for store data from object using getall() function
+     * from interface
+     *
+     * @param tabel is JTable datatype for referencing JTable that used for
+     * showing data table
+     */
     public void bindingTable(JTable tabel) {
         ListRegion = IntrfcRM.getAll();
         String[] tblHeader = new String[]{"id", "name"};
@@ -80,7 +87,12 @@ public class RegionView extends javax.swing.JInternalFrame {
         tblView.setModel(dtm);
 
     }
-
+  /**
+     * this function used for clearing table that used for refresh
+     *
+     * @param table is JTable datatype for referencing JTable that used for
+     * showing data table
+     */
     public void clearTable(JTable table) {
         DefaultTableModel dm = (DefaultTableModel) table.getModel();
         while (dm.getRowCount() > 0) {
@@ -88,6 +100,9 @@ public class RegionView extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * this function used for refreshing input fields
+     */
     public void refresh() {
         clearTable(tblView);
         bindingTable(tblView);
@@ -96,11 +111,15 @@ public class RegionView extends javax.swing.JInternalFrame {
         txtId.setEditable(true);
         isClicked = true;
     }
-//    for (Region region : drm.search("Asia")) {
-//                System.out.println(region.getRegionId());
-//                System.out.println(region.getRegionName());
-//        }
 
+    /**
+     * this function used for store data from object using search(keyword)
+     * function from interface
+     *
+     * @param tabel is JTable datatype for referencing JTable that used for
+     * showing data table
+     * @param key is string datatype for search keyword
+     */
     public void bindTblSearch(JTable tabel, String key) {
         ListRegion = IntrfcRM.search(key);
         String[] tblHeader = new String[]{"id", "name"};
@@ -134,7 +153,6 @@ public class RegionView extends javax.swing.JInternalFrame {
         tblView = new javax.swing.JTable();
         TxtSearch = new javax.swing.JTextField();
         BtnSearch = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         setBorder(null);
         setClosable(true);
@@ -251,14 +269,6 @@ public class RegionView extends javax.swing.JInternalFrame {
         });
         getContentPane().add(BtnSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 180, 110, 30));
 
-        jButton1.setText("Print");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 540, -1, -1));
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -291,10 +301,10 @@ public class RegionView extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(rootPane, rct.Save(txtId.getText(), txtName.getText()));
                     refresh();
                 }
-              
+
             } else {
-             JOptionPane.showMessageDialog(rootPane, rct.Save(txtId.getText(), txtName.getText()));
-             refresh();
+                JOptionPane.showMessageDialog(rootPane, rct.Save(txtId.getText(), txtName.getText()));
+                refresh();
             }
         }
     }//GEN-LAST:event_btnInsertActionPerformed
@@ -316,31 +326,12 @@ public class RegionView extends javax.swing.JInternalFrame {
         bindTblSearch(tblView, TxtSearch.getText());
     }//GEN-LAST:event_BtnSearchActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//       SessionFactory sf;
-//       sf = HibernateUtil.getSessionFactory();
-//        Session session = sf.openSession();
-//       Transaction trc = null;
-//       trc = session.beginTransaction();
-//        String reportPath = "C:\\Temp\\Sample_report.jrxml";
-//        JasperReport jr;
-//        try {
-//            jr = JasperCompileManager.compileReport(reportPath);
-//            JasperPrint jp = JasperFillManager.fillReport(jr,null,trc.commit() );
-//        } catch (JRException ex) {
-//            Logger.getLogger(RegionView.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//       
-//       JasperViewer.viewReport(jp);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnSearch;
     private javax.swing.JTextField TxtSearch;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnInsert;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

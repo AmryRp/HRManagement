@@ -24,16 +24,17 @@ import model.Location;
  * @author amry4
  */
 public class LocationView extends javax.swing.JInternalFrame {
-  
- LocationController Lct;
-    IGeneric<Location, Short, String> IntrfcLM;
+
+    LocationController Lct;
+    IGeneric<Location> IntrfcLM;
     List<Location> ListLocation;
-    IGeneric<Country, String, String> IntrfcCM;
+    IGeneric<Country> IntrfcCM;
     List<Country> ListCountry;
     boolean isClicked = true;
-public LocationView() {
+
+    public LocationView() {
         initComponents();
-         Lct = new LocationController();
+        Lct = new LocationController();
         IntrfcLM = new LocationDao();
         ListLocation = IntrfcLM.getAll();
         IntrfcCM = new CountryDao();
@@ -52,13 +53,20 @@ public LocationView() {
         while (i < ListCountry.size()) {
             countryId[i] = ListCountry.get(i).getCountryId();
             countryname[i] = ListCountry.get(i).getCountryName();
-            countryIdName[i] = countryId[i]+" "+ countryname[i];
+            countryIdName[i] = countryId[i] + " " + countryname[i];
             i++;
         }
         DefaultComboBoxModel tR = new DefaultComboBoxModel(countryIdName);
         getCmbCountryId().setModel(tR);
     }
 
+    /**
+     * this function used for store data from object using getall() function
+     * from interface
+     *
+     * @param tabel is JTable datatype for referencing JTable that used for
+     * showing data table
+     */
     public void bindingTable(JTable tabel) {
         ListLocation = IntrfcLM.getAll();
         String[] tblHeader = new String[]{"id", "Address", "Postal Code",
@@ -73,14 +81,20 @@ public LocationView() {
             row[2] = ListLocation.get(dtm.getRowCount()).getPostalCode();
             row[3] = ListLocation.get(dtm.getRowCount()).getCity();
             row[4] = ListLocation.get(dtm.getRowCount()).getStateProvince();
-            row[5] = (ListLocation.get(dtm.getRowCount()).getCountryId() == null) ? 
-                    "": ListLocation.get(dtm.getRowCount()).getCountryId().getCountryId()+" "
-                    +ListLocation.get(dtm.getRowCount()).getCountryId().getCountryName();
+            row[5] = (ListLocation.get(dtm.getRowCount()).getCountryId() == null)
+                    ? "" : ListLocation.get(dtm.getRowCount()).getCountryId().getCountryId() + " "
+                    + ListLocation.get(dtm.getRowCount()).getCountryId().getCountryName();
             dtm.addRow(row);
         }
         tblViewLocation.setModel(dtm);
     }
 
+    /**
+     * this function used for clearing table that used for refresh
+     *
+     * @param table is JTable datatype for referencing JTable that used for
+     * showing data table
+     */
     public void clearTable(JTable table) {
         DefaultTableModel dm = (DefaultTableModel) table.getModel();
         while (dm.getRowCount() > 0) {
@@ -88,6 +102,9 @@ public LocationView() {
         }
     }
 
+    /**
+     * this function used for refreshing input fields
+     */
     public void refresh() {
         clearTable(tblViewLocation);
         bindingTable(tblViewLocation);
@@ -101,10 +118,47 @@ public LocationView() {
         isClicked = true;
     }
 
+    /**
+     * this function used for checking empty field
+     *
+     * @return to boolean true or false
+     */
     private boolean IsEmptyField() {
         return TxtLocationId.getText().trim().equals("");
     }
-    
+
+    /**
+     * this function used for store data from object using search(keyword)
+     * function from interface
+     *
+     * @param tabel is JTable datatype for referencing JTable that used for
+     * showing data table
+     * @param key is string datatype for search keyword
+     */
+    public void bindTblSearch(JTable tabel, String key) {
+        ListLocation = IntrfcLM.search(key);
+        String[] tblHeader = new String[]{"id", "name", "region"};
+        DefaultTableModel dtm = new DefaultTableModel(null, tblHeader);
+        tabel.getModel();
+        Object[] row;
+        row = new Object[dtm.getColumnCount()];
+        while (dtm.getRowCount() < ListLocation.size()) {
+            row[0] = ListLocation.get(dtm.getRowCount()).getLocationId();
+            row[1] = ListLocation.get(dtm.getRowCount()).getStreetAddress();
+            row[2] = ListLocation.get(dtm.getRowCount()).getPostalCode();
+            row[3] = ListLocation.get(dtm.getRowCount()).getCity();
+            row[4] = ListLocation.get(dtm.getRowCount()).getStateProvince();
+            row[5] = (ListLocation.get(dtm.getRowCount()).getCountryId() == null)
+                    ? "" : ListLocation.get(dtm.getRowCount()).getCountryId().getCountryId() + " "
+                    + ListLocation.get(dtm.getRowCount()).getCountryId().getCountryName();
+            dtm.addRow(row);
+
+        }
+
+        tblViewLocation.setModel(dtm);
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,6 +185,8 @@ public LocationView() {
         CmbCountryId = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblViewLocation = new javax.swing.JTable();
+        BtnSearch = new javax.swing.JButton();
+        TxtSearch = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("LOCATIONS MANAGEMENT");
@@ -269,11 +325,29 @@ public LocationView() {
         });
         jScrollPane1.setViewportView(tblViewLocation);
 
+        BtnSearch.setText("SEARCH");
+        BtnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSearchActionPerformed(evt);
+            }
+        });
+
+        TxtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 751, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(449, Short.MAX_VALUE)
+                .addComponent(TxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(BtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -284,12 +358,17 @@ public LocationView() {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(234, 234, 234)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(251, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
@@ -303,9 +382,9 @@ public LocationView() {
         } else {
             String[] space = CmbCountryId.getSelectedItem().toString().split(" ");
             JOptionPane.showMessageDialog(rootPane, Lct.Save(TxtLocationId.getText(),
-                TxtStreetAddress.getText(), TxtZipCode.getText(),
-                TxtCity.getText(), TxtProvince.getText(), space[0]));
-        refresh();
+                    TxtStreetAddress.getText(), TxtZipCode.getText(),
+                    TxtCity.getText(), TxtProvince.getText(), space[0]));
+            refresh();
 
         }
     }//GEN-LAST:event_btnInsertLoactionActionPerformed
@@ -313,7 +392,7 @@ public LocationView() {
     private void btnDeleteLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteLocationActionPerformed
         if (!IsEmptyField()) {
             int result = JOptionPane.showConfirmDialog(null,
-                "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
+                    "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(rootPane, Lct.delete(TxtLocationId.getText()));
                 refresh();
@@ -340,12 +419,22 @@ public LocationView() {
         isClicked = false;
     }//GEN-LAST:event_tblViewLocationMouseClicked
 
+    private void BtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSearchActionPerformed
+        bindTblSearch(tblViewLocation, TxtSearch.getText());
+    }//GEN-LAST:event_BtnSearchActionPerformed
+
+    private void TxtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtSearchActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnSearch;
     private javax.swing.JComboBox<String> CmbCountryId;
     private javax.swing.JTextField TxtCity;
     private javax.swing.JTextField TxtLocationId;
     private javax.swing.JTextField TxtProvince;
+    private javax.swing.JTextField TxtSearch;
     private javax.swing.JTextField TxtStreetAddress;
     private javax.swing.JTextField TxtZipCode;
     private javax.swing.JButton btnDeleteLocation;

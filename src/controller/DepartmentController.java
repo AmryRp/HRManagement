@@ -22,13 +22,13 @@ public class DepartmentController {
 
     DepartmentlView dv;
     List<Department> ListDept;
-    IGeneric<Department, Short, String> IDepartement;
+    IGeneric<Department> IDepartement;
 
     List< Location> ListLocation;
-    IGeneric<Location, Short, String> ILocation;
+    IGeneric<Location> ILocation;
 
     List< Employee> ListEmployee;
-    IGeneric<Employee, Integer, String> IEmployee;
+    IGeneric<Employee> IEmployee;
 
     Department EC = new Department();
     Location ER = new Location();
@@ -49,7 +49,7 @@ public class DepartmentController {
      * @param Name is String Datatype for departmentName
      * @param managerId is String Datatype for managerId
      * @param locationId is String Datatype for locationId
-     * @return to String to insertOrUpdate with object Department
+     * @return to String for insertOrUpdate with object Department
      */
     public String save(String Id, String Name, String managerId, String locationId) {
         IDepartement = new DepartmentDao();
@@ -62,7 +62,7 @@ public class DepartmentController {
     /**
      * delete function is used for deleting data from table
      * @param id is string datatype converted to short for deleting data
-     * @return to String to delete from object Department
+     * @return to String for delete from object Department
      */
     public String delete(String id) {
         return (IDepartement.delete(Short.parseShort(id))) ? "sukses" : "failed";

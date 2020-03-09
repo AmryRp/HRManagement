@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import model.Region;
@@ -19,7 +20,7 @@ import static tool.HibernateUtil.getSessionFactory;
  *
  * @author amry4
  */
-public class RegionDao implements IGeneric<Region, BigDecimal, String> {
+public class RegionDao implements IGeneric<Region> {
 
 //    //SessionFactory sf;
 //    private Session session;
@@ -90,13 +91,13 @@ public class RegionDao implements IGeneric<Region, BigDecimal, String> {
      * @return to object Region from model.Region
      */
       @Override
-    public Region getById(BigDecimal Id) {
+    public Region getById(Serializable id) {
         Session session = sf.openSession();
         Region rg = null;
         Transaction trc = null;
         try {
             trc = session.beginTransaction();
-            rg = (Region) session.get(Region.class, Id);
+            rg = (Region) session.get(Region.class, id);
             trc.commit();
             System.out.println(rg);
         } catch (Exception e) {
@@ -151,7 +152,7 @@ public class RegionDao implements IGeneric<Region, BigDecimal, String> {
  * @return to boolean true or false
  */
     @Override
-    public boolean delete(BigDecimal id) {
+    public boolean delete(Serializable id) {
        Session ss = sf.openSession();
         Transaction trc = null;
         try {

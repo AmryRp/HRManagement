@@ -47,16 +47,18 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
 
     }
     DepartmentController Dct;
-    IGeneric<Department, Short, String> idm;
+    IGeneric<Department> idm;
     List<Department> ListDM;
-    IGeneric<Employee, Integer, String> iem;
+    IGeneric<Employee> iem;
     List<Employee> ListEM;
-    IGeneric<Location, Short, String> ilm;
+    IGeneric<Location> ilm;
     List<Location> ListLM;
     boolean isClicked = true;
 
     /**
-     * Creates new form DepartmentsManagement
+     * this function for filing the model for combo box that used on
+     *
+     * @param Jbox is a datatype for j combo box
      */
     public void FillcboxM(JComboBox Jbox) {
 
@@ -66,28 +68,44 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
         String[] ManIdName = new String[ListEM.size()];
         int i = 0;
         while (i < ListEM.size()) {
-            Id[i] = (ListEM.get(i).getManagerId() == null) ? 0 : ListEM.get(i).getManagerId().getEmployeeId() ;
+            Id[i] = (ListEM.get(i).getManagerId() == null) ? 0 : ListEM.get(i).getManagerId().getEmployeeId();
             Name[i] = (ListEM.get(i).getManagerId() == null) ? "" : ListEM.get(i).getManagerId().getLastName();
-            ManIdName[i] = Id[i]+" "+Name[i];
+            ManIdName[i] = Id[i] + " " + Name[i];
             i++;
         }
         DefaultComboBoxModel dtm = new DefaultComboBoxModel(ManIdName);
         getCmbDMMan().setModel(dtm);
     }
 
+    /**
+     * this function for filing the model for combo box that used on
+     *
+     * @param Jbox is a datatype for j combo box
+     */
     public void FillcboxL(JComboBox Jbox) {
 
         ListLM = ilm.getAll();
+        Short[] locId = new Short[ListLM.size()];
         String[] locationname = new String[ListLM.size()];
+        String[] locIdName = new String[ListLM.size()];
         int i = 0;
         while (i < ListLM.size()) {
+            locId[i] = ListLM.get(i).getLocationId();
             locationname[i] = ListLM.get(i).getCity();
+            locIdName[i] = locId[i] + " " + locationname[i];
             i++;
         }
-        DefaultComboBoxModel dtm = new DefaultComboBoxModel(locationname);
+        DefaultComboBoxModel dtm = new DefaultComboBoxModel(locIdName);
         getCmbDMLoc().setModel(dtm);
     }
 
+   /**
+     * this function used for store data from object using getall() function
+     * from interface
+     *
+     * @param tabel is JTable datatype for referencing JTable that used for
+     * showing data table
+     */
     public void bindingTable(JTable tabel) {
         ListDM = idm.getAll();
         String[] tblHeader = new String[]{"Department Id", "Department Name", "Manager", "Location"};
@@ -101,12 +119,49 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
             row[2] = (ListDM.get(dtm.getRowCount()).getManagerId() == null)
                     ? "" : ListDM.get(dtm.getRowCount()).getManagerId().getEmployeeId()
                     + " " + ListDM.get(dtm.getRowCount()).getManagerId().getLastName();
-            row[3] = ListDM.get(dtm.getRowCount()).getLocationId().getCity();
+            row[3] = (ListDM.get(dtm.getRowCount()).getLocationId() == null) ? ""
+                    : ListDM.get(dtm.getRowCount()).getLocationId().getLocationId() + " "
+                    + ListDM.get(dtm.getRowCount()).getLocationId().getCity();
             dtm.addRow(row);
         }
         TblDM.setModel(dtm);
     }
 
+   /**
+     * this function used for store data from object using search(keyword)
+     * function from interface
+     *
+     * @param tabel is JTable datatype for referencing JTable that used for
+     * showing data table
+     * @param key is string datatype for search keyword
+     */
+    public void bindTblSearch(JTable tabel, String key) {
+        ListDM = idm.search(key);
+        String[] tblHeader = new String[]{"Department Id", "Department Name", "Manager", "Location"};
+        DefaultTableModel dtm = new DefaultTableModel(null, tblHeader);
+        tabel.getModel();
+        Object[] row;
+        row = new Object[dtm.getColumnCount()];
+        while (dtm.getRowCount() < ListDM.size()) {
+            row[0] = ListDM.get(dtm.getRowCount()).getDepartmentId();
+            row[1] = ListDM.get(dtm.getRowCount()).getDepartmentName();
+            row[2] = (ListDM.get(dtm.getRowCount()).getManagerId() == null)
+                    ? "" : ListDM.get(dtm.getRowCount()).getManagerId().getEmployeeId()
+                    + " " + ListDM.get(dtm.getRowCount()).getManagerId().getLastName();
+            row[3] = (ListDM.get(dtm.getRowCount()).getLocationId() == null) ? ""
+                    : ListDM.get(dtm.getRowCount()).getLocationId().getLocationId() + " "
+                    + ListDM.get(dtm.getRowCount()).getLocationId().getCity();
+            dtm.addRow(row);
+        }
+        TblDM.setModel(dtm);
+    }
+
+   /**
+     * this function used for clearing table that used for refresh
+     *
+     * @param table is JTable datatype for referencing JTable that used for
+     * showing data table
+     */
     public void clearTable(JTable table) {
         DefaultTableModel dm = (DefaultTableModel) table.getModel();
         while (dm.getRowCount() > 0) {
@@ -114,6 +169,10 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
         }
     }
 
+   
+    /**
+     * this function used for refreshing input fields
+     */
     public void refresh() {
         clearTable(TblDM);
         bindingTable(TblDM);
@@ -125,6 +184,11 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
         isClicked = true;
     }
 
+   /**
+     * this function used for checking empty field
+     *
+     * @return to boolean true or false
+     */
     private boolean IsEmptyField() {
         return TxtDMId.getText().trim().equals("");
     }
@@ -151,8 +215,11 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
         CmbDMMan = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         TblDM = new javax.swing.JTable();
+        TxtSearch = new javax.swing.JTextField();
+        BtnSearch = new javax.swing.JButton();
 
         setClosable(true);
+        setTitle("DEPARTMENT MANAGEMENT");
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
@@ -191,22 +258,15 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
-                .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addComponent(CmbDMMan, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(jLabel4)
-                .addGap(21, 21, 21)
-                .addComponent(CmbDMLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(453, 453, 453)
-                .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(CmbDMMan, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(21, 21, 21)
+                        .addComponent(CmbDMLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(53, 53, 53)
@@ -214,7 +274,14 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(31, 31, 31)
-                        .addComponent(TxtDMName, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(TxtDMName, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(153, 153, 153))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,10 +312,11 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
                         .addGap(3, 3, 3)
                         .addComponent(jLabel4))
                     .addComponent(CmbDMLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnInsert)
-                    .addComponent(btnDelete)))
+                    .addComponent(btnDelete))
+                .addContainerGap())
         );
 
         TblDM.setModel(new javax.swing.table.DefaultTableModel(
@@ -274,31 +342,53 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(TblDM);
 
+        TxtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtSearchActionPerformed(evt);
+            }
+        });
+
+        BtnSearch.setText("SEARCH");
+        BtnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 733, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(TxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(BtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(3, 3, 3)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(282, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(30, 30, 30)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(272, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(16, Short.MAX_VALUE)))
         );
 
         pack();
@@ -308,8 +398,9 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
         if (IsEmptyField()) {
             JOptionPane.showMessageDialog(rootPane, "fill id");
         } else {
-
-            JOptionPane.showMessageDialog(rootPane, Dct.save(TxtDMId.getText(), TxtDMName.getText(), CmbDMMan.getSelectedItem().toString(), CmbDMLoc.getSelectedItem().toString()));
+            String[] split1 = CmbDMMan.getSelectedItem().toString().split(" ");
+            String[] split2 = CmbDMLoc.getSelectedItem().toString().split(" ");
+            JOptionPane.showMessageDialog(rootPane, Dct.save(TxtDMId.getText(), TxtDMName.getText(), split1[0], split2[0]));
         }
         refresh();
     }//GEN-LAST:event_btnInsertActionPerformed
@@ -332,19 +423,32 @@ public class DepartmentlView extends javax.swing.JInternalFrame {
         int row = TblDM.getSelectedRow();
         TxtDMId.setText(dm.getValueAt(row, 0).toString());
         TxtDMName.setText(dm.getValueAt(row, 1).toString());
-        CmbDMLoc.setSelectedItem(dm.getValueAt(row, 2));
-        CmbDMMan.setSelectedItem(dm.getValueAt(row, 3));
+        String Temp3 = (dm.getValueAt(row, 2) == null) ? "" : dm.getValueAt(row, 2).toString();
+        CmbDMMan.setSelectedItem(Temp3);
+        String Temp2 = (dm.getValueAt(row, 3) == null) ? "" : dm.getValueAt(row, 3).toString();
+        CmbDMLoc.setSelectedItem(Temp2);
+
         TxtDMId.setEditable(false);
         isClicked = false;
     }//GEN-LAST:event_TblDMMouseClicked
 
+    private void TxtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtSearchActionPerformed
+
+    private void BtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSearchActionPerformed
+        bindTblSearch(TblDM, TxtSearch.getText());
+    }//GEN-LAST:event_BtnSearchActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnSearch;
     private javax.swing.JComboBox<String> CmbDMLoc;
     private javax.swing.JComboBox<String> CmbDMMan;
     private javax.swing.JTable TblDM;
     private javax.swing.JTextField TxtDMId;
     private javax.swing.JTextField TxtDMName;
+    private javax.swing.JTextField TxtSearch;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnInsert;
     private javax.swing.JLabel jLabel2;

@@ -23,11 +23,11 @@ public class LocationController {
     }
 
     LocationView LocView;
-    IGeneric<Location, Short, String> IntrfcLM;
+    IGeneric<Location> IntrfcLM;
     List<Location> ListLoc;
     Location EL = new Location();
     List<Country> ListCountry;
-    IGeneric<Country, String, String> IntrfcCM;
+    IGeneric<Country> IntrfcCM;
     Country EC = new Country();
 
     public LocationController(LocationView frame) {

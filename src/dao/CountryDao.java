@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.io.Serializable;
 import java.util.List;
 import model.Country;
 import org.hibernate.Query;
@@ -17,7 +18,7 @@ import tool.*;
  *
  * @author amry4
  */
-public class CountryDao implements IGeneric<Country, String, String> {
+public class CountryDao implements IGeneric<Country> {
 
 //    //SessionFactory sf;
 //    private Session session;
@@ -36,7 +37,7 @@ public class CountryDao implements IGeneric<Country, String, String> {
      * @return boolean true or false
      */
     @Override
-    public boolean delete(String id) {
+    public boolean delete(Serializable id) {
         Session ss = sf.openSession();
         Transaction trc = null;
         try {
@@ -145,14 +146,14 @@ public class CountryDao implements IGeneric<Country, String, String> {
      * @return to string datatype for getting regionName
      */
     @Override
-    public Country getById(String Id) {
+    public Country getById(Serializable id) {
         Session session = sf.openSession();
 
         Country rg = null;
         Transaction trc = null;
         try {
             trc = session.beginTransaction();
-            rg = (Country) session.get(Country.class, Id);
+            rg = (Country) session.get(Country.class, id);
             trc.commit();
         } catch (Exception e) {
             if (trc != null) {

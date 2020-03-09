@@ -15,15 +15,15 @@ import java.util.List;
  * @param <Id> is data type for id 
  * @param <Name> is data type for name(keyword)
  */
-public interface IGeneric<T, Id extends Serializable,Name extends Serializable>{
+public interface IGeneric< T>{
     
     public boolean insertOrUpdate(T Entity);
 
-    public boolean delete(Id id);
+    public boolean delete(Serializable id);
 
     public List<T> getAll();
 
-    public List<T> search(Name name);
+    public List<T> search(String name);
 
-    public T getById(Id Id);
+    public T getById(Serializable Id);
 }

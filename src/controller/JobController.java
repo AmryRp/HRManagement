@@ -22,7 +22,7 @@ public class JobController {
     }
 
     JobView frame;
-    IGeneric<Job, String, String> IntrfcJM;
+    IGeneric<Job> IntrfcJM;
     List<Job> ListJob;
     Job EJ = new Job();
 

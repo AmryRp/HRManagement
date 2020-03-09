@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.io.Serializable;
 import java.util.List;
 import model.Employee;
 import org.hibernate.Query;
@@ -17,7 +18,7 @@ import tool.HibernateUtil;
  *
  * @author amry4
  */
-public class EmployeeDao implements IGeneric<Employee, Integer, String> {
+public class EmployeeDao implements IGeneric<Employee> {
 
     private SessionFactory sf;
 
@@ -31,7 +32,7 @@ public class EmployeeDao implements IGeneric<Employee, Integer, String> {
  * @return to boolean true or false
  */
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(Serializable id) {
         Session ss = sf.openSession();
         Transaction trc = null;
         try {
@@ -136,14 +137,14 @@ public class EmployeeDao implements IGeneric<Employee, Integer, String> {
  * @return to Employee entity model
  */
     @Override
-    public Employee getById(Integer Id) {
+    public Employee getById(Serializable id) {
         Session session = sf.openSession();
 
         Employee rg = null;
         Transaction trc = null;
         try {
             trc = session.beginTransaction();
-            rg = (Employee) session.get(Employee.class, Id);
+            rg = (Employee) session.get(Employee.class, id);
             trc.commit();
             System.out.println(rg);
         } catch (Exception e) {

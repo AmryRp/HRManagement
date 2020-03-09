@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.io.Serializable;
 import java.util.List;
 import model.Location;
 import org.hibernate.Query;
@@ -17,7 +18,7 @@ import tool.HibernateUtil;
  *
  * @author amry4
  */
-public class LocationDao implements IGeneric<Location, Short, String> {
+public class LocationDao implements IGeneric<Location> {
 
     private SessionFactory sf;
 
@@ -31,7 +32,7 @@ public class LocationDao implements IGeneric<Location, Short, String> {
  * @return to boolean true or false
  */
     @Override
-    public boolean delete(Short id) {
+    public boolean delete(Serializable id) {
         Session ss = sf.openSession();
         Transaction trc = null;
         try {
@@ -134,7 +135,7 @@ public class LocationDao implements IGeneric<Location, Short, String> {
  * @return to location entity model
  */
     @Override
-    public Location getById(Short id) {
+    public Location getById(Serializable id) {
         Session session = sf.openSession();
 
         Location rg = null;

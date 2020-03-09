@@ -22,9 +22,9 @@ public class CountryController {
 
     CountryView CountryView;
     List< Country> ListCountry;
-    IGeneric<Country, String, String> IntrfcCM;
+    IGeneric<Country> IntrfcCM;
     List< Region> ListRegion;
-    IGeneric<Region, BigDecimal, String> IntrfcRM;
+    IGeneric<Region> IntrfcRM;
 
     Country EC = new Country();
     Region ER = new Region();

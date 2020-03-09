@@ -6,12 +6,13 @@
 package view;
 
 import controller.EmployeeController;
-import controller.JobController;
 import dao.DepartmentDao;
 import dao.EmployeeDao;
 import dao.IGeneric;
 import dao.JobDao;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -28,54 +29,52 @@ import model.Job;
  */
 public class EmployeeView extends javax.swing.JInternalFrame {
 
-     
     /**
      * Creates new form EmployeeView
      */
     public EmployeeView() {
         initComponents();
-         Jct = new EmployeeController();
+        Jct = new EmployeeController();
         IntrfcEM = new EmployeeDao();
         ListEmployee = IntrfcEM.getAll();
-        IntrfcEMM = new EmployeeDao();
-        ListEmpM = IntrfcEMM.getAll();
+
         ijm = new JobDao();
         idm = new DepartmentDao();
         bindingTable(TblEmployee);
-        FillcboxManager(cmbManId);
+        FillcboxM(cmbManId);
         FillcboxDept(cmbDepId);
-        FillcboxJob(CmbJobId);
+        FillcboxJob(cmbJobId);
         Calendar now = Calendar.getInstance();
-        now.add(Calendar.DATE,-30);
+        now.add(Calendar.DATE, -30);
         Calendar then = Calendar.getInstance();
-        then.add(Calendar.DATE,+30);
+        then.add(Calendar.DATE, +30);
         dateChooserHire.setMinDate(now);
         dateChooserHire.setMaxDate(then);
         Calendar c = Calendar.getInstance();
-        
+
     }
-    
-    
-        EmployeeController Jct;
+
+    EmployeeController Jct;
     List<Employee> ListEmployee;
-    List<Employee> ListEmpM;
     List<Job> ListJob;
     List<Department> ListDept;
-    IGeneric<Employee, Integer, String> IntrfcEM;
-    IGeneric<Employee, Integer, String> IntrfcEMM;
-    IGeneric<Department, Short, String> idm;
-    IGeneric<Job, String, String> ijm;
+    IGeneric<Employee> IntrfcEM;
+    IGeneric<Department> idm;
+    IGeneric<Job> ijm;
     boolean isClicked = true;
-    
+
     /**
-     * Creates new form JobsManager
+     * this function used for checking empty field
+     *
+     * @return to boolean true or false
      */
-   private boolean IsEmptyField() {
+    private boolean IsEmptyField() {
         return TxtEmployeeId.getText().trim().equals("");
     }
 
-   
-
+    /**
+     * this function used for refreshing input fields
+     */
     public void refresh() {
         clearTable(TblEmployee);
         bindingTable(TblEmployee);
@@ -86,7 +85,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         TxtEmail.setText("");
         TxtPhoneNumber.setText("");
         dateChooserHire.setText("");
-        CmbJobId.setSelectedItem("Choose Job");
+        cmbJobId.setSelectedItem("Choose Job");
         cmbManId.setSelectedItem("Choose Manager");
         cmbDepId.setSelectedItem("Choose Departement");
         TxtEmployeeId.setEditable(true);
@@ -94,6 +93,12 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         isClicked = true;
     }
 
+    /**
+     * this function used for clearing table that used for refresh
+     *
+     * @param table is JTable datatype for referencing JTable that used for
+     * showing data table
+     */
     public void clearTable(JTable table) {
         DefaultTableModel dm = (DefaultTableModel) table.getModel();
         while (dm.getRowCount() > 0) {
@@ -101,6 +106,13 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * this function used for store data from object using getall() function
+     * from interface
+     *
+     * @param tabel is JTable datatype for referencing JTable that used for
+     * showing data table
+     */
     public void bindingTable(JTable tabel) {
         ListEmployee = IntrfcEM.getAll();
         String[] tblHeader = new String[]{"id", "first name", "last name", "Email",
@@ -115,14 +127,17 @@ public class EmployeeView extends javax.swing.JInternalFrame {
             row[2] = ListEmployee.get(dtm.getRowCount()).getLastName();
             row[3] = ListEmployee.get(dtm.getRowCount()).getEmail();
             row[4] = ListEmployee.get(dtm.getRowCount()).getPhoneNumber();
-            row[5] = ListEmployee.get(dtm.getRowCount()).getHireDate();
-            row[6] = ListEmployee.get(dtm.getRowCount()).getJobId().getJobTitle();
+            SimpleDateFormat hire = new SimpleDateFormat("MM/dd/yy");
+            row[5] = hire.format(ListEmployee.get(dtm.getRowCount()).getHireDate());
+            row[6] = (ListEmployee.get(dtm.getRowCount()).getJobId().getJobTitle() == null)
+                    ? " " : ListEmployee.get(dtm.getRowCount()).getJobId().getJobId() + " "
+                    + ListEmployee.get(dtm.getRowCount()).getJobId().getJobTitle();
             row[7] = ListEmployee.get(dtm.getRowCount()).getSalary();
             row[8] = ListEmployee.get(dtm.getRowCount()).getCommissionPct();
             row[9] = (ListEmployee.get(dtm.getRowCount()).getManagerId() == null)
                     ? "" : ListEmployee.get(dtm.getRowCount()).getManagerId().getEmployeeId()
                     + " " + ListEmployee.get(dtm.getRowCount()).getManagerId().getLastName();
-            row[10] = (ListEmployee.get(dtm.getRowCount()).getDepartmentId()== null)
+            row[10] = (ListEmployee.get(dtm.getRowCount()).getDepartmentId() == null)
                     ? "" : ListEmployee.get(dtm.getRowCount()).getDepartmentId().getDepartmentId()
                     + " " + ListEmployee.get(dtm.getRowCount()).getDepartmentId().getDepartmentName();
             dtm.addRow(row);
@@ -130,44 +145,107 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         TblEmployee.setModel(dtm);
     }
 
-    public void FillcboxManager(JComboBox Jbox) {
-        ListEmpM = IntrfcEMM.getAll();
-        int[] managerId = new int[ListEmpM.size()];
-        String[] managerName = new String[ListEmpM.size()];
-        String[] manIdName= new String[ListEmpM.size()];
-        int i = 0;
-        while (i < ListEmpM.size()) {
-            managerName[i] =(ListEmpM.get(i).getManagerId() == null) ? "" : ListEmpM.get(i).getManagerId().getLastName();
-            managerId[i] = (ListEmpM.get(i).getManagerId() == null) ? 0 : ListEmpM.get(i).getManagerId().getEmployeeId();
-            manIdName[i] = managerId[i]+" "+manIdName[i]; 
-            i++;
+    /**
+     * this function used for store data from object using search(keyword)
+     * function from interface
+     *
+     * @param tabel is JTable datatype for referencing JTable that used for
+     * showing data table
+     * @param key is string datatype for search keyword
+     */
+    public void bindTblSearch(JTable tabel, String key) {
+        ListEmployee = IntrfcEM.search(key);
+        String[] tblHeader = new String[]{"id", "first name", "last name", "Email",
+            "phone Number", "HireDate", "Job", "Salary", "Commission", "Manager", "Department"};
+        DefaultTableModel dtm = new DefaultTableModel(null, tblHeader);
+        tabel.getModel();
+        Object[] row;
+        row = new Object[ListEmployee.size()];
+        while (dtm.getRowCount() < ListEmployee.size()) {
+            row[0] = ListEmployee.get(dtm.getRowCount()).getEmployeeId();
+            row[1] = ListEmployee.get(dtm.getRowCount()).getFirstName();
+            row[2] = ListEmployee.get(dtm.getRowCount()).getLastName();
+            row[3] = ListEmployee.get(dtm.getRowCount()).getEmail();
+            row[4] = ListEmployee.get(dtm.getRowCount()).getPhoneNumber();
+            SimpleDateFormat hire = new SimpleDateFormat("MM/dd/yy");
+            row[5] = hire.format(ListEmployee.get(dtm.getRowCount()).getHireDate());
+            row[6] = (ListEmployee.get(dtm.getRowCount()).getJobId().getJobTitle() == null)
+                    ? " " : ListEmployee.get(dtm.getRowCount()).getJobId().getJobId() + " "
+                    + ListEmployee.get(dtm.getRowCount()).getJobId().getJobTitle();
+            row[7] = ListEmployee.get(dtm.getRowCount()).getSalary();
+            row[8] = ListEmployee.get(dtm.getRowCount()).getCommissionPct();
+            row[9] = (ListEmployee.get(dtm.getRowCount()).getManagerId() == null)
+                    ? "" : ListEmployee.get(dtm.getRowCount()).getManagerId().getEmployeeId()
+                    + " " + ListEmployee.get(dtm.getRowCount()).getManagerId().getLastName();
+            row[10] = (ListEmployee.get(dtm.getRowCount()).getDepartmentId() == null)
+                    ? "" : ListEmployee.get(dtm.getRowCount()).getDepartmentId().getDepartmentId()
+                    + " " + ListEmployee.get(dtm.getRowCount()).getDepartmentId().getDepartmentName();
+            dtm.addRow(row);
         }
-        DefaultComboBoxModel dtm = new DefaultComboBoxModel(manIdName);
-        getCmbManId().setModel(dtm);
-
+        TblEmployee.setModel(dtm);
     }
 
+    /**
+     * this function for filing the model for combo box that used on
+     *
+     * @param Jbox is a datatype for j combo box
+     */
+    public void FillcboxM(JComboBox Jbox) {
+
+        ListEmployee = IntrfcEM.getAll();
+        String[] Name = new String[ListEmployee.size()];
+        int[] Id = new int[ListEmployee.size()];
+        String[] ManIdName = new String[ListEmployee.size()];
+        int i = 0;
+        while (i < ListEmployee.size()) {
+            Id[i] = (ListEmployee.get(i).getManagerId() == null) ? 0 : ListEmployee.get(i).getEmployeeId();
+            Name[i] = (ListEmployee.get(i).getManagerId() == null) ? "" : ListEmployee.get(i).getLastName();
+            ManIdName[i] = Id[i] + " " + Name[i];
+            i++;
+        }
+        DefaultComboBoxModel dtm = new DefaultComboBoxModel(ManIdName);
+        getCmbManId().setModel(dtm);
+    }
+
+    /**
+     * this function for filing the model for combo box that used on
+     *
+     * @param Jbox is a datatype for j combo box
+     */
     public void FillcboxJob(JComboBox Jbox) {
         ListJob = ijm.getAll();
-        String[] managerName = new String[ListJob.size()];
+        String[] JobId = new String[ListJob.size()];
+        String[] jobTittle = new String[ListJob.size()];
+        String[] jobIdName = new String[ListJob.size()];
         int i = 0;
         while (i < ListJob.size()) {
-            managerName[i] = ListJob.get(i).getJobTitle();
+            JobId[i] = ListJob.get(i).getJobId();
+            jobTittle[i] = ListJob.get(i).getJobTitle();
+            jobIdName[i] = JobId[i] + " " + jobTittle[i];
             i++;
         }
-        DefaultComboBoxModel dtm = new DefaultComboBoxModel(managerName);
-        getCmbDepId().setModel(dtm);
+        DefaultComboBoxModel dtm = new DefaultComboBoxModel(jobIdName);
+        getCmbJobId().setModel(dtm);
     }
 
+    /**
+     * this function for filing the model for combo box that used on
+     *
+     * @param Jbox is a datatype for j combo box
+     */
     public void FillcboxDept(JComboBox Jbox) {
         ListDept = idm.getAll();
-        String[] managerName = new String[ListDept.size()];
+        Short[] deptId = new Short[ListDept.size()];
+        String[] deptName = new String[ListDept.size()];
+        String[] deptIdName = new String[ListDept.size()];
         int i = 0;
         while (i < ListDept.size()) {
-            managerName[i] = ListDept.get(i).getDepartmentName();
+            deptId[i] = ListDept.get(i).getDepartmentId();
+            deptName[i] = ListDept.get(i).getDepartmentName();
+            deptIdName[i] = deptId[i] + " " + deptName[i];
             i++;
         }
-        DefaultComboBoxModel dtm = new DefaultComboBoxModel(managerName);
+        DefaultComboBoxModel dtm = new DefaultComboBoxModel(deptIdName);
         getCmbDepId().setModel(dtm);
     }
 
@@ -201,12 +279,14 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         TxtComP = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        CmbJobId = new javax.swing.JComboBox<>();
+        cmbJobId = new javax.swing.JComboBox<>();
         cmbDepId = new javax.swing.JComboBox<>();
         cmbManId = new javax.swing.JComboBox<>();
         dateChooserHire = new datechooser.beans.DateChooserCombo();
         jScrollPane1 = new javax.swing.JScrollPane();
         TblEmployee = new javax.swing.JTable();
+        BtnSearch = new javax.swing.JButton();
+        TxtSearch = new javax.swing.JTextField();
 
         PEmployee.setBackground(new java.awt.Color(204, 255, 204));
         PEmployee.setPreferredSize(new java.awt.Dimension(451, 300));
@@ -250,7 +330,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
 
         jLabel12.setText("Department Id");
 
-        CmbJobId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Id", "item1", "item2" }));
+        cmbJobId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Id", "item1", "item2" }));
 
         cmbDepId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Id", "item1", "item2" }));
 
@@ -289,7 +369,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
                                     .addGap(18, 18, 18)
                                     .addGroup(PEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(TxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(CmbJobId, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cmbJobId, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(TxtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(dateChooserHire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGap(18, 18, 18)
@@ -355,7 +435,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
                         .addGap(24, 24, 24)
                         .addGroup(PEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(CmbJobId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cmbJobId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(PEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDeleteEmp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnInsertEmp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -377,11 +457,29 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(TblEmployee);
 
+        BtnSearch.setText("SEARCH");
+        BtnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSearchActionPerformed(evt);
+            }
+        });
+
+        TxtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 741, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(439, Short.MAX_VALUE)
+                .addComponent(TxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(BtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -392,7 +490,12 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 612, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(305, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(281, 281, 281))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -409,17 +512,20 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         if (IsEmptyField()) {
             JOptionPane.showMessageDialog(rootPane, "fill id");
         } else {
-            JOptionPane.showMessageDialog(rootPane, Jct.save(TxtEmployeeId.getText(), TxtFirstName.getText(),TxtLastName.getText(), TxtEmail.getText(),
-                TxtPhoneNumber.getText(),dateChooserHire.getText(), CmbJobId.getSelectedItem().toString(), TxtSal.getText(),
-                TxtComP.getText(), cmbManId.getSelectedItem().toString(), cmbDepId.getSelectedItem().toString()));
-        refresh();
+            String[] split1 = cmbJobId.getSelectedItem().toString().split(" ");
+            String[] split2 = cmbManId.getSelectedItem().toString().split(" ");
+            String[] split3 = cmbDepId.getSelectedItem().toString().split(" ");
+            JOptionPane.showMessageDialog(rootPane, Jct.save(TxtEmployeeId.getText(), TxtFirstName.getText(), TxtLastName.getText(), TxtEmail.getText(),
+                    TxtPhoneNumber.getText(), dateChooserHire.getText(), split1[0], TxtSal.getText(),
+                    TxtComP.getText(), split2[0], split3[0]));
+            refresh();
         }
     }//GEN-LAST:event_btnInsertEmpActionPerformed
 
     private void btnDeleteEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteEmpActionPerformed
         if (!IsEmptyField()) {
             int result = JOptionPane.showConfirmDialog(null,
-                "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
+                    "Are you sure you want to delete this data?", null, JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(rootPane, Jct.delete(TxtEmployeeId.getText()));
                 refresh();
@@ -442,18 +548,27 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         TxtEmail.setText(dm.getValueAt(row, 3).toString());
         TxtPhoneNumber.setText(dm.getValueAt(row, 4).toString());
         dateChooserHire.setText(dm.getValueAt(row, 5).toString());
-        CmbJobId.setSelectedItem(dm.getValueAt(row, 6));
+        cmbJobId.setSelectedItem(dm.getValueAt(row, 6));
         TxtSal.setText(dm.getValueAt(row, 7).toString());
-        TxtComP.setText(dm.getValueAt(row, 8).toString());
+        String temp8 = (dm.getValueAt(row, 8) == null) ? "" : dm.getValueAt(row, 8).toString();
+        TxtComP.setText(temp8);
         cmbManId.setSelectedItem(dm.getValueAt(row, 9));
         cmbDepId.setSelectedItem(dm.getValueAt(row, 10));
         TxtEmployeeId.setEditable(false);
         isClicked = false;
     }//GEN-LAST:event_TblEmployeeMouseClicked
 
+    private void BtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSearchActionPerformed
+        bindTblSearch(TblEmployee, TxtSearch.getText());
+    }//GEN-LAST:event_BtnSearchActionPerformed
+
+    private void TxtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtSearchActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> CmbJobId;
+    private javax.swing.JButton BtnSearch;
     private javax.swing.JPanel PEmployee;
     private javax.swing.JTable TblEmployee;
     private javax.swing.JTextField TxtComP;
@@ -463,9 +578,11 @@ public class EmployeeView extends javax.swing.JInternalFrame {
     private javax.swing.JTextField TxtLastName;
     private javax.swing.JTextField TxtPhoneNumber;
     private javax.swing.JTextField TxtSal;
+    private javax.swing.JTextField TxtSearch;
     private javax.swing.JButton btnDeleteEmp;
     private javax.swing.JButton btnInsertEmp;
     private javax.swing.JComboBox<String> cmbDepId;
+    private javax.swing.JComboBox<String> cmbJobId;
     private javax.swing.JComboBox<String> cmbManId;
     private datechooser.beans.DateChooserCombo dateChooserHire;
     private javax.swing.JLabel jLabel10;
@@ -525,4 +642,9 @@ public class EmployeeView extends javax.swing.JInternalFrame {
     public datechooser.beans.DateChooserCombo getDateChooserHire() {
         return dateChooserHire;
     }
+
+    public javax.swing.JComboBox<String> getCmbJobId() {
+        return cmbJobId;
+    }
+
 }
