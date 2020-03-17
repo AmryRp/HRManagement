@@ -5,30 +5,33 @@ package servlet;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import dao.GeneralDao;
 import dao.IDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 import model.Useraccount;
+import tool.BCrypt;
 
 /**
  *
  * @author amry4
  */
 public class LoginServlet extends HttpServlet {
+
     List<Useraccount> ListAccount;
     IDao<Useraccount> IAccount;
     Useraccount ua = new Useraccount();
 
     public LoginServlet() {
+        super();
         IAccount = new GeneralDao();
     }
 
@@ -46,7 +49,7 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
+
         }
     }
 
@@ -62,6 +65,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         processRequest(request, response);
     }
 
@@ -76,6 +80,38 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String username = request.getParameter("Username");
+        String password = request.getParameter("Password");
+        PrintWriter out = response.getWriter();
+        if (getPassword(username).equals("failed")) {
+            out.println("<script src='Sweet_JS/sweetalert2.js'></script>");
+            out.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
+            out.println("<script>");
+            out.println("$(document).ready(function () {");
+            out.println("swal ( 'incorrect id !' ,  ' ' ,  'error' ).then(function() {\n"
+                    + "    window.location = 'login.jsp';\n"
+                    + "});");
+            out.println("$  });");
+            out.println("</script>");
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            rd.include(request, response);
+        } else {
+            ListAccount = IAccount.manageData(new Useraccount(), "username", username, new BigDecimal("0"), false, false);
+            if ((BCrypt.checkpw(password, ListAccount.get(0).getPassword()))
+                    && (username.equals(ListAccount.get(0).getUsername()))) {
+                response.sendRedirect(request.getContextPath() + "/mainMenu.jsp");
+            } else {
+                out.println("<script src='Sweet_JS/sweetalert2.js'></script>");
+                out.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
+                out.println("<script>");
+                out.println("$(document).ready(function(){");
+                out.println("swal ( 'incorrect password !' ,  ' ' ,  'error' );");
+                out.println("});");
+                out.println("</script>");
+                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                rd.include(request, response);
+            }
+        }
         processRequest(request, response);
     }
 
@@ -89,8 +125,8 @@ public class LoginServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-      public String getPassword(String username){
+    public String getPassword(String username) {
         IAccount = new GeneralDao();
-    return (IAccount.manageData(new Useraccount(),"username",username,new BigDecimal("0"),false,false) != null) ? "sukses" : "failed";
+        return (IAccount.manageData(new Useraccount(), "username", username, new BigDecimal("0"), false, false) != null) ? "sukses" : "failed";
     }
 }

@@ -12,7 +12,6 @@
 <% GeneralDao<Department> gdr = new GeneralDao<>();%>
 <% GeneralDao<Job> gj = new GeneralDao<>();%>
 <% GeneralDao<Employee> gE = new GeneralDao<>();%>
-<% DepartmentController dct = new DepartmentController();%>
 
 <!DOCTYPE html>
 <html>
@@ -20,54 +19,85 @@
         <jsp:include page="/mainMenu.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title> Employee Management </title>
-        <style>
-            table {
-                font-family: 'Varela Round', sans-serif;
-                border: 2px solid ;
-                width: 100%;
-            }
-            td, th {
-                border: 1px  #000000 ;
-                text-align: center;
-                padding: 7px;
-            }
-
-            tr:nth-child(even) {
-                background-color: #fdfff0;
-                border: 0.8px #000000;
-            }
-            .dropdown-menu {         
-                max-height: 200px;
-                overflow-y: auto;
-            }
-            input {
-                position: relative;
-                color: black;
-            }
-
-            input:before {
-                position: absolute;
-                content: attr(data-date);
-                color: black;
-            }
-
-            input::-webkit-datetime-edit, input::-webkit-inner-spin-button, input::-webkit-clear-button {
-                display: none;
-            }
-
-            input::-webkit-calendar-picker-indicator {
-                position: absolute;
-                top: 3px;
-                right: 0;
-                color: black;
-                opacity: 1;
-            }
-        </style>
+        
 
     </head>
     <body>
-        <div class="container">
-            <div class="containercol px-md-5">
+        <div class="container"  style="width: 100%">
+            <div class="container px-lg-5">
+                <div class="row mx-lg-n5">
+                    <div class="col py-3 px-lg-5 "></div>
+                    <div>
+                        <a href="#" data-toggle="tooltip" title="Insert Data">
+                            <button id="saving" class="btn btn-success saving " type="button" data-toggle="modal" data-target="#Insert"><i class="fa fa-save" ></i></button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <table id="tableEmployee" class="table table-hover display nowrap" style="width: 100%; text-align: center"  >
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Hire Date</th>
+                        <th>Job Title</th>
+                        <th>Salary</th>
+                        <th>Commission</th>
+                        <th>Manager</th>
+                        <th>Department</th>
+                        <th>Action</th>
+                    </tr> 
+                </thead>
+                <tbody>
+                    <%
+                        for (Employee c : gE.manageData(new Employee(), "lastName", "", "", false, true)) {
+                    %>   <tr>
+                        <td class="nr"><%= c.getEmployeeId()%></td>
+                        <td class="nr2"><%= c.getFirstName()%></td>
+                        <td class="nr3"><%= c.getLastName()%></td>
+                        <td class="nr4"><%= (c.getEmail() == null) ? "" : c.getEmail()%></td>
+                        <td class="nr5"><%= (c.getPhoneNumber() == null) ? "" : c.getPhoneNumber()%></td>
+                        <% SimpleDateFormat hire = new SimpleDateFormat("YYYY-MM-dd");%>
+                        <td class="nr6"><%= (c.getHireDate() == null) ? "" : hire.format(c.getHireDate())%></td>
+                        <td class="nr7"><%= (c.getJobId() == null) ? "" : c.getJobId().getJobId() + " " + c.getJobId().getJobTitle()%></td>
+                        <td class="nr8"><%= (c.getSalary() == null) ? "" : c.getSalary()%></td>
+                        <td class="nr9"><%= (c.getCommissionPct() == null) ? "" : c.getCommissionPct()%></td>
+                        <td class="nr10"><%= (c.getManagerId() == null) ? "" : c.getManagerId().getEmployeeId() + " " + c.getManagerId().getLastName()%></td>
+                        <td class="nr11"><%= (c.getDepartmentId() == null) ? "" : c.getDepartmentId().getDepartmentId() + " " + c.getDepartmentId().getDepartmentName()%></td>
+                        <td><a href="#" data-toggle="tooltip" title="Edit Data">
+                                <button id="updating" class="btn btn-primary confirm updating"type="button" data-toggle="modal" data-target="#Insert"><i class="fa fa-edit" ></i></button>
+                            </a>
+                            <a href="#" data-toggle="tooltip" title="Delete Data">
+                                <button class="btn btn-danger confirm"type="button" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash" ></i></button>
+                            </a>      
+                        </td>
+
+                    </tr>
+                    <% }
+                    %>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Hire Date</th>
+                        <th>Job Title</th>
+                        <th>Salary</th>
+                        <th>Commission</th>
+                        <th>Manager</th>
+                        <th>Department</th>
+                        <th>Action</th>
+                    </tr> 
+                </tfoot>
+            </table>
+            
                 <div class="container">
                     <div class="containercol px-md-5">
                         <!-- The Modal -->
@@ -226,7 +256,8 @@
                         </form>
                     </div>
                 </div>
-            </div>
+                                                    
+        
             <!--END MODAL 1-->
 
             <!-- The Modal -->
@@ -268,80 +299,7 @@
             </div>
 
             <!--END MODAL-->
-            <br>
-            <div class="container px-lg-5">
-                <div class="row mx-lg-n5">
-                    <div class="col py-3 px-lg-5 "></div>
-                    <div>
-                        <a href="#" data-toggle="tooltip" title="Insert Data">
-                            <button id="saving" class="btn btn-success saving " type="button" data-toggle="modal" data-target="#Insert"><i class="fa fa-save" ></i></button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <table id="tableEmployee" class="table display nowrap" style="width: 100%; text-align: center"  >
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>Hire Date</th>
-                        <th>Job Title</th>
-                        <th>Salary</th>
-                        <th>Commission</th>
-                        <th>Manager</th>
-                        <th>Department</th>
-                        <th>Action</th>
-                    </tr> 
-                </thead>
-                <tbody>
-                    <%
-                        for (Employee c : gE.manageData(new Employee(), "lastName", "", "", false, true)) {
-                    %>   <tr>
-                        <td class="nr"><%= c.getEmployeeId()%></td>
-                        <td class="nr2"><%= c.getFirstName()%></td>
-                        <td class="nr3"><%= c.getLastName()%></td>
-                        <td class="nr4"><%= (c.getEmail() == null) ? "" : c.getEmail()%></td>
-                        <td class="nr5"><%= (c.getPhoneNumber() == null) ? "" : c.getPhoneNumber()%></td>
-                        <% SimpleDateFormat hire = new SimpleDateFormat("YYYY-MM-dd");%>
-                        <td class="nr6"><%= (c.getHireDate() == null) ? "" : hire.format(c.getHireDate())%></td>
-                        <td class="nr7"><%= (c.getJobId() == null) ? "" : c.getJobId().getJobId() + " " + c.getJobId().getJobTitle()%></td>
-                        <td class="nr8"><%= (c.getSalary() == null) ? "" : c.getSalary()%></td>
-                        <td class="nr9"><%= (c.getCommissionPct() == null) ? "" : c.getCommissionPct()%></td>
-                        <td class="nr10"><%= (c.getManagerId() == null) ? "" : c.getManagerId().getEmployeeId() + " " + c.getManagerId().getLastName()%></td>
-                        <td class="nr11"><%= (c.getDepartmentId() == null) ? "" : c.getDepartmentId().getDepartmentId() + " " + c.getDepartmentId().getDepartmentName()%></td>
-                        <td><a href="#" data-toggle="tooltip" title="Edit Data">
-                                <button id="updating" class="btn btn-primary confirm updating"type="button" data-toggle="modal" data-target="#Insert"><i class="fa fa-edit" ></i></button>
-                            </a>
-                            <a href="#" data-toggle="tooltip" title="Delete Data">
-                                <button class="btn btn-danger confirm"type="button" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash" ></i></button>
-                            </a>      
-                        </td>
-
-                    </tr>
-                    <% }
-                    %>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Id</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>Hire Date</th>
-                        <th>Job Title</th>
-                        <th>Salary</th>
-                        <th>Commission</th>
-                        <th>Manager</th>
-                        <th>Department</th>
-                        <th>Action</th>
-                    </tr> 
-                </tfoot>
-            </table>
+            
 
         </div>
     </body>

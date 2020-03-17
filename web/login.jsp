@@ -107,17 +107,17 @@
 				<!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
 			</div>
 			<div class="modal-body">
-				<form action="/mainMenu.jsp" method="post">
+				<form action="${pageContext.servletContext.contextPath}/loginservlet" method="post">
 					<div class="form-group">
 						<i class="fa fa-user"></i>
-						<input type="text" class="form-control" placeholder="Username" required="required">
+						<input id="Username" name="Username" type="text" class="form-control" placeholder="Username" required="required">
 					</div>
 					<div class="form-group">
 						<i class="fa fa-lock"></i>
-						<input type="password" class="form-control" placeholder="Password" required="required">					
+						<input id="Password" name="Password" type="password" class="form-control" placeholder="Password" required="required">					
 					</div>
 					<div class="form-group">
-						<input type="submit" class="btn btn-primary btn-block btn-lb" value="Login">
+						<input  type="submit" class="btn btn-primary btn-block btn-lb" value="Login">
 					</div>
 				</form>				
 				
@@ -129,5 +129,6 @@
 	</div>
 </div>     
 </body>
-
+<script src='https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 </html>               

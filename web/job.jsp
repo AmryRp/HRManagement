@@ -19,30 +19,7 @@
         <jsp:include page="/mainMenu.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title> Job Management </title>
-        <style>
-            table {
-                font-family: 'Varela Round', sans-serif;
-                border: 2px solid ;
-                width: 100%;
-            }
-            td, th {
-                border: 1px  #000000 ;
-                text-align: center;
-                padding: 7px;
-            }
-
-            tr:nth-child(even) {
-                background-color: #fdfff0;
-                border: 0.8px #000000;
-            }
-            .dropdown-menu {         
-                max-height: 200px;
-                overflow-y: auto;
-            }
-
-        </style>
-
-    </head>
+           </head>
     <body>
         <div class="container">
             <div class="containercol px-md-5">
