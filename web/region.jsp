@@ -21,7 +21,7 @@
         <jsp:include page="/mainMenu.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title> Region Management </title>
-        
+
     </head>
     <body>
         <div class="container">
@@ -29,6 +29,7 @@
                 <div class="container">
                     <div class="containercol px-md-5">
                         <!-- The Modal -->
+
                         <form action="${pageContext.servletContext.contextPath}/regionservlet?save" method="POST" id="savedata" >
                             <div class="modal" id="Insert">
                                 <div class="modal-dialog">
@@ -45,7 +46,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="addon-wrapping">*</span>
                                                 </div>
-                                                <input id="txtId" type="txtId" name="txtId" placeholder=" Id" aria-label="countryId" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
+                                                <input class="txtId form-control" id="txtId" type="Name" name="txtId" placeholder=" Id" aria-label="txtId" aria-describedby="addon-wrapping"  style="width: 100%">
 
                                             </div>
                                             <br>
@@ -53,7 +54,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="addon-wrapping">*</span>
                                                 </div>
-                                                <input id="txtName" type="txtName" name="txtName" placeholder=" Name" aria-label="countryName" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
+                                                <input id="txtName" type="Name" name="txtName" placeholder=" Name" aria-label="countryName" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
 
                                             </div>
                                             <br>
@@ -73,6 +74,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -86,7 +88,7 @@
                         <form action="${pageContext.servletContext.contextPath}/regionservlet?delete" method="POST"  id="removeData" >
                             <!-- Modal Header -->
                             <div class="modal-header">
-                                <h4 class="modal-title">Are you sure want to delete ?</h4>
+                                <h4 class="modal-title">Viewing Data</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <!-- Modal body -->
@@ -94,6 +96,10 @@
                                 <div   >
                                     <div><h5 style="width: 100%" style="color: black" > Id Number : </h5> 
                                         <input class="isi hapusisi form-control" id="hapusisi" name="hapusisi" type="text" style="color: black" value="" style="border: none transparent;
+                                               outline: none;" readonly />
+                                        <br>
+                                        <h5 style="width: 100%" style="color: black" > Region Name : </h5> 
+                                         <input class="isi2 hapusisi2 form-control" id="hapusisi2" name="hapusisi2" type="text" style="color: black" value="" style="border: none transparent;
                                                outline: none;" readonly /> 
                                     </div>
                                 </div>
@@ -105,7 +111,7 @@
                                         <div class="col py-3 px-lg-5 "></div>
                                         <div>
 
-                                            <button onclick="deleteAlert(event)"  class="btn btn-danger deletebtn yesdelete" type="submit" value="Submit" >Yes</button>
+                                            <button onclick="deleteAlert(event)"  class="btn btn-danger deletebtn yesdelete" type="submit" value="Submit" >Delete</button>
 
                                         </div>
                                     </div>
@@ -147,7 +153,7 @@
                         <td class="nr" ><%= c.getRegionId()%></td>
                         <td class="nr2" ><%= c.getRegionName()%></td>
                         <td><a href="#" data-toggle="tooltip" title="Edit Data">
-                                <button class="btn btn-primary updating confirm "type="button" data-toggle="modal" data-target="#Insert"><i class="fa fa-edit" ></i></button>
+                                <button id="updating" class="btn btn-primary updating confirm "type="button" data-toggle="modal" data-target="#Insert"><i class="fa fa-edit" ></i></button>
                             </a>
                             <a href="#" data-toggle="tooltip" title="Delete Data">
                                 <button class="btn btn-danger confirm"type="button" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash" ></i></button>
@@ -169,48 +175,42 @@
             </table>
 
         </div>
-
+                    <form hidden="true" action="${pageContext.servletContext.contextPath}/regionservlet?update" method="post" id="updatedata"> <button hidden="true" class="btn btn-outline-danger " type="submit" ></button></form>
     </body>
 
     <script>
         $(document).ready(function () {
-        var table = $('#tableRegion').DataTable({
-         
+            var table = $('#tableRegion').DataTable({
+
+            });
         });
-    });
         $(".saving").click(function () {
-            $(".saveOrDelete").text("SAVE NEW DATA DEPARTMENT");
+            $(".saveOrDelete").text("SAVE NEW DATA REGION");
             var textBox = document.getElementById("txtId"); //field
             var textBox2 = document.getElementById("txtName");
-            var textBox3 = document.getElementById("txtManager");
-            var textBox4 = document.getElementById("txtLocation");
             textBox.value = "";
             textBox2.value = "";
-            textBox3.value = "";
-            textBox4.value = "";
             $("#txtId").prop("readonly", false);
         });
         $(".confirm").click(function () {
             var $row = $(this).closest("tr");    // Find the row
             var $text = $row.find(".nr").text(); // Find the text
             var $text2 = $row.find(".nr2").text(); //nr class
-            var $text3 = $row.find(".nr3").text();
             $(".isi").text($text); // title
             $(".isi2").text($text2);
             var textBox = document.getElementById("txtId"); //field
             var textBox2 = document.getElementById("txtName");
-            var textBox3 = document.getElementById("txtRegion");
             var tx = document.getElementById("hapusisi");
+            var tx2 = document.getElementById("hapusisi2");
             textBox.value = $text;
             tx.value = $text;
             textBox2.value = $text2;
-            textBox3.value = $text3;
+            tx2.value = $text2;
+            $("#txtId").prop("readonly", true);
+            $("#txtId").toggleClass('border-0');
+            $("#hapusisi").prop("readonly", true);
             $(".updating").click(function () {
-                $("#txtId").prop("readonly", true);
-                $("#txtId").toggleClass('border-0');
-
-                $("#hapusisi").prop("readonly", true);
-                $(".saveOrDelete").text("UPDATE DATA DEPARTMENT");
+                $(".saveOrDelete").text("UPDATE DATA REGION");
             });
         });
 
@@ -222,39 +222,38 @@
         function deleteAlert(event) {
             event.preventDefault();
             $("#removeData").submit(swal({
-                title: "data has been deleted",
-                text: "successful!",
-                type: "success",
-                confirmButtonColor: "#34E076",
-                confirmButtonText: "Ok.",
-                closeOnConfirm: false
+                title: "sure want to delete ?",
+                text: "",
+                type: "question",
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, keep it'
             }
             ).then(function (result) {
                 setTimeout(function () {
                     var formz = document.getElementById("removeData");
                     formz.submit();
                 }, 30);
-
             }));
         }
-        function insertAlert(event) {
-            event.preventDefault();
-            $("#savedata").submit(swal({
-                title: "data has been save",
-                text: "successful!",
-                type: "success",
-                confirmButtonColor: "#34E076",
-                confirmButtonText: "Ok.",
-                closeOnConfirm: false
-            }
-            ).then(function (result) {
-                setTimeout(function () {
-                    var formz = document.getElementById("savedata");
-                    formz.submit();
-                }, 30);
-
-            }));
-        }
+//        function insertAlert(event) {
+//            event.preventDefault();
+//            $("#savedata").submit(swal({
+//                title: "data has been save",
+//                text: "successful!",
+//                type: "success",
+//                confirmButtonColor: "#34E076",
+//                confirmButtonText: "Ok.",
+//                closeOnConfirm: false
+//            }
+//            ).then(function (result) {
+//                setTimeout(function () {
+//                    var formz = document.getElementById("savedata");
+//                    formz.submit();
+//                }, 30);
+//
+//            }));
+//        }
     </script>
 
 </html>

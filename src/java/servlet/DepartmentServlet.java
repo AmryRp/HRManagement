@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -62,7 +63,7 @@ public class DepartmentServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             /* TODO output your page here. You may use following sample code. */
-            response.sendRedirect(request.getContextPath() + "/department.jsp");
+           
         }
     }
 
@@ -139,13 +140,26 @@ public class DepartmentServlet extends HttpServlet {
         String[] txtLocation = request.getParameter("txtLocation").split(" ");
         System.out.println(txtId + " " + txtName + " " + Arrays.toString(txtManager) + " " + Arrays.toString(txtLocation));
 //save
+        PrintWriter out = response.getWriter();
         if (confirm(txtId)) {
             IDepartement.manageData(new Department(new Short(txtId), txtName, new Employee(new Integer(txtManager[0])),
                     new Location(new Short(txtLocation[0]))), "", "", new Short("0"), true, false);
+             response.sendRedirect(request.getContextPath() + "/department.jsp");
 //            }
         } else {
+            out.println("<script src='Sweet_JS/sweetalert2.js'></script>");
+            out.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
+            out.println("<script>");
+            out.println("$(document).ready(function () {");
+            out.println("swal ( 'Data has been saved' ,  ' ' ,  'success' ).then(function() {\n"
+                    + "    window.location = 'department.jsp';\n"
+                    + "});");
+            out.println("});");
+            out.println("</script>");
             IDepartement.manageData(new Department(new Short(txtId), txtName, new Employee(new Integer(txtManager[0])),
                     new Location(new Short(txtLocation[0]))), "", "", new Short("0"), true, false);
+            RequestDispatcher rd = request.getRequestDispatcher("department.jsp");
+            rd.include(request, response);
         }
     }
 

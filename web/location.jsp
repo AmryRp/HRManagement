@@ -21,8 +21,6 @@
         <jsp:include page="/mainMenu.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title> Location Management </title>
-        
-
     </head>
     <body>
         <div class="container">
@@ -46,7 +44,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="addon-wrapping">*</span>
                                                 </div>
-                                                <input id="txtId" type="Name" name="txtId" placeholder=" Id" aria-label=locationId" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
+                                                <input  maxlength="4" id="txtId" type="Name" name="txtId" placeholder=" Id" aria-label=locationId" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
 
                                             </div>
                                             <br>
@@ -54,7 +52,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="addon-wrapping">*</span>
                                                 </div>
-                                                <input id="street" type="Name" name="street" placeholder=" Street" aria-label="street" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
+                                                <input  maxlength="40" id="street" type="Name" name="street" placeholder=" Street" aria-label="street" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
 
                                             </div>
                                             <br>
@@ -62,7 +60,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="addon-wrapping">*</span>
                                                 </div>
-                                                <input id="zipCode" type="Number" name="zipCode" placeholder=" Zip Code" aria-label="zipCode" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
+                                                <input  maxlength="12" id="zipCode" type="Number" name="zipCode" placeholder=" Zip Code" aria-label="zipCode" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
 
                                             </div>
                                             <br>
@@ -70,7 +68,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="addon-wrapping">*</span>
                                                 </div>
-                                                <input id="city" type="Name" name="city" placeholder=" City" aria-label=city" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
+                                                <input  maxlength="30" id="city" type="Name" name="city" placeholder=" City" aria-label=city" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
 
                                             </div>
                                             <br>
@@ -78,7 +76,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="addon-wrapping">*</span>
                                                 </div>
-                                                <input id="province" type="Name" name="province" placeholder=" Province" aria-label="province" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
+                                                <input  maxlength="25" id="province" type="Name" name="province" placeholder=" Province" aria-label="province" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
 
                                             </div>
                                             <br>
@@ -94,7 +92,7 @@
                                                     <ul  class="dropdown-menu dr1" aria-labelledby="dropdownMenuButton">
                                                         <%
                                                             for (Country E : gc.manageData(new Country(), "countryName", "", "", false, true)) {
-                                                        %> <li><a class='dropdown-item' href='#'><%= E.getRegionId()%> <%= E.getCountryName()%></a></li>
+                                                        %> <li><a class='dropdown-item' href='#'><%= E.getCountryId()%> <%= E.getCountryName()%></a></li>
                                                             <% }
                                                             %>
                                                     </ul>
@@ -139,6 +137,9 @@
                                 <div   >
                                     <div><h5 style="width: 100%" style="color: black" > Id Number : </h5> 
                                         <input class="isi hapusisi form-control" id="hapusisi" name="hapusisi" type="text" style="color: black" value="" style="border: none transparent;
+                                               outline: none;" readonly /> 
+                                        <h5 style="width: 100%" style="color: black" > City : </h5> 
+                                         <input class="isi hapusisi2 form-control" id="hapusisi2" name="hapusisi2" type="text" style="color: black" value="" style="border: none transparent;
                                                outline: none;" readonly /> 
                                     </div>
                                 </div>
@@ -194,11 +195,11 @@
                         for (Location c : gl.manageData(new Location(), "city", "", "", false, true)) {
                     %>   <tr>
                         <td class="nr"><%= c.getLocationId()%></td>
-                        <td class="nr"><%= c.getStreetAddress()%></td>
-                        <td class="nr"><%= c.getPostalCode()%></td>
-                        <td class="nr"><%= c.getCity()%></td>
-                        <td class="nr2"><%= c.getStateProvince()%></td>
-                        <td class="nr3"><%= (c.getCountryId()== null) ? "" : c.getCountryId().getCountryId()+ " " + c.getCountryId().getCountryName()%></td>
+                        <td class="nr1"><%= c.getStreetAddress()%></td>
+                        <td class="nr2"><%= c.getPostalCode()%></td>
+                        <td class="nr3"><%= c.getCity()%></td>
+                        <td class="nr4"><%= c.getStateProvince()%></td>
+                        <td class="nr5"><%= (c.getCountryId() == null) ? "" : c.getCountryId().getCountryId() + " " + c.getCountryId().getCountryName()%></td>
                         <td><a href="#" data-toggle="tooltip" title="Edit Data">
                                 <button class="btn btn-primary updating confirm "type="button" data-toggle="modal" data-target="#Insert"><i class="fa fa-edit" ></i></button>
                             </a>
@@ -224,27 +225,27 @@
                     </tr> 
                 </tfoot>
             </table>
-
         </div>
-
     </body>
-
     <script>
         $(document).ready(function () {
-        var table = $('#tableLocation').DataTable({
-         
+            var table = $('#tableLocation').DataTable({
+            });
         });
-    });
         $(".saving").click(function () {
             $(".saveOrDelete").text("SAVE NEW DATA DEPARTMENT");
             var textBox = document.getElementById("txtId"); //field
-            var textBox2 = document.getElementById("txtName");
-            var textBox3 = document.getElementById("txtManager");
-            var textBox4 = document.getElementById("txtLocation");
+            var textBox2 = document.getElementById("street");
+            var textBox3 = document.getElementById("zipCode");
+            var textBox4 = document.getElementById("city");
+            var textBox5 = document.getElementById("province");
+            var textBox6 = document.getElementById("txtRegion");
             textBox.value = "";
             textBox2.value = "";
             textBox3.value = "";
             textBox4.value = "";
+            textBox5.value = "";
+            textBox6.value = "";
             $("#txtId").prop("readonly", false);
         });
         $(".confirm").click(function () {
@@ -252,21 +253,31 @@
             var $text = $row.find(".nr").text(); // Find the text
             var $text2 = $row.find(".nr2").text(); //nr class
             var $text3 = $row.find(".nr3").text();
+            var $text4 = $row.find(".nr4").text();
+            var $text5 = $row.find(".nr5").text();
             $(".isi").text($text); // title
             $(".isi2").text($text2);
             var textBox = document.getElementById("txtId"); //field
-            var textBox2 = document.getElementById("txtName");
-            var textBox3 = document.getElementById("txtRegion");
+            var textBox2 = document.getElementById("street");
+            var textBox3 = document.getElementById("zipCode");
+            var textBox4 = document.getElementById("city");
+            var textBox5 = document.getElementById("province");
+            var textBox6 = document.getElementById("txtRegion");
             var tx = document.getElementById("hapusisi");
+            var tx2 = document.getElementById("hapusisi2");
             textBox.value = $text;
             tx.value = $text;
+            tx2.value = $text3;
             textBox2.value = $text2;
             textBox3.value = $text3;
+            textBox4.value = $text4;
+            textBox5.value = $text5;
+            textBox6.value = $text6;
             $(".updating").click(function () {
                 $("#txtId").prop("readonly", true);
                 $("#txtId").toggleClass('border-0');
-
                 $("#hapusisi").prop("readonly", true);
+                $("#hapusisi2").prop("readonly", true);
                 $(".saveOrDelete").text("UPDATE DATA DEPARTMENT");
             });
         });
@@ -279,39 +290,38 @@
         function deleteAlert(event) {
             event.preventDefault();
             $("#removeData").submit(swal({
-                title: "data has been deleted",
+                title: "sure want to delete ?",
                 text: "successful!",
                 type: "success",
-                confirmButtonColor: "#34E076",
-                confirmButtonText: "Ok.",
-                closeOnConfirm: false
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, keep it'
             }
             ).then(function (result) {
                 setTimeout(function () {
                     var formz = document.getElementById("removeData");
                     formz.submit();
                 }, 30);
-
             }));
         }
-        function insertAlert(event) {
-            event.preventDefault();
-            $("#savedata").submit(swal({
-                title: "data has been save",
-                text: "successful!",
-                type: "success",
-                confirmButtonColor: "#34E076",
-                confirmButtonText: "Ok.",
-                closeOnConfirm: false
-            }
-            ).then(function (result) {
-                setTimeout(function () {
-                    var formz = document.getElementById("savedata");
-                    formz.submit();
-                }, 30);
-
-            }));
-        }
+//        function insertAlert(event) {
+//            event.preventDefault();
+//            $("#savedata").submit(swal({
+//                title: "data has been save",
+//                text: "successful!",
+//                type: "success",
+//                confirmButtonColor: "#34E076",
+//                confirmButtonText: "Ok.",
+//                closeOnConfirm: false
+//            }
+//            ).then(function (result) {
+//                setTimeout(function () {
+//                    var formz = document.getElementById("savedata");
+//                    formz.submit();
+//                }, 30);
+//
+//            }));
+//        }
     </script>
 
 </html>

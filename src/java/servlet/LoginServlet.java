@@ -16,7 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.JOptionPane;
+import javax.servlet.http.HttpSession;
 import model.Useraccount;
 import tool.BCrypt;
 
@@ -80,37 +80,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("Username");
-        String password = request.getParameter("Password");
-        PrintWriter out = response.getWriter();
-        if (getPassword(username).equals("failed")) {
-            out.println("<script src='Sweet_JS/sweetalert2.js'></script>");
-            out.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
-            out.println("<script>");
-            out.println("$(document).ready(function () {");
-            out.println("swal ( 'incorrect id !' ,  ' ' ,  'error' ).then(function() {\n"
-                    + "    window.location = 'login.jsp';\n"
-                    + "});");
-            out.println("$  });");
-            out.println("</script>");
-            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-            rd.include(request, response);
-        } else {
-            ListAccount = IAccount.manageData(new Useraccount(), "username", username, new BigDecimal("0"), false, false);
-            if ((BCrypt.checkpw(password, ListAccount.get(0).getPassword()))
-                    && (username.equals(ListAccount.get(0).getUsername()))) {
-                response.sendRedirect(request.getContextPath() + "/mainMenu.jsp");
-            } else {
-                out.println("<script src='Sweet_JS/sweetalert2.js'></script>");
-                out.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
-                out.println("<script>");
-                out.println("$(document).ready(function(){");
-                out.println("swal ( 'incorrect password !' ,  ' ' ,  'error' );");
-                out.println("});");
-                out.println("</script>");
-                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-                rd.include(request, response);
-            }
+        switch (request.getQueryString()) {
+            case "in":
+                login(request, response);
+                break;
+            case "out":
+                logout(request, response);
+                break;
         }
         processRequest(request, response);
     }
@@ -128,5 +104,63 @@ public class LoginServlet extends HttpServlet {
     public String getPassword(String username) {
         IAccount = new GeneralDao();
         return (IAccount.manageData(new Useraccount(), "username", username, new BigDecimal("0"), false, false) != null) ? "sukses" : "failed";
+    }
+
+    public void logout(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        out.println("<script src='Sweet_JS/sweetalert2.js'></script>");
+        out.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
+        out.println("<script>");
+        out.println("$(document).ready(function () {");
+        out.println("swal ( 'You are successfully logged out!' ,  'successful!' ,  'success' ).then(function() {\n"
+                + "    window.location = 'login.jsp';\n"
+                + "});});");
+        out.println("</script>");
+        request.getRequestDispatcher("login.jsp").include(request, response);
+
+        HttpSession session = request.getSession();
+        session.invalidate();
+
+        out.close();
+    }
+
+    public void login(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String username = request.getParameter("Username");
+        String password = request.getParameter("Password");
+        PrintWriter out = response.getWriter();
+        if (getPassword(username).equals("failed")) {
+            out.println("<script src='Sweet_JS/sweetalert2.js'></script>");
+            out.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
+            out.println("<script>");
+            out.println("$(document).ready(function () {");
+            out.println("swal ( 'incorrect username !' ,  ' ' ,  'error' ).then(function() {\n"
+                    + "    window.location = 'login.jsp';\n"
+                    + "});});");
+            out.println("</script>");
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            rd.include(request, response);
+        } else {
+            ListAccount = IAccount.manageData(new Useraccount(), "username", username, new BigDecimal("0"), false, false);
+            if ((BCrypt.checkpw(password, ListAccount.get(0).getPassword()))
+                    && (username.equals(ListAccount.get(0).getUsername()))) {
+                HttpSession session = request.getSession();
+                session.setAttribute("userLogon", username);
+                response.sendRedirect(request.getContextPath() + "/mainMenu.jsp");
+            } else {
+                out.println("<script src='Sweet_JS/sweetalert2.js'></script>");
+                out.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
+                out.println("<script>");
+                out.println("$(document).ready(function(){");
+                out.println("swal ( 'incorrect password !' ,  ' ' ,  'error' ).then(function() {\n"
+                        + "    window.location = 'login.jsp';\n"
+                        + "});");
+                out.println("});");
+                out.println("</script>");
+                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                rd.include(request, response);
+            }
+        }
     }
 }

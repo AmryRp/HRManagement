@@ -21,7 +21,7 @@
         <jsp:include page="/mainMenu.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title> Department Management </title>
-        
+
 
     </head>
     <body>
@@ -31,7 +31,6 @@
                     <div class="containercol px-md-5">
                         <!-- The Modal -->
                         <form action="${pageContext.servletContext.contextPath}/departmentservlet?save" method="POST" id="savedata" name="savedata">
-
                             <div class="modal" id="Insert">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -224,92 +223,93 @@
 
     <script>
         $(document).ready(function () {
-        var table = $('#tableDepartment').DataTable({
+            var table = $('#tableDepartment').DataTable({
 
-        });
+            });
         });
         $(".saving").click(function () {
-        $(".saveOrDelete").text("SAVE NEW DATA DEPARTMENT");
-        var textBox = document.getElementById("txtId"); //field
-        var textBox2 = document.getElementById("txtName");
-        var textBox3 = document.getElementById("txtManager");
-        var textBox4 = document.getElementById("txtLocation");
-        textBox.value = "";
-        textBox2.value = "";
-        textBox3.value = "";
-        textBox4.value = "";
-        $("#txtId").prop("readonly", false);
+            $(".saveOrDelete").text("SAVE NEW DATA DEPARTMENT");
+            var textBox = document.getElementById("txtId"); //field
+            var textBox2 = document.getElementById("txtName");
+            var textBox3 = document.getElementById("txtManager");
+            var textBox4 = document.getElementById("txtLocation");
+            textBox.value = "";
+            textBox2.value = "";
+            textBox3.value = "";
+            textBox4.value = "";
+            $("#txtId").prop("readonly", false);
         });
         $(".confirm").click(function () {
-        var $row = $(this).closest("tr"); // Find the row
-        var $text = $row.find(".nr").text(); // Find the text
-        var $text2 = $row.find(".nr2").text(); //nr class
-        var $text3 = $row.find(".nr3").text();
-        var $text4 = $row.find(".nr4").text();
-        $(".isi").text($text); // title
-        $(".isi2").text($text2);
-        var textBox = document.getElementById("txtId"); //field
-        var textBox2 = document.getElementById("txtName");
-        var textBox3 = document.getElementById("txtManager");
-        var textBox4 = document.getElementById("txtLocation");
-        var tx = document.getElementById("hapusisi");
-        textBox.value = $text;
-        tx.value = $text;
-        textBox2.value = $text2;
-        textBox3.value = $text3;
-        textBox4.value = $text4;
-        $("#txtId").prop("readonly", true);
-        $("#txtId").toggleClass('border-0');
-        $("#hapusisi").prop("readonly", true);
-        $(".updating").click(function () {
-        $(".saveOrDelete").text("UPDATE DATA DEPARTMENT");
-        });
+            var $row = $(this).closest("tr"); // Find the row
+            var $text = $row.find(".nr").text(); // Find the text
+            var $text2 = $row.find(".nr2").text(); //nr class
+            var $text3 = $row.find(".nr3").text();
+            var $text4 = $row.find(".nr4").text();
+            $(".isi").text($text); // title
+            $(".isi2").text($text2);
+            var textBox = document.getElementById("txtId"); //field
+            var textBox2 = document.getElementById("txtName");
+            var textBox3 = document.getElementById("txtManager");
+            var textBox4 = document.getElementById("txtLocation");
+            var tx = document.getElementById("hapusisi");
+            textBox.value = $text;
+            tx.value = $text;
+            textBox2.value = $text2;
+            textBox3.value = $text3;
+            textBox4.value = $text4;
+            $("#txtId").prop("readonly", true);
+            $("#txtId").toggleClass('border-0');
+            $("#hapusisi").prop("readonly", true);
+            $(".updating").click(function () {
+                $(".saveOrDelete").text("UPDATE DATA DEPARTMENT");
+            });
         });
         $(document).on('click', '.dr1 li a', function () {
-        $('#editManager').val($(this).text());
-        $('#txtManager').val($(this).text());
+            $('#editManager').val($(this).text());
+            $('#txtManager').val($(this).text());
         });
         $(document).on('click', '.dr2 li a', function () {
-        $('#editLocation').val($(this).text());
-        $('#txtLocation').val($(this).text());
+            $('#editLocation').val($(this).text());
+            $('#txtLocation').val($(this).text());
         });
         function deleteAlert(event) {
-        event.preventDefault();
-        $("#removeData").submit(swal({
-        title: "data has been deleted",
+            event.preventDefault();
+            $("#removeData").submit(swal({
+                title: "sure want to delete ?",
                 text: "successful!",
                 type: "success",
+                showCancelButton: true,
                 confirmButtonColor: "#34E076",
-                confirmButtonText: "Ok.",
-                closeOnConfirm: false
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, keep it'
+            }
+            ).then(function (result) {
+                setTimeout(function () {
+                    var formz = document.getElementById("removeData");
+                    formz.submit();
+                }, 30);
+            }));
         }
-        ).then(function (result) {
-        setTimeout(function () {
-        var formz = document.getElementById("removeData");
-        formz.submit();
-        }, 30);
-        }));
-        }
-        function insertAlert(event) {
-        event.preventDefault();
-        
-            $("#savedata").submit(swal({
-        title: "data has been save",
-                text: "successful!",
-                type: "success",
-                confirmButtonColor: "#34E076",
-                confirmButtonText: "Ok.",
-                closeOnConfirm: false
-        }
-        ).then(function (result) {
-        setTimeout(function () {
-        var formz = document.getElementById("savedata");
-        formz.submit();
-        }, 30);
-        }));
-        }
-        
-        
+//        function insertAlert(event) {
+//        event.preventDefault();
+//        
+//            $("#savedata").submit(swal({
+//        title: "data has been save",
+//                text: "successful!",
+//                type: "success",
+//                confirmButtonColor: "#34E076",
+//                confirmButtonText: "Ok.",
+//                closeOnConfirm: false
+//        }
+//        ).then(function (result) {
+//        setTimeout(function () {
+//        var formz = document.getElementById("savedata");
+//        formz.submit();
+//        }, 30);
+//        }));
+//        }
+//        
+//        
     </script>
 
 </html>

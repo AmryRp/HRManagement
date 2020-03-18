@@ -28,8 +28,8 @@ FROM
 				<text><![CDATA[COUNTRY REPORT]]></text>
 			</staticText>
 			<image>
-				<reportElement x="434" y="0" width="121" height="79" uuid="98a0fb0d-ffef-4069-9a54-3af7b62169aa"/>
-				<imageExpression><![CDATA["C:\\Users\\amry4\\OneDrive\\Pictures\\metrodata-1.jpg"]]></imageExpression>
+				<reportElement x="432" y="-2" width="123" height="81" uuid="f9fae49b-148d-453f-8bc1-10f9dc232452"/>
+				<imageExpression><![CDATA["C:\\Users\\amry4\\OneDrive\\Pictures\\TUgas\\metrodata-1.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>

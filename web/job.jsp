@@ -19,7 +19,7 @@
         <jsp:include page="/mainMenu.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title> Job Management </title>
-           </head>
+    </head>
     <body>
         <div class="container">
             <div class="containercol px-md-5">
@@ -221,39 +221,38 @@
         function deleteAlert(event) {
             event.preventDefault();
             $("#removeData").submit(swal({
-                title: "data has been deleted",
+                title: "sure want to delete ?",
                 text: "successful!",
                 type: "success",
-                confirmButtonColor: "#34E076",
-                confirmButtonText: "Ok.",
-                closeOnConfirm: false
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, keep it'
             }
             ).then(function (result) {
                 setTimeout(function () {
                     var formz = document.getElementById("removeData");
                     formz.submit();
                 }, 30);
-
             }));
         }
-        function insertAlert(event) {
-            event.preventDefault();
-            $("#savedata").submit(swal({
-                title: "data has been save",
-                text: "successful!",
-                type: "success",
-                confirmButtonColor: "#34E076",
-                confirmButtonText: "Ok.",
-                closeOnConfirm: false
-            }
-            ).then(function (result) {
-                setTimeout(function () {
-                    var formz = document.getElementById("savedata");
-                    formz.submit();
-                }, 30);
-
-            }));
-        }
+//        function insertAlert(event) {
+//            event.preventDefault();
+//            $("#savedata").submit(swal({
+//                title: "data has been save",
+//                text: "successful!",
+//                type: "success",
+//                confirmButtonColor: "#34E076",
+//                confirmButtonText: "Ok.",
+//                closeOnConfirm: false
+//            }
+//            ).then(function (result) {
+//                setTimeout(function () {
+//                    var formz = document.getElementById("savedata");
+//                    formz.submit();
+//                }, 30);
+//
+//            }));
+//        }
     </script>
 
 </html>

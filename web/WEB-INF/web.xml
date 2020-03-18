@@ -28,6 +28,10 @@
         <servlet-name>LocationServlet</servlet-name>
         <servlet-class>servlet.LocationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReportServlet</servlet-name>
+        <servlet-class>servlet.ReportServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EmployeeServlet</servlet-name>
         <url-pattern>/employeeservlet</url-pattern>
@@ -56,6 +60,10 @@
         <servlet-name>LocationServlet</servlet-name>
         <url-pattern>/locationservlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportServlet</servlet-name>
+        <url-pattern>/reportservlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -64,4 +72,5 @@
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
+    <absolute-ordering/>
 </web-app>

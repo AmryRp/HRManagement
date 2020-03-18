@@ -18,8 +18,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,7 +68,7 @@ public class EmployeeServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             /* TODO output your page here. You may use following sample code. */
-            response.sendRedirect(request.getContextPath() + "/employee.jsp");
+//            response.sendRedirect(request.getContextPath() + "/employee.jsp");
         }
     }
 
@@ -106,6 +106,9 @@ public class EmployeeServlet extends HttpServlet {
                 break;
             case "delete":
                 delete(request, response);
+                break;
+            case "update":
+                update(request, response);
                 break;
         }
         processRequest(request, response);
@@ -145,6 +148,31 @@ public class EmployeeServlet extends HttpServlet {
         return sqlDate;
     }
 
+    public void update(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String employeeId = request.getParameter("employeeId");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
+        String hireDate = request.getParameter("hireDate");
+        String[] job = request.getParameter("job").split(" ");
+        String salary = request.getParameter("salary");
+        String commission = request.getParameter("commission");
+        String[] managerId = request.getParameter("manager").split(" ");
+        String[] departmentId = request.getParameter("department").split(" ");
+        try {
+            IEmployee.manageData(new Employee(new Integer(employeeId), firstName, lastName, email,
+                    phoneNumber, toDate(hireDate), (new Job(job[0])), new BigDecimal(salary),
+                    new BigDecimal(commission), (new Employee(new Integer(managerId[0]))),
+                    (new Department(new Short(departmentId[0])))), "", "", 0, true, false);
+
+        } catch (ParseException ex) {
+            Logger.getLogger(EmployeeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        response.sendRedirect(request.getContextPath() + "/employee.jsp");
+    }
+
     public void save(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         IEmployee = new GeneralDao();
@@ -162,23 +190,52 @@ public class EmployeeServlet extends HttpServlet {
         String[] managerId = request.getParameter("manager").split(" ");
         String[] departmentId = request.getParameter("department").split(" ");
         try {
-            System.out.println(employeeId + " " + firstName + " " + toDate(hireDate)+" "+lastName + " " + email + " " + phoneNumber + " " + hireDate + " "
+            System.out.println(employeeId + " " + firstName + " " + toDate(hireDate) + " " + lastName + " " + email + " " + phoneNumber + " " + hireDate + " "
                     + Arrays.toString(job) + " " + salary + " " + commission + " " + Arrays.toString(managerId) + " " + Arrays.toString(departmentId));
         } catch (ParseException ex) {
             Logger.getLogger(EmployeeServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-//save
+//save  
+        PrintWriter out = response.getWriter();
         if (confirm(employeeId)) {
-            try {
-                IEmployee.manageData(new Employee(new Integer(employeeId), firstName, lastName, email,
-                        phoneNumber, toDate(hireDate), (new Job(job[0])), new BigDecimal(salary),
-                        new BigDecimal(commission), (new Employee(new Integer(managerId[0]))),
-                        (new Department(new Short(departmentId[0])))), "", "", 0, true, false);
+//            out.println(" <script src='Sweet_JS/sweetalert2.all.min.js'></script>");
+//            out.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
+//            out.println("<script>");
+//            out.println("$(document).ready(function () {");
+//            out.println("swal({\n"
+//                    + "        title: \"Warning\",\n"
+//                    + "        text: \"this Region data Exist want to Update ?\",\n"
+//                    + "        type: \"warning\",\n"
+//                    + "        showCancelButton: true,\n"
+//                    + "        confirmButtonColor: '#DD6B55',\n"
+//                    + "        confirmButtonText: 'Yes, I am sure!',\n"
+//                    + "        cancelButtonText: \"No, cancel it!\",\n"
+//                    + "    }).then(function() {\n"
+//                    + "      $(this).trigger('submit');\n"
+//                    + "        swal({\n"
+//                    + "            title: 'Success!', \n"
+//                    + "            text: 'Data Updated', \n"
+//                    + "            type: 'success'\n"
+//                    + "        }, function() {\n"
+//                    + "            $(this).trigger('submit');");
+//            out.println("        }).then(function() { var formz = document.getElementById(\"savedata\");\n"
+//                    + "                    formz.submit();\n");
+//
+//            out.println("window.location = 'employee.jsp';\n"
+//                    + "});\n"
+//                    + "    },function(dismiss) {\n"
+//                    + "        if(dismiss == 'cancel') {\n"
+//                    + "            swal(\"Cancelled\", \"Invoice not created!\", \"error\").then(function() {\n"
+//                    + "    window.location = 'employee.jsp';\n"
+//                    + "});\n"
+//                    + "        }\n"
+//                    + "    });"
+//                    + "});");
+//            out.println("</script>");
 
-            } catch (ParseException ex) {
-                Logger.getLogger(EmployeeServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+            update(request, response);
+            RequestDispatcher rd = request.getRequestDispatcher("employee.jsp");
+            rd.include(request, response);
         } else {
             try {
                 IEmployee.manageData(new Employee(new Integer(employeeId), firstName, lastName, email,

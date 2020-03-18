@@ -25,7 +25,7 @@ FROM
 				<text><![CDATA[REGION REPORT]]></text>
 			</staticText>
 			<image>
-				<reportElement x="432" y="0" width="123" height="81" uuid="99b5a53d-ecbb-41bc-b365-ca8d9cc18300"/>
+				<reportElement x="432" y="-2" width="123" height="81" uuid="99b5a53d-ecbb-41bc-b365-ca8d9cc18300"/>
 				<imageExpression><![CDATA["C:\\Users\\amry4\\OneDrive\\Pictures\\TUgas\\metrodata-1.jpg"]]></imageExpression>
 			</image>
 		</band>

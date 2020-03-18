@@ -21,7 +21,7 @@
         <jsp:include page="/mainMenu.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title> Country Management </title>
-        
+
 
     </head>
     <body>
@@ -41,51 +41,52 @@
                                         </div>
                                         <!-- Modal body -->
                                         <div class="p-3 border bg-dark">
-
-                                            <div class="input-group flex-nowrap">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="addon-wrapping">*</span>
-                                                </div>
-                                                <input id="txtId" type="txtId" name="txtId" placeholder=" Id" aria-label="countryId" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
-
-                                            </div>
-                                            <br>
-                                            <div class="input-group flex-nowrap">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="addon-wrapping">*</span>
-                                                </div>
-                                                <input id="txtName" type="txtName" name="txtName" placeholder=" Name" aria-label="countryName" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
-
-                                            </div>
-                                            <br>
-                                            <div class="dropdown">
-                                                <div class="input-group flex-nowrap" >
+                                            <div class='field'>
+                                                <div class="input-group flex-nowrap">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="addon-wrapping">*</span>
                                                     </div>
-                                                    <input id="txtRegion" name="txtRegion" value="" type="txtRegion" placeholder=" Region" aria-label="Region" aria-describedby="addon-wrapping" readonly >
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
-                                                        Region
-                                                    </button>
-                                                    <ul  class="dropdown-menu dr1" aria-labelledby="dropdownMenuButton">
-                                                        <%
-                                                            for (Region E : gr.manageData(new Region(), "regionName", "", "", false, true)) {
-                                                        %> <li><a class='dropdown-item' href='#'><%= E.getRegionId()%> <%= E.getRegionName()%></a></li>
-                                                            <% }
-                                                            %>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <br>
+                                                    <input required="required" id="txtId" type="txtId" name="txtId" placeholder=" Id" aria-label="countryId" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
 
+                                                </div>
+                                                <br>
+                                                <div class="input-group flex-nowrap">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="addon-wrapping">*</span>
+                                                    </div>
+                                                    <input id="txtName" type="txtName" name="txtName" placeholder=" Name" aria-label="countryName" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
+
+                                                </div>
+                                                <br>
+                                                <div class="dropdown">
+                                                    <div class="input-group flex-nowrap" >
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="addon-wrapping">*</span>
+                                                        </div>
+                                                        <input id="txtRegion" name="txtRegion" value="" type="txtRegion" placeholder=" Region" aria-label="Region" aria-describedby="addon-wrapping" readonly >
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                                                            Region
+                                                        </button>
+                                                        <ul  class="dropdown-menu dr1" aria-labelledby="dropdownMenuButton">
+                                                            <%
+                                                                for (Region E : gr.manageData(new Region(), "regionName", "", "", false, true)) {
+                                                            %> <li><a class='dropdown-item' href='#'><%= E.getRegionId()%> <%= E.getRegionName()%></a></li>
+                                                                <% }
+                                                                %>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            </div>
                                             <!-- Modal footer -->
                                             <div class="modal-footer">
                                                 <div class="container px-lg-5">
                                                     <div class="row mx-lg-n5">
                                                         <div class="col py-3 px-lg-5 "></div>
-                                                        <div>
-                                                            <button onclick="insertAlert(event)" class="btn btn-success" type="submit" value="Submit">Save</button>
-                                                        </div>
+                                                        <div class='actions'>
+                                                            <input onclick="insertAlert(event)" class="btn btn-success" type="submit" value="Save" disabled="disabled">
+
+                                                        </div>   
                                                     </div>
                                                 </div>
                                             </div>
@@ -197,11 +198,12 @@
     </body>
 
     <script>
+       
         $(document).ready(function () {
-        var table = $('#tableCountry').DataTable({
-         
+            var table = $('#tableCountry').DataTable({
+
+            });
         });
-    });
         $(".saving").click(function () {
             $(".saveOrDelete").text("SAVE NEW DATA DEPARTMENT");
             var textBox = document.getElementById("txtId"); //field
@@ -242,43 +244,43 @@
             $('#editManager').val($(this).text());
             $('#txtRegion').val($(this).text());
         });
-
         function deleteAlert(event) {
             event.preventDefault();
             $("#removeData").submit(swal({
-                title: "data has been deleted",
-                text: "successful!",
-                type: "success",
+                title: "sure want to delete ?",
+                text: "",
+                type: "question",
+                showCancelButton: true,
                 confirmButtonColor: "#34E076",
-                confirmButtonText: "Ok.",
-                closeOnConfirm: false
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, keep it'
             }
             ).then(function (result) {
                 setTimeout(function () {
                     var formz = document.getElementById("removeData");
                     formz.submit();
                 }, 30);
-
             }));
         }
-        function insertAlert(event) {
-            event.preventDefault();
-            $("#savedata").submit(swal({
-                title: "data has been save",
-                text: "successful!",
-                type: "success",
-                confirmButtonColor: "#34E076",
-                confirmButtonText: "Ok.",
-                closeOnConfirm: false
-            }
-            ).then(function (result) {
-                setTimeout(function () {
-                    var formz = document.getElementById("savedata");
-                    formz.submit();
-                }, 30);
 
-            }));
-        }
+//        function insertAlert(event) {
+//            event.preventDefault();
+//            $("#savedata").submit(swal({
+//                title: "data has been save",
+//                text: "successful!",
+//                type: "success",
+//                confirmButtonColor: "#34E076",
+//                confirmButtonText: "Ok.",
+//                closeOnConfirm: false
+//            }
+//            ).then(function (result) {
+//                setTimeout(function () {
+//                    var formz = document.getElementById("savedata");
+//                    formz.submit();
+//                }, 30);
+//
+//            }));
+//        }
     </script>
 
 </html>

@@ -19,10 +19,12 @@
         <jsp:include page="/mainMenu.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title> Employee Management </title>
-        
+
 
     </head>
     <body>
+        <br>
+        <br>
         <div class="container"  style="width: 100%">
             <div class="container px-lg-5">
                 <div class="row mx-lg-n5">
@@ -97,155 +99,155 @@
                     </tr> 
                 </tfoot>
             </table>
-            
-                <div class="container">
-                    <div class="containercol px-md-5">
-                        <!-- The Modal -->
-                        <form action="${pageContext.servletContext.contextPath}/employeeservlet?save" method="POST" id="savedata" >
-                            <div class="modal" id="Insert">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                            <h4 class="modal-title modalTitle saveOrDelete" id="saveOrDelete">Insert Data</h4>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            <div class="container">
+                <div class="containercol px-md-5">
+                    <!-- The Modal -->
+                    <form action="${pageContext.servletContext.contextPath}/employeeservlet?save" method="POST" id="savedata" >
+                        <!--<form action="${pageContext.servletContext.contextPath}/employeeservlet?update" method="POST" id="updatedata" >-->
+                        <div class="modal" id="Insert">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title modalTitle saveOrDelete" id="saveOrDelete">Insert Data</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <!-- Modal body -->
+                                    <div class="p-3 border bg-dark">
+                                        <div class="input-group flex-nowrap">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="addon-wrapping">*</span>
+                                            </div>
+                                            <input id="employeeId" class="employeeId" type="Name" name="employeeId" placeholder=" Id" aria-label="employeeId" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
                                         </div>
-                                        <!-- Modal body -->
-                                        <div class="p-3 border bg-dark">
+                                        <br>
+                                        <div class="input-group flex-nowrap">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="addon-wrapping">*</span>
+                                            </div>
+                                            <input id="firstName" type="Name" name="firstName" placeholder=" First Name" aria-label="firstName" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
+                                        </div>
+                                        <br>
+                                        <div class="input-group flex-nowrap">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="addon-wrapping">*</span>
+                                            </div>
+                                            <input id="lastName" type="Name" name="lastName" placeholder=" Last Name" aria-label="lastName" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
+                                        </div>
+                                        <br>
+                                        <div class="input-group flex-nowrap">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="addon-wrapping">*</span>
+                                            </div>
+                                            <input id="email" type="email" name="email" placeholder=" Email" aria-label=" @email" aria-describedby="addon-wrapping" class="form-control" style="width: 100%"/>
+                                        </div>
+                                        <br>
+                                        <div class="input-group flex-nowrap">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="addon-wrapping">*</span>
+                                            </div>
+
+                                            <input id="phoneNumber" type="tel" value=""  name="phoneNumber" placeholder="1234566789" aria-label="phoneNumber" 
+                                                   aria-describedby="addon-wrapping" class="form-control" style="width: 100%" />
+
+                                        </div>
+                                        <br>
+                                        <div class="input-group flex-nowrap">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="addon-wrapping">*</span>
+                                            </div>
+                                            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js" ></script>
+                                            <input id="hireDate" type="Date" pattern="(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d" 
+                                                   name="hireDate" aria-label="hireDate" data-date="" data-date-format="MM/DD/YY" value=""
+                                                   aria-describedby="addon-wrapping" class="form-control" style="width: 100%"/>
+                                        </div>
+                                        <br>
+                                        <div class="dropdown">
+                                            <div class="input-group flex-nowrap" >
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="addon-wrapping">*</span>
+                                                </div>
+                                                <input id="job" name="job" value="" type="Name" name="job" placeholder=" Job" aria-label="job" aria-describedby="addon-wrapping" readonly >
+                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                                                    Job
+                                                </button>
+                                                <ul  class="dropdown-menu dr1" aria-labelledby="dropdownMenuButton">
+                                                    <%
+                                                        for (Job E : gj.manageData(new Job(), "jobTitle", "", "", false, true)) {
+                                                    %> <li><a class='dropdown-item' href='#'><%= E.getJobId()%> <%= E.getJobTitle()%></a></li>
+                                                        <% }
+                                                        %>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="input-group flex-nowrap">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="addon-wrapping">*</span>
+                                            </div>
+                                            <input id="salary" type="Number" name="salary" placeholder=" Salary" aria-label="salary" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
+
+                                        </div>
+                                        <br>
+                                        <div class="input-group flex-nowrap">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="addon-wrapping">*</span>
+                                            </div>
+                                            <input id="commission" type="Name" min="0" max="0.9" name="commission" placeholder=" commission" aria-label="commision" aria-describedby="addon-wrapping" class="form-control" style="width: 100%"/>
+                                            <input id="comissionChooser" type="range" min="0" max="0.9" step="0.1" value="0.0" name="comissionChooser" oninput="commission.value = comissionChooser.value"/>
+
+                                        </div>
+                                        <br>
+                                        <div class="dropdown">
+                                            <div class="input-group flex-nowrap" >
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="addon-wrapping">*</span>
+                                                </div>
+                                                <input id="manager" name="manager" value="" type="Name" placeholder=" Manager" aria-label="Manager" aria-describedby="addon-wrapping" readonly >
+                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                                                    Manager
+                                                </button>
+                                                <ul  class="dropdown-menu dr2" aria-labelledby="dropdownMenuButton">
+                                                    <%
+                                                        for (Employee E : gE.manageData(new Employee(), "lastName", "", "", false, true)) {
+                                                    %> <li><a class='dropdown-item' href='#'><%= E.getEmployeeId()%> <%= E.getLastName()%></a></li>
+                                                        <% }
+                                                        %>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="dropdown">
                                             <div class="input-group flex-nowrap">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="addon-wrapping">*</span>
                                                 </div>
-                                                <input id="employeeId" class="employeeId" type="Name" name="employeeId" placeholder=" Id" aria-label="employeeId" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
-                                            </div>
-                                            <br>
-                                            <div class="input-group flex-nowrap">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="addon-wrapping">*</span>
-                                                </div>
-                                                <input id="firstName" type="Name" name="firstName" placeholder=" First Name" aria-label="firstName" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
-                                            </div>
-                                            <br>
-                                            <div class="input-group flex-nowrap">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="addon-wrapping">*</span>
-                                                </div>
-                                                <input id="lastName" type="Name" name="lastName" placeholder=" Last Name" aria-label="lastName" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
-                                            </div>
-                                            <br>
-                                            <div class="input-group flex-nowrap">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="addon-wrapping">*</span>
-                                                </div>
-                                                <input id="email" type="email" name="email" placeholder=" Email" aria-label=" @email" aria-describedby="addon-wrapping" class="form-control" style="width: 100%"/>
-                                            </div>
-                                            <br>
-                                            <div class="input-group flex-nowrap">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="addon-wrapping">*</span>
-                                                </div>
-
-                                                <input id="phoneNumber" type="tel" value=""  name="phoneNumber" placeholder="1234566789" aria-label="phoneNumber" 
-                                                       aria-describedby="addon-wrapping" class="form-control" style="width: 100%" />
+                                                <input id="department" name="department" type="Name" placeholder=" Department" aria-label="department" aria-describedby="addon-wrapping" readonly >
+                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" >
+                                                    Department
+                                                </button>
+                                                <ul class="dropdown-menu dr3" aria-labelledby="dropdownMenuButton">
+                                                    <%
+                                                        for (Department r : gdr.manageData(new Department(), "departmentName", "", "", false, true)) {
+                                                    %>  <li><a class='dropdown-item' href='#'><%= r.getDepartmentId()%> <%= r.getDepartmentName()%></a></li>
+                                                        <% }
+                                                        %>
+                                                </ul>
 
                                             </div>
-                                            <br>
-                                            <div class="input-group flex-nowrap">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="addon-wrapping">*</span>
-                                                </div>
-                                                <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js" ></script>
-                                                <input id="hireDate" type="Date" pattern="(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d" 
-                                                       name="hireDate" aria-label="hireDate" data-date="" data-date-format="MM/DD/YY" value=""
-                                                       aria-describedby="addon-wrapping" class="form-control" style="width: 100%"/>
-                                            </div>
-                                            <br>
-                                            <div class="dropdown">
-                                                <div class="input-group flex-nowrap" >
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="addon-wrapping">*</span>
-                                                    </div>
-                                                    <input id="job" name="job" value="" type="Name" name="job" placeholder=" Job" aria-label="job" aria-describedby="addon-wrapping" readonly >
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
-                                                        Job
-                                                    </button>
-                                                    <ul  class="dropdown-menu dr1" aria-labelledby="dropdownMenuButton">
-                                                        <%
-                                                            for (Job E : gj.manageData(new Job(), "jobTitle", "", "", false, true)) {
-                                                        %> <li><a class='dropdown-item' href='#'><%= E.getJobId()%> <%= E.getJobTitle()%></a></li>
-                                                            <% }
-                                                            %>
-                                                    </ul>
+                                        </div>
 
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="input-group flex-nowrap">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="addon-wrapping">*</span>
-                                                </div>
-                                                <input id="salary" type="Name" name="salary" placeholder=" Salary" aria-label="salary" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
-
-                                            </div>
-                                            <br>
-                                            <div class="input-group flex-nowrap">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="addon-wrapping">*</span>
-                                                </div>
-                                                <input id="commission" type="Name" min="0" max="0.9" name="commission" placeholder=" commission" aria-label="commision" aria-describedby="addon-wrapping" class="form-control" style="width: 100%"/>
-                                                <input id="comissionChooser" type="range" min="0" max="0.9" step="0.1" value="0.0" name="comissionChooser" oninput="commission.value = comissionChooser.value"/>
-
-                                            </div>
-                                            <br>
-                                            <div class="dropdown">
-                                                <div class="input-group flex-nowrap" >
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="addon-wrapping">*</span>
-                                                    </div>
-                                                    <input id="manager" name="manager" value="" type="Name" placeholder=" Manager" aria-label="Manager" aria-describedby="addon-wrapping" readonly >
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
-                                                        Manager
-                                                    </button>
-                                                    <ul  class="dropdown-menu dr2" aria-labelledby="dropdownMenuButton">
-                                                        <%
-                                                            for (Employee E : gE.manageData(new Employee(), "lastName", "", "", false, true)) {
-                                                        %> <li><a class='dropdown-item' href='#'><%= E.getEmployeeId()%> <%= E.getLastName()%></a></li>
-                                                            <% }
-                                                            %>
-                                                    </ul>
-
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="dropdown">
-                                                <div class="input-group flex-nowrap">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="addon-wrapping">*</span>
-                                                    </div>
-                                                    <input id="department" name="department" type="Name" placeholder=" Department" aria-label="department" aria-describedby="addon-wrapping" readonly >
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" >
-                                                        Department
-                                                    </button>
-                                                    <ul class="dropdown-menu dr3" aria-labelledby="dropdownMenuButton">
-                                                        <%
-                                                            for (Department r : gdr.manageData(new Department(), "departmentName", "", "", false, true)) {
-                                                        %>  <li><a class='dropdown-item' href='#'><%= r.getDepartmentId()%> <%= r.getDepartmentName()%></a></li>
-                                                            <% }
-                                                            %>
-                                                    </ul>
-
-                                                </div>
-                                            </div>
-
-                                            <br>
-                                            <!-- Modal footer -->
-                                            <div class="modal-footer">
-                                                <div class="container px-lg-5">
-                                                    <div class="row mx-lg-n5">
-                                                        <div class="col py-3 px-lg-5 "></div>
-                                                        <div>
-                                                            <button onclick="insertAlert(event)" class="btn btn-success" type="submit" value="Submit">Save</button>
-                                                        </div>
+                                        <br>
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <div class="container px-lg-5">
+                                                <div class="row mx-lg-n5">
+                                                    <div class="col py-3 px-lg-5 "></div>
+                                                    <div>
+                                                        <button onclick="insertAlert(event)" class="btn btn-success" type="submit" value="Submit">Save</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -253,11 +255,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                        <!--</form>-->
+                    </form>
                 </div>
-                                                    
-        
+            </div>
+
+
             <!--END MODAL 1-->
 
             <!-- The Modal -->
@@ -299,7 +303,7 @@
             </div>
 
             <!--END MODAL-->
-            
+
 
         </div>
     </body>
@@ -403,60 +407,59 @@
         $(document).on('click', '.dr3 li a', function () {
             $('#department').val($(this).text());
         });
-
         function deleteAlert(event) {
             event.preventDefault();
             $("#removeData").submit(swal({
-                title: "data has been deleted",
+                title: "sure want to delete ?",
                 text: "successful!",
                 type: "success",
+                showCancelButton: true,
                 confirmButtonColor: "#34E076",
-                confirmButtonText: "Ok.",
-                closeOnConfirm: false
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, keep it'
             }
             ).then(function (result) {
                 setTimeout(function () {
                     var formz = document.getElementById("removeData");
                     formz.submit();
                 }, 30);
-
             }));
         }
-        $(document).ready(function () {
-        $("form").on('submit', function (e) {
-        $(".employeeId").each(function () {
-        e.preventDefault();
-                var input = $(this);
-                if (input.val() == "") {
-                swal(input.attr("name") + " Cannot be blank");
-                return false;
-        } 
-                else if (input.val() == "3" ) //BELOM BISA
-	{       
-                swal(input.attr("name") + "is already exist ");
-                return false;
-        }
-                else{
-                event.preventDefault();
-                $("#savedata").submit(swal({
-                     title: "data has been save",
-                     text: "successful!",
-                     type: "success",
-                     confirmButtonColor: "#34E076",
-                     confirmButtonText: "Ok.",
-                     closeOnConfirm: false
-        }
-        ).then(function (result) {
-        setTimeout(function () {
-        var formz = document.getElementById("savedata");
-                formz.submit();
-        }, 30);
-        }));
-        }
-
-        })
-        });
-        });
+//        $(document).ready(function () {
+//        $("form").on('submit', function (e) {
+//        $(".employeeId").each(function () {
+//        e.preventDefault();
+//                var input = $(this);
+//                if (input.val() == "") {
+//                swal(input.attr("name") + " Cannot be blank");
+//                return false;
+//        } 
+//                else if (input.val() == "3" ) //BELOM BISA
+//	{       
+//                swal(input.attr("name") + "is already exist ");
+//                return false;
+//        }
+//                else{
+//                event.preventDefault();
+//                $("#savedata").submit(swal({
+//                     title: "data has been save",
+//                     text: "successful!",
+//                     type: "success",
+//                     confirmButtonColor: "#34E076",
+//                     confirmButtonText: "Ok.",
+//                     closeOnConfirm: false
+//        }
+//        ).then(function (result) {
+//        setTimeout(function () {
+//        var formz = document.getElementById("savedata");
+//                formz.submit();
+//        }, 30);
+//        }));
+//        }
+//
+//        })
+//        });
+//        });
 
     </script>
 
