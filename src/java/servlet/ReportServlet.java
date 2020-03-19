@@ -47,7 +47,7 @@ public class ReportServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            response.sendRedirect(request.getContextPath() + "/mainMenu.jsp");
+//            response.sendRedirect(request.getContextPath() + "/mainMenu.jsp");
             /* TODO output your page here. You may use following sample code. */
 //            out.println("<!DOCTYPE html>");
 //            out.println("<html>");
@@ -98,8 +98,9 @@ public class ReportServlet extends HttpServlet {
 
         } catch (SQLException ex) {
             Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+            processRequest(request, response);
         }
-        processRequest(request, response);
+
     }
 
     /**
@@ -127,26 +128,6 @@ public class ReportServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-//    public void showReport(String Report, HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException, SQLException {
-//        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-//        Connection c = null;
-//        String[] filename = Report.split(".jrxml");
-//        String htmlpath = ("C:\\Users\\amry4\\OneDrive\\Dokumen\\NetBeansProjects\\HRWeb" + filename[0] + ".html ");
-//        try {
-//            System.out.println("sudah");
-//            c = sessionFactory.getSessionFactoryOptions().getServiceRegistry().
-//                    getService(ConnectionProvider.class).getConnection();
-//            JasperPrint countryPrint = JasperFillManager.fillReport(
-//                    getClass().getClassLoader().getResourceAsStream(Report), null, c);
-//            JasperExportManager.exportReportToHtmlFile(countryPrint, htmlpath);
-//            String destFile = "region.pdf";
-//            JasperExportManager.exportReportToPdfFile(countryPrint, destFile);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        processRequest(request, response);
-//    }
     public void reportfix(String Report, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -170,6 +151,28 @@ public class ReportServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        processRequest(request, response);
+//        processRequest(request, response);
     }
+
 }
+
+//    public void showReport(String Report, HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException, SQLException {
+//        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//        Connection c = null;
+//        String[] filename = Report.split(".jrxml");
+//        String htmlpath = ("C:\\Users\\amry4\\OneDrive\\Dokumen\\NetBeansProjects\\HRWeb" + filename[0] + ".html ");
+//        try {
+//            System.out.println("sudah");
+//            c = sessionFactory.getSessionFactoryOptions().getServiceRegistry().
+//                    getService(ConnectionProvider.class).getConnection();
+//            JasperPrint countryPrint = JasperFillManager.fillReport(
+//                    getClass().getClassLoader().getResourceAsStream(Report), null, c);
+//            JasperExportManager.exportReportToHtmlFile(countryPrint, htmlpath);
+//            String destFile = "region.pdf";
+//            JasperExportManager.exportReportToPdfFile(countryPrint, destFile);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        processRequest(request, response);
+//    }

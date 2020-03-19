@@ -65,7 +65,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+         switch (request.getQueryString()) {
+            case "out":
+                logout(request, response);
+                break;
+        }
         processRequest(request, response);
     }
 
@@ -83,10 +87,6 @@ public class LoginServlet extends HttpServlet {
         switch (request.getQueryString()) {
             case "in":
                 login(request, response);
-                break;
-            case "out":
-                logout(request, response);
-                break;
         }
         processRequest(request, response);
     }

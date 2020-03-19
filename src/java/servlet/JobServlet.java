@@ -11,14 +11,12 @@ import dao.GeneralDao;
 import dao.IDao;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Job;
-import model.Useraccount;
 
 /**
  *
