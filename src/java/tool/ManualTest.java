@@ -4,35 +4,25 @@
  * and open the template in the editor.
  */
 package tool;
-
-//import view.Login;
-import tool.BCrypt;
-import model.*;
-import dao.GeneralDao;
+import java.util.Properties;    
+import javax.mail.*;    
+import javax.mail.internet.*;    
 
 /**
  *
  * @author amry4
  */
+class Mailer {
+
+    
+}
+
 public class ManualTest {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
-        GeneralDao<Region> gd = new GeneralDao<Region>();
-//        RegionDao drm = new RegionDao();
-//        Login mainview = new Login();
-//        mainview.setVisible(true);
-//
-//        
-//    String pw_hash = BCrypt.hashpw("Bismillah", BCrypt.gensalt());
-//        System.out.println(pw_hash);
-
-//    BCrypt.checkpw(pw_hash, pw_hash);
-        for (Region r : gd.manageData(new Region(), "regionName", "", "", false, true)) {
-            System.out.println(r.getRegionName());
-        }
+        //from,password,to,subject,message  
+//        String link = "http://localhost:8084/HRWeb/loginservlet?out";
+//        Mailer.send("amry40297dua@gmail.com", "4mryg4nt3ng", "amry40297@gmail.com", "hello javatpoint", "How r u? click this : ");
+        //change from, password and to  
     }
 }

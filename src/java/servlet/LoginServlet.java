@@ -120,6 +120,7 @@ public class LoginServlet extends HttpServlet {
         request.getRequestDispatcher("login.jsp").include(request, response);
 
         HttpSession session = request.getSession();
+        session.removeAttribute("userLogon");
         session.invalidate();
 
         out.close();

@@ -14,14 +14,12 @@
 <% GeneralDao<Region> gr = new GeneralDao<>();%>
 <% IDao<Region> IRegion; %>
 <% IRegion = new GeneralDao();%>
-
 <!DOCTYPE html>
 <html>
     <head>
         <jsp:include page="/mainMenu.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title> Region Management </title>
-
     </head>
     <body>
         <div class="container">
@@ -99,7 +97,7 @@
                                                outline: none;" readonly />
                                         <br>
                                         <h5 style="width: 100%" style="color: black" > Region Name : </h5> 
-                                         <input class="isi2 hapusisi2 form-control" id="hapusisi2" name="hapusisi2" type="text" style="color: black" value="" style="border: none transparent;
+                                        <input class="isi2 hapusisi2 form-control" id="hapusisi2" name="hapusisi2" type="text" style="color: black" value="" style="border: none transparent;
                                                outline: none;" readonly /> 
                                     </div>
                                 </div>
@@ -175,7 +173,7 @@
             </table>
 
         </div>
-                    <form hidden="true" action="${pageContext.servletContext.contextPath}/regionservlet?update" method="post" id="updatedata"> <button hidden="true" class="btn btn-outline-danger " type="submit" ></button></form>
+        <form hidden="true" action="${pageContext.servletContext.contextPath}/regionservlet?update" method="post" id="updatedata"> <button hidden="true" class="btn btn-outline-danger " type="submit" ></button></form>
     </body>
 
     <script>

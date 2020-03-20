@@ -32,6 +32,10 @@
         <servlet-name>ReportServlet</servlet-name>
         <servlet-class>servlet.ReportServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterValidation</servlet-name>
+        <servlet-class>servlet.RegisterValidation</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EmployeeServlet</servlet-name>
         <url-pattern>/employeeservlet</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>ReportServlet</servlet-name>
         <url-pattern>/reportservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterValidation</servlet-name>
+        <url-pattern>/registervalidation</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

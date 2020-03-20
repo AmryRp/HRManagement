@@ -123,7 +123,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <!--				<a href="#">Forgot Password?</a>-->
+                        <a href="registerform.jsp" style="color: brown">Register  </a> | <a href="#">Forgot Password?</a>
                     </div>
                 </div>
             </div>
