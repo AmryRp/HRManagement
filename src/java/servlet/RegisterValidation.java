@@ -99,7 +99,7 @@ public class RegisterValidation extends HttpServlet {
             if (ListAccount != null) {
                 valid = false;
                 errorString = "Username yang baginda masukkan sudah ada";
-                response.sendRedirect(request.getContextPath() + "/registerform.jsp");
+//                response.sendRedirect(request.getContextPath() + "/registerform.jsp");
             }
             if (valid) {
 
