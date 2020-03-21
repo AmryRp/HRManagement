@@ -154,7 +154,7 @@
                                 <button id="updating" class="btn btn-primary updating confirm "type="button" data-toggle="modal" data-target="#Insert"><i class="fa fa-edit" ></i></button>
                             </a>
                             <a href="#" data-toggle="tooltip" title="Delete Data">
-                                <button class="btn btn-danger confirm"type="button" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash" ></i></button>
+                                <button class="btn btn-danger confirm" type="button" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash" ></i></button>
                             </a>      
                         </td>
 

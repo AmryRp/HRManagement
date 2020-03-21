@@ -24,6 +24,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Useraccount;
 import tool.BCrypt;
+import tool.VerifyCaptcha;
 
 /**
  *
@@ -62,16 +64,7 @@ public class RegisterValidation extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet RegisterValidation</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet RegisterValidation at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
+
         }
     }
 
@@ -87,12 +80,61 @@ public class RegisterValidation extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        switch (request.getQueryString()) {
-            case "activation":
-                activation(request, response);
-                break;
+        if (request.getQueryString().equals("activation")) {
+            switch (request.getQueryString()) {
+                case "activation":
+                    activation(request, response);
+                    break;
+
+            }
+        } else {
+            boolean valid = true;
+            String errorString = "-";
+            String cs = "Captcha Invalid !!";
+            String userName = request.getParameter("inputEmail");
+            System.out.println(userName);
+            IAccount = new GeneralDao();
+            ListAccount = IAccount.manageData(new Useraccount(), "username", userName, "", false, false);
+            System.out.println(ListAccount);
+            if (ListAccount != null) {
+                valid = false;
+                errorString = "Username yang baginda masukkan sudah ada";
+                response.sendRedirect(request.getContextPath() + "/registerform.jsp");
+            }
+            if (valid) {
+
+                String gRecaptchaResponse = (String) request.getParameter("g-recaptcha-response");
+                boolean captcha = false;
+                System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
+                // Verify CAPTCHA.
+                captcha = VerifyCaptcha.verify(gRecaptchaResponse);
+                if (!captcha) {
+                    errorString = cs;
+                    request.setAttribute("errorString", errorString);
+                    RequestDispatcher dispatcher
+                            = //
+                            request.getServletContext().getRequestDispatcher("/registerform.jsp");
+                    System.out.println("error captcha");
+                    dispatcher.forward(request, response);
+                    return;
+                } else {
+                    switch (request.getQueryString()) {
+                        case "register":
+                            register(request, response);
+                            break;
+                    }
+                }
+            } else {
+                request.setAttribute("errorString", errorString);
+                RequestDispatcher dispatcher
+                        = //
+                        request.getServletContext().getRequestDispatcher("/registerform.jsp");
+                System.out.println("error ini");
+                dispatcher.forward(request, response);
+                return;
+            }
         }
-        processRequest(request, response);
+
     }
 
     /**
@@ -106,12 +148,12 @@ public class RegisterValidation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        switch (request.getQueryString()) {
-            case "register":
-                register(request, response);
-                break;
-        }
-        processRequest(request, response);
+        this.doGet(request, response);
+//        switch (request.getQueryString()) {
+//            case "register":
+//                register(request, response);
+//                break;
+//        }
     }
 
     /**
@@ -135,10 +177,10 @@ public class RegisterValidation extends HttpServlet {
         session.setAttribute("registPass", pass);
         Random rdNumber = new Random();
         int numberToday = rdNumber.nextInt(1000);
-        String aktifasi = "http://localhost:8084/HRWeb/loginservlet?activation";
+//        String aktifasi = "http://localhost:8084/HRWeb/loginservlet?activation";
         System.out.println(email + " " + pass + " " + numberToday);
         String htmlFile = "C:\\Users\\amry4\\OneDrive\\Dokumen\\NetBeansProjects\\HRWeb\\web\\header.html";
-        send(emailSender, passwordSender, email, "#HRM" + numberToday + " Your Account Activation for HR management",htmlFile );
+        send(emailSender, passwordSender, email, "#HRM" + numberToday + " Your Account Activation for HR management", htmlFile);
         //beri alert email sukses dikirmkan ke email pendaftar
         response.sendRedirect(request.getContextPath() + "/login.jsp");
 
@@ -150,11 +192,14 @@ public class RegisterValidation extends HttpServlet {
         //ambil dari html yang dikirim ke email. 
         String email = (String) session.getAttribute("registEmail");
         String pass = (String) session.getAttribute("registPass");
+        //ambil dari session
         session.setAttribute("activateEmail", email);
         session.setAttribute("activatePass", pass);
+        //remove dari session
+        session.removeAttribute("registEnail");
+        session.removeAttribute("registPass");
         System.out.println(email);
         System.out.println(pass);
-
         save(email, pass, request, response);
 
     }

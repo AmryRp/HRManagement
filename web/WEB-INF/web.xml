@@ -70,7 +70,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RegisterValidation</servlet-name>
-        <url-pattern>/registervalidation</url-pattern>
+        <url-pattern>/registerValidation</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

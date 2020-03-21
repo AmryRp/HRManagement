@@ -21,8 +21,6 @@
         <jsp:include page="/mainMenu.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title> Country Management </title>
-
-
     </head>
     <body>
         <div class="container">
@@ -198,7 +196,7 @@
     </body>
 
     <script>
-       
+
         $(document).ready(function () {
             var table = $('#tableCountry').DataTable({
 

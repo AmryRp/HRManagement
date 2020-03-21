@@ -3,70 +3,28 @@
     Created on : Mar 19, 2020, 11:03:14 AM
     Author     : amry4
 --%>
-
+<%@page import="net.tanesha.recaptcha.ReCaptchaResponse"%>
+<%@page import="net.tanesha.recaptcha.ReCaptchaImpl"%>
+<%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
+<%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Register</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Registration Form</title>
-        <style>
-            table {
-                font-family: 'Varela Round', sans-serif;
-                border: 2px solid ;
-                width: 100%;
-            }
-            td, th {
-                border: 1px  #000000 ;
-                text-align: center;
-                padding: 7px;
-            }
-            .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-                background-color: #FFFFFF;
-            }
-            thead
-            {
-                background-color: #405d27;
-            }
-            tr:nth-child(odd) {
-                background-color: #82b74b;
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-                border: 0.8px #000000;
-            }
-            tr:nth-child(even) {
-                background-color: #c1946a;
-
-                border: 0.8px #000000;
-            }
-            .dropdown-menu {         
-                max-height: 200px;
-                overflow-y: auto;
-            }
-            input {
-                position: relative;
-                color: black;
-            }
-
-            input:before {
-                position: absolute;
-                content: attr(data-date);
-                color: black;
-            }
-
-            input::-webkit-datetime-edit, input::-webkit-inner-spin-button, input::-webkit-clear-button {
-                display: none;
-            }
-
-            input::-webkit-calendar-picker-indicator {
-                position: absolute;
-                top: 3px;
-                right: 0;
-                color: black;
-                opacity: 1;
-            }
+        <style type="text/css">
             body {
                 font-family: 'Varela Round', sans-serif;
             }
@@ -143,20 +101,43 @@
         </style>
     </head>
     <body>
-        <h1>Register Form</h1>
-        <form action="${pageContext.servletContext.contextPath}/registervalidation?register" method="POST">
-            <div class="container">
-                <div class="field">
-                    <input maxlength="64" type="Email" id="inputEmail" name="inputEmail" class="inputEmail" required>
-                    <input minlength="8"  type="Password" id="inputPassword" name="inputPassword" class="inputPassword" required>
-                </div>
-                <br>
-                <div class="actions">
-                    <input class="registerbtn btn btn-success " value="Register" id="registerbtn" type="submit" >
+        <div id="myModal" class="container ">
+            <div class="modal-dialog modal-login">
+                <div class="modal-content">
+                    <div class="modal-header">				
+                        <h4 class="modal-title">Register Form</h4>
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                    </div>
+                    <div class="modal-body">
+                        <form action="registerValidation?register" method="post">
+                            <div class="form-group">
+                                <i class="fa fa-user"></i>
+                                <input maxlength="64" type="Email" id="inputEmail" name="inputEmail" class="inputEmail form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <i class="fa fa-lock"></i>
+                                <input minlength="8"  type="Password" id="inputPassword" name="inputPassword" class="inputPassword form-control" required>				
+                            </div>
+                            <p style="color:red;">${errorString}</p>
+                            <div class="form-group">
+                                <div class="g-recaptcha"
+                                     data-sitekey="6LfAs-IUAAAAAC4m5Ew-2hnoMAgjRq-UUqSFfkP2"></div>
+                            </div>
+                            <div class="form-group">
+                                <input class="registerbtn btn btn-success btn-block btn-lb" value="Submit" id="registerbtn form-control" type="submit" >
+                            </div>
+                        </form>				
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <a href="forgotpassword.jsp">Forgot Password?</a>
+                        <a href="login.jsp" style="color: brown"> <i class="fa fa-chevron-left"></i> </a> 
+
+                    </div>
                 </div>
             </div>
-        </form>
-
+        </div>    
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js"></script>
     <!-- Jquery v.3.2.1 from ajax for Sweet Alert  -->
@@ -170,29 +151,25 @@
     <!-- Jquery v.3.3.0 from code.jquery for datatable  -->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <!-- datatables.min v.3.3.0 from ajax for table design   -->
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js">
-        $(document).ready(function () {
-            $('.field input').keyup(function () {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'>
 
-                var empty = false;
-                $('.field input').each(function () {
-                    if ($(this).val().length == 0) {
-                        empty = true;
-                    }
-                });
+    $(document).ready(function () {
+        $('.field input').keyup(function () {
 
-                if (empty) {
-                    $('.actions input').attr('disabled', 'disabled');
-                } else {
-                    $('.actions input').attr('disabled', false);
+            var empty = false;
+            $('.field input').each(function () {
+                if ($(this).val().length == 0) {
+                    empty = true;
                 }
             });
+
+            if (empty) {
+                $('.actions input').attr('disabled', 'disabled');
+            } else {
+                $('.actions input').attr('disabled', false);
+            }
         });
+    });
     </script>
 </html>

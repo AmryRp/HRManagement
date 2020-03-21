@@ -192,7 +192,11 @@
                 if (session.getAttribute("userLogon").equals("")) {
                     response.sendRedirect(request.getContextPath() + "/login.jsp");
             %>
-           
+           <a href="${pageContext.servletContext.contextPath}/login.jsp">
+                <b>
+                    <button href="${pageContext.servletContext.contextPath}/login.jsp" class="btn btn-outline-primary " type="submit" >Login</button>
+                </b>
+            </a>
             <%
             } else {
             %>
