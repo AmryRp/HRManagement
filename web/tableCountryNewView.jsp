@@ -10,24 +10,24 @@
 <%@page import="model.*"%>
 <%@page import="dao.*"%>
 <%@page import="controller.DepartmentController" %>
+<% GeneralDao<Country> gc = new GeneralDao<>();%>
 <% GeneralDao<Region> gr = new GeneralDao<>();%>
-<% IDao<Region> IRegion; %>
-<% IRegion = new GeneralDao();%>
+<% IDao<Country> ICountry; %>
+<% ICountry = new GeneralDao();%>
 <!DOCTYPE html>
 <html style="height: auto;" class="">
     <head>
         <jsp:include page="/script.jsp" />
         <jsp:include page="/mainmenuNavbar.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Region</title>
+        <title>Country</title>
     </head>
     <body class="sidebar-mini sidebar-collapse control-sidebar-slide-open" data-gr-c-s-loaded="true" style="height: auto;">
         <div class="containercol px-md-5">
             <div class="container">
                 <div class="containercol px-md-5">
                     <!-- The Modal -->
-
-                    <form action="${pageContext.servletContext.contextPath}/regionservlet?save" method="POST" id="savedata" >
+                    <form action="${pageContext.servletContext.contextPath}/countryservlet?save" method="POST" id="savedata" >
                         <div class="modal" id="Insert">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -38,31 +38,52 @@
                                     </div>
                                     <!-- Modal body -->
                                     <div class="p-3 border bg-dark">
+                                        <div class='field'>
+                                            <div class="input-group flex-nowrap">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="addon-wrapping">*</span>
+                                                </div>
+                                                <input required="required" id="txtId" type="txtId" name="txtId" placeholder=" Id" aria-label="countryId" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
 
-                                        <div class="input-group flex-nowrap">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="addon-wrapping">*</span>
                                             </div>
-                                            <input class="txtId form-control" id="txtId" type="Name" name="txtId" placeholder=" Id" aria-label="txtId" aria-describedby="addon-wrapping"  style="width: 100%">
+                                            <br>
+                                            <div class="input-group flex-nowrap">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="addon-wrapping">*</span>
+                                                </div>
+                                                <input id="txtName" type="txtName" name="txtName" placeholder=" Name" aria-label="countryName" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
 
-                                        </div>
-                                        <br>
-                                        <div class="input-group flex-nowrap">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="addon-wrapping">*</span>
                                             </div>
-                                            <input id="txtName" type="Name" name="txtName" placeholder=" Name" aria-label="countryName" aria-describedby="addon-wrapping" class="form-control" style="width: 100%">
-
+                                            <br>
+                                            <div class="dropdown">
+                                                <div class="input-group flex-nowrap" >
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="addon-wrapping">*</span>
+                                                    </div>
+                                                    <input id="txtRegion" name="txtRegion" value="" type="txtRegion" placeholder=" Region" aria-label="Region" aria-describedby="addon-wrapping" readonly >
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                                                        Region
+                                                    </button>
+                                                    <ul  class="dropdown-menu dr1" aria-labelledby="dropdownMenuButton">
+                                                        <%
+                                                            for (Region E : gr.manageData(new Region(), "regionName", "", "", false, true)) {
+                                                        %> <li><a class='dropdown-item' href='#'><%= E.getRegionId()%> <%= E.getRegionName()%></a></li>
+                                                            <% }
+                                                            %>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <br>
                                         </div>
-                                        <br>
                                         <!-- Modal footer -->
                                         <div class="modal-footer">
                                             <div class="container px-lg-5">
                                                 <div class="row mx-lg-n5">
                                                     <div class="col py-3 px-lg-5 "></div>
-                                                    <div>
-                                                        <button onclick="insertAlert(event)" class="btn btn-success" type="submit" value="Submit">Save</button>
-                                                    </div>
+                                                    <div class='actions'>
+                                                        <input onclick="insertAlert(event)" class="btn btn-success" type="submit" value="Save" disabled="disabled">
+
+                                                    </div>   
                                                 </div>
                                             </div>
                                         </div>
@@ -71,7 +92,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -82,10 +102,10 @@
         <div class="modal" id="deleteModal">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="${pageContext.servletContext.contextPath}/regionservlet?delete" method="POST"  id="removeData" >
+                    <form action="${pageContext.servletContext.contextPath}/countryservlet?delete" method="POST"  id="removeData" >
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">Viewing Data</h4>
+                            <h4 class="modal-title">Are you sure want to delete ?</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <!-- Modal body -->
@@ -93,10 +113,6 @@
                             <div   >
                                 <div><h5 style="width: 100%" style="color: black" > Id Number : </h5> 
                                     <input class="isi hapusisi form-control" id="hapusisi" name="hapusisi" type="text" style="color: black" value="" style="border: none transparent;
-                                           outline: none;" readonly />
-                                    <br>
-                                    <h5 style="width: 100%" style="color: black" > Name : </h5> 
-                                    <input class="isi2 hapusisi2 form-control" id="hapusisi2" name="hapusisi2" type="text" style="color: black" value="" style="border: none transparent;
                                            outline: none;" readonly /> 
                                 </div>
                             </div>
@@ -107,18 +123,21 @@
                                 <div class="row mx-lg-n5">
                                     <div class="col py-3 px-lg-5 "></div>
                                     <div>
-                                        <button onclick="deleteAlert(event)"  class="btn btn-danger deletebtn yesdelete" type="submit" value="Submit" >Delete</button>
+
+                                        <button onclick="deleteAlert(event)"  class="btn btn-danger deletebtn yesdelete" type="submit" value="Submit" >Yes</button>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
                     </form>
                 </div>
             </div>
 
         </div>
         <!--MODAL-->
-
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" >
             <!-- Content Header (Page header) -->
@@ -173,26 +192,28 @@
                                                                                     <tr role="row">
                                                                                         <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">Id</th>
                                                                                         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Name</th>
+                                                                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Region</th>
                                                                                         <th class="no-sort" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Action</th>
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
                                                                                     <%
-                                                                                        for (Region c : gr.manageData(new Region(), "regionName", "", "", false, true)) {
-                                                                                    %>   <tr role="row" class="odd">
-                                                                                        <td class="nr sorting_1"tabindex="0" ><%= c.getRegionId()%></td>
-                                                                                        <td class="nr2 sorting_1"tabindex="0" ><%= c.getRegionName()%></td>
-                                                                                        <td >
-                                                                                            <a style="padding-right: 30px" href="#" data-toggle="tooltip" title="Edit Data">
+                                                                                        for (Country c : gc.manageData(new Country(), "countryName", "", "", false, true)) {
+                                                                                    %>    <tr role="row" class="odd">
+                                                                                        <td class="nr sorting_1"tabindex="0" ><%= c.getCountryId()%></td>
+                                                                                        <td class="nr2 sorting_1"tabindex="0" ><%= c.getCountryName()%></td>
+                                                                                        <td class="nr3 sorting_1"tabindex="0" ><%= (c.getRegionId() == null) ? "" : c.getRegionId().getRegionId() + " " + c.getRegionId().getRegionName()%></td>
+                                                                                        <td style="vertical-align: middle; text-align: center;" >
+                                                                                            <a style="vertical-align: middle; display: inline-block;
+                                                                                               margin: 0 20px 0 0;" href="#" data-toggle="tooltip" title="Edit Data">
                                                                                                 <i class="fa fa-edit updating confirm"style="font-size:36px;color:#0066cc; align-content: center" id="updating" type="button" data-toggle="modal" data-target="#Insert"></i>
                                                                                             </a>
 
-                                                                                            <a style="padding-right: 30px" href="#" data-toggle="tooltip" title="Delete Data">
+                                                                                            <a style="vertical-align: middle;display: inline-block;
+                                                                                               margin: 0 20px 0 0;" href="#" data-toggle="tooltip" title="Delete Data">
                                                                                                 <i class="fa fa-trash confirm" style="font-size:36px;color:red; align-content: center" type="button" data-toggle="modal" data-target="#deleteModal"></i>
                                                                                             </a>   
-
                                                                                         </td>
-
                                                                                     </tr>
                                                                                     <% }
                                                                                     %></tbody>
@@ -200,6 +221,7 @@
                                                                                     <tr>
                                                                                         <th rowspan="1" colspan="1">Id</th>
                                                                                         <th rowspan="1" colspan="1">Name</th>
+                                                                                        <th rowspan="1" colspan="1">Region</th>
                                                                                         <th rowspan="1" colspan="1">Action</th>
                                                                                 </tfoot>
                                                                             </table>
@@ -247,38 +269,44 @@
                 "autoWidth": false,
                 "responsive": true,
                 "columnDefs": [
-                    {"orderable": false, "targets": 2}
+                    {"orderable": false, "targets": 3}
                 ]
 
             });
         });
         $(".saving").click(function () {
-            $(".saveOrDelete").text("SAVE NEW DATA REGION");
+            $(".saveOrDelete").text("SAVE NEW DATA DEPARTMENT");
             var textBox = document.getElementById("txtId"); //field
             var textBox2 = document.getElementById("txtName");
+            var textBox3 = document.getElementById("txtManager");
+            var textBox4 = document.getElementById("txtLocation");
             textBox.value = "";
             textBox2.value = "";
+            textBox3.value = "";
+            textBox4.value = "";
             $("#txtId").prop("readonly", false);
         });
         $(".confirm").click(function () {
             var $row = $(this).closest("tr");    // Find the row
             var $text = $row.find(".nr").text(); // Find the text
             var $text2 = $row.find(".nr2").text(); //nr class
+            var $text3 = $row.find(".nr3").text();
             $(".isi").text($text); // title
             $(".isi2").text($text2);
             var textBox = document.getElementById("txtId"); //field
             var textBox2 = document.getElementById("txtName");
+            var textBox3 = document.getElementById("txtRegion");
             var tx = document.getElementById("hapusisi");
-            var tx2 = document.getElementById("hapusisi2");
             textBox.value = $text;
             tx.value = $text;
             textBox2.value = $text2;
-            tx2.value = $text2;
-            $("#txtId").prop("readonly", true);
-            $("#txtId").toggleClass('border-0');
-            $("#hapusisi").prop("readonly", true);
+            textBox3.value = $text3;
             $(".updating").click(function () {
-                $(".saveOrDelete").text("UPDATE DATA REGION");
+                $("#txtId").prop("readonly", true);
+                $("#txtId").toggleClass('border-0');
+
+                $("#hapusisi").prop("readonly", true);
+                $(".saveOrDelete").text("UPDATE DATA DEPARTMENT");
             });
         });
 
@@ -286,7 +314,6 @@
             $('#editManager').val($(this).text());
             $('#txtRegion').val($(this).text());
         });
-
         function deleteAlert(event) {
             event.preventDefault();
             $("#removeData").submit(swal({
@@ -294,6 +321,7 @@
                 text: "",
                 type: "question",
                 showCancelButton: true,
+                confirmButtonColor: "#34E076",
                 confirmButtonText: 'Yes, delete it!',
                 cancelButtonText: 'No, keep it'
             }

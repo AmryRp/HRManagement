@@ -8,12 +8,18 @@ package servlet;
 import dao.GeneralDao;
 import dao.IDao;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -24,6 +30,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,14 +39,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Useraccount;
 import tool.BCrypt;
-import tool.VerifyCaptcha;
+
 
 /**
  *
  * @author amry4
  */
 public class RegisterValidation extends HttpServlet {
+    public static final String SITE_VERIFY_URL = //
+            "https://www.google.com/recaptcha/api/siteverify";
+    public static final String SITE_KEY = "6LfAs-IUAAAAAC4m5Ew-2hnoMAgjRq-UUqSFfkP2";
 
+    public static final String SECRET_KEY = "6LfAs-IUAAAAAKg5GJra9bGjdTvENPhS2ualS1JO";
     List<Useraccount> ListAccount;
     IDao<Useraccount> IAccount;
     Useraccount ua = new Useraccount();
@@ -50,7 +61,59 @@ public class RegisterValidation extends HttpServlet {
         super();
         IAccount = new GeneralDao();
     }
-
+    public static boolean verify(String gRecaptchaResponse) {
+        if (gRecaptchaResponse == null || gRecaptchaResponse.length() == 0) {
+            System.out.println("GAGAL");
+            return false;
+        }
+ 
+        try {
+            URL verifyUrl = new URL(SITE_VERIFY_URL);
+ 
+            // Open a Connection to URL above.
+            HttpsURLConnection conn = (HttpsURLConnection) verifyUrl.openConnection();
+ 
+            // Add the Header informations to the Request to prepare send to the server.
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("User-Agent", "Chrome/80.0.3987.149");
+            conn.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+ 
+            // Data will be sent to the server.
+            String postParams = "secret=" + SECRET_KEY //
+                    + "&response=" + gRecaptchaResponse;
+ 
+            // Send Request
+            conn.setDoOutput(true);
+ 
+            // Get the output stream of Connection.
+            // Write data in this stream, which means to send data to Server.
+            OutputStream outStream = conn.getOutputStream();
+            outStream.write(postParams.getBytes());
+ 
+            outStream.flush();
+            outStream.close();
+ 
+            // Response code return from Server.
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode=" + responseCode);
+ 
+            // Get the Input Stream of Connection to read data sent from the Server.
+            InputStream is = conn.getInputStream();
+ 
+            JsonReader jsonReader = Json.createReader(is);
+            JsonObject jsonObject = jsonReader.readObject();
+            jsonReader.close();
+ 
+            // ==> {"success": true}
+            System.out.println("Response: " + jsonObject);
+ 
+            boolean success = jsonObject.getBoolean("success");
+            return success;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -107,7 +170,7 @@ public class RegisterValidation extends HttpServlet {
                 boolean captcha = false;
                 System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
                 // Verify CAPTCHA.
-                captcha = VerifyCaptcha.verify(gRecaptchaResponse);
+                captcha = verify(gRecaptchaResponse);
                 if (!captcha) {
                     errorString = cs;
                     request.setAttribute("errorString", errorString);
