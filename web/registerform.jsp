@@ -3,6 +3,7 @@
     Created on : Mar 19, 2020, 11:03:14 AM
     Author     : amry4
 --%>
+<%@page import="servlet.RegisterValidation"%>
 <%@page import="net.tanesha.recaptcha.ReCaptchaResponse"%>
 <%@page import="net.tanesha.recaptcha.ReCaptchaImpl"%>
 <%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
@@ -120,8 +121,10 @@
                             </div>
                             <p style="color:red;">${errorString}</p>
                             <div class="form-group">
+                                <% String SiteKey = RegisterValidation.SITE_KEY;
+                                %>
                                 <div class="g-recaptcha"
-                                     data-sitekey="6LfAs-IUAAAAAC4m5Ew-2hnoMAgjRq-UUqSFfkP2"></div>
+                                     data-sitekey=<%= SiteKey%>></div>
                             </div>
                             <div class="form-group">
                                 <input class="registerbtn btn btn-success btn-block btn-lb" value="Submit" id="registerbtn form-control" type="submit" >
@@ -154,22 +157,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'>
 
-    $(document).ready(function () {
-        $('.field input').keyup(function () {
+        $(document).ready(function () {
+            $('.field input').keyup(function () {
 
-            var empty = false;
-            $('.field input').each(function () {
-                if ($(this).val().length == 0) {
-                    empty = true;
+                var empty = false;
+                $('.field input').each(function () {
+                    if ($(this).val().length == 0) {
+                        empty = true;
+                    }
+                });
+
+                if (empty) {
+                    $('.actions input').attr('disabled', 'disabled');
+                } else {
+                    $('.actions input').attr('disabled', false);
                 }
             });
-
-            if (empty) {
-                $('.actions input').attr('disabled', 'disabled');
-            } else {
-                $('.actions input').attr('disabled', false);
-            }
         });
-    });
     </script>
 </html>
